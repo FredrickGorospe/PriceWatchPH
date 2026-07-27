@@ -1,0 +1,29 @@
+services:
+  db:
+    # Patch tag resolved against Docker Hub at task-implementation time
+    # (see tasks/TASK_001_BOOTSTRAP.md, Unknowns) rather than the floating
+    # `postgres:16` tag, so the image doesn't silently drift.
+    image: postgres:16.14-bookworm
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+
+volumes:
+  postgres_data:
