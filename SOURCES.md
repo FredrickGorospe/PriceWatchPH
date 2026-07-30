@@ -26,7 +26,7 @@ Sources are listed in priority order.
 
 ## 2. My own 2018–present buy/sell records, entered manually
 
-- **Status:** UNDER REVIEW
+- **Status:** APPROVED
 - **Access method:** manual entry
 - **Terms of service URL:** N/A — first-party data, no external terms govern this source
 - **What the terms say about automated access:** N/A — first-party data, no external terms govern this source
