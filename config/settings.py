@@ -25,6 +25,9 @@ INSTALLED_APPS = [
     "sources",
     "catalogue",
     "ingestion",
+    "listings",
+    "pricing",
+    "outcomes",
 ]
 
 MIDDLEWARE = [
