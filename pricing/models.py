@@ -8,10 +8,12 @@ from listings.models import CONDITION_CHOICES, Listing
 class PricePoint(models.Model):
     sku = models.ForeignKey(Sku, on_delete=models.PROTECT, related_name="price_points")
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES)
-    # The date portion after converting fetched_at to Asia/Manila, not UTC —
-    # a UTC day splits a Manila evening across two buckets. See Decision 3
-    # in this task file; enforced by aggregation code (phase 5), not by
-    # this column, which is a plain date.
+    # The Manila calendar date of Listing.observed_at (see
+    # pricing.bucketing.manila_day) — not of RawListing.fetched_at, which the
+    # pricing engine is not responsible for reading (docs/00_PLANNING.md §1),
+    # and not the UTC date, since a UTC day splits a Manila evening across
+    # two buckets. Enforced by aggregation code (phase 5), not by this
+    # column, which is a plain date. See TASK_005 Decisions 2 and 3.
     day = models.DateField()
     median = models.DecimalField(max_digits=12, decimal_places=2)
     p25 = models.DecimalField(max_digits=12, decimal_places=2)

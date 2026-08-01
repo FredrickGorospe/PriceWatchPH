@@ -7,6 +7,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # environment only, so a missing key must fail loudly, not fall back silently.
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
+# Same fail-loudly rule as SECRET_KEY. This key can never be rotated: tokens
+# derived from it live in immutable RawListing rows, so a new key stops
+# matching a counterparty's past tokens and silently breaks repeat-
+# counterparty linkage. Backup-critical for the life of the database. See
+# TASK_005 Decision 6.
+SELLER_PSEUDONYM_KEY = os.environ["DJANGO_SELLER_PSEUDONYM_KEY"]
+
 DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
@@ -82,3 +89,12 @@ TIME_ZONE = "UTC"
 # Display-only setting for templates/views to convert into later. Never used
 # for storage or for Django's own TIME_ZONE — those two must never merge.
 DISPLAY_TIME_ZONE = os.environ.get("DJANGO_DISPLAY_TIME_ZONE", "Asia/Manila")
+
+# The day-bucketing boundary PricePoint.day derives from (via
+# pricing.bucketing.manila_day) is a third timezone decision, distinct from
+# storage (UTC) and display. Unlike DISPLAY_TIME_ZONE this is a hardcoded
+# constant, not read from the environment: changing it would silently
+# rebucket every stored PricePoint, which must be a deliberate code change
+# with a migration plan, not an env tweak on one machine. See TASK_005
+# Decision 3.
+AGGREGATION_TIME_ZONE = "Asia/Manila"

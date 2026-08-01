@@ -35,6 +35,7 @@ Sources are listed in priority order.
 - **Reason for that rate limit:** N/A — first-party data, no external terms govern this source
 - **Date verified, and by whom:** TODO
 - **Kill criteria:** N/A — this source is first-party data with no external terms to violate; rejection criteria does not apply in the same sense as scraped sources.
+- **Privacy note:** counterparty names are pseudonymised on write into `RawListing` (TASK_005), but the source file itself still holds plaintext names and is not protected by that measure — its storage, access, and backup handling must be decided before phase 9.
 
 ---
 

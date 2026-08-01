@@ -19,7 +19,20 @@ class RawListing(models.Model):
     url = models.TextField()
     seller = models.TextField()
     fetched_at = models.DateTimeField()
+    # When the source stated the priced event happened — the transaction date
+    # for personal_records, a posting date if a scraped listing shows one.
+    # Distinct from fetched_at (when this system learned it); nullable
+    # because most sources state no such date. See TASK_005 Decision 2.
+    occurred_at = models.DateTimeField(null=True, blank=True)
     external_id = models.CharField(max_length=200, null=True, blank=True)
+    # The verbatim source row, so a fact this schema did not anticipate is
+    # recoverable rather than lost when the source file is edited or
+    # discarded. NULL means no payload was recorded; {} means one was
+    # recorded and was empty — the two are different facts and must stay
+    # distinguishable. Any counterparty name inside must already be
+    # pseudonymised before write — see ingestion.pseudonymise.redact_payload.
+    # See TASK_005 Decisions 1 and 5.
+    payload = models.JSONField(null=True, blank=True)
 
     class Meta:
         constraints = [
