@@ -1,0 +1,32 @@
+{
+  "description": "PriceWatchPH protected-path and Decimal guardrails.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^(Bash|apply_patch)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/block_sensitive_paths.py\"",
+            "timeout": 5,
+            "statusMessage": "Checking protected paths"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^apply_patch$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/warn_float_usage.py\"",
+            "timeout": 5,
+            "statusMessage": "Checking Decimal policy",
+            "additionalContextLimit": 300
+          }
+        ]
+      }
+    ]
+  }
+}
