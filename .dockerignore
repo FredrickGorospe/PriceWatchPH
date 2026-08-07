@@ -1,0 +1,43 @@
+# Secrets and local environment files
+.env
+.env.*
+*.env
+**/.env
+**/.env.*
+**/*.env
+!.env.example
+
+# Repository and local agent tooling
+.git
+.claude
+.codex
+.mcp.json
+
+# Python and tool caches
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.tox
+.nox
+.coverage
+.coverage.*
+htmlcov
+
+# Virtual environments
+.venv
+venv
+
+# Editor and operating-system artifacts
+.idea
+.vscode
+**/*.swp
+**/*~
+**/.DS_Store
+**/Thumbs.db
+
+# Local PostgreSQL data directories
+**/pgdata
+**/postgres-data
+**/postgresql/data
