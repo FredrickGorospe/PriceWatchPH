@@ -1,0 +1,10 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+  <li>
+    <a href="{% url 'admin:ingestion_rawlisting_log_personal_trade' %}" class="addlink">
+      Log a personal trade
+    </a>
+  </li>
+  {{ block.super }}
+{% endblock %}

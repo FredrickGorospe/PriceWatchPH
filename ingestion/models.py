@@ -61,3 +61,23 @@ class RawListing(models.Model):
 
     def delete(self, *args, **kwargs):
         raise ValidationError("RawListing is immutable and cannot be deleted.")
+
+
+class Swap(models.Model):
+    given_listing = models.OneToOneField(
+        RawListing,
+        on_delete=models.PROTECT,
+        related_name="swap_given",
+    )
+    received_listing = models.OneToOneField(
+        RawListing,
+        on_delete=models.PROTECT,
+        related_name="swap_received",
+    )
+    cash_adjustment = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
