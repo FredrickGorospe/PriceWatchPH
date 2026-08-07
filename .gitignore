@@ -14,3 +14,6 @@ venv/
 *.log
 .DS_Store
 .idea/
+
+# Legacy project MCP configuration is non-Codex and machine-local.
+/.mcp.json
