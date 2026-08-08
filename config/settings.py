@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "sources",
     "catalogue",
     "ingestion",
@@ -98,3 +99,15 @@ DISPLAY_TIME_ZONE = os.environ.get("DJANGO_DISPLAY_TIME_ZONE", "Asia/Manila")
 # with a migration plan, not an env tweak on one machine. See TASK_005
 # Decision 3.
 AGGREGATION_TIME_ZONE = "Asia/Manila"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_PAGINATION_CLASS": "api.pagination.FixedPageNumberPagination",
+    "PAGE_SIZE": 25,
+    "COERCE_DECIMAL_TO_STRING": True,
+}
