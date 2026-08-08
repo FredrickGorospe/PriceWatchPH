@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import path, reverse
 from django.utils import timezone
 
-from catalogue.models import Sku
+from catalogue.models import Sku, SkuAlias
 from listings.models import Listing
 from listings.normalisation import normalise_title
 
@@ -37,10 +37,33 @@ class ListingConfirmationForm(forms.ModelForm):
         required=True,
         label="Confirm or correct SKU",
     )
+    create_alias = forms.BooleanField(
+        required=False,
+        initial=False,
+        label="Create exact alias from this raw title",
+    )
 
     class Meta:
         model = Listing
-        fields = ("sku",)
+        fields = ("sku", "create_alias")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        sku = cleaned_data.get("sku")
+        if not cleaned_data.get("create_alias") or sku is None:
+            return cleaned_data
+
+        normalised_text = normalise_title(self.instance.raw_listing.raw_title)
+        existing_alias = SkuAlias.objects.filter(
+            normalised_text=normalised_text,
+        ).first()
+        if existing_alias is not None and existing_alias.sku_id != sku.pk:
+            self.add_error(
+                "create_alias",
+                "This normalized title is already an alias for a different SKU.",
+            )
+
+        return cleaned_data
 
 
 @admin.register(Listing)
@@ -64,7 +87,7 @@ class ListingAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Confirmation",
-            {"fields": ("sku",)},
+            {"fields": ("sku", "create_alias")},
         ),
         (
             "RawListing evidence",
@@ -234,6 +257,43 @@ class ListingAdmin(admin.ModelAdmin):
                 "resolved_at",
                 "reviewed_unresolved_at",
             ]
+        )
+
+        if form.cleaned_data["create_alias"]:
+            raw_title = obj.raw_listing.raw_title
+            normalised_text = normalise_title(raw_title)
+            existing_alias = SkuAlias.objects.filter(
+                normalised_text=normalised_text,
+            ).first()
+            if existing_alias is None:
+                SkuAlias.objects.create(
+                    sku=obj.sku,
+                    alias_text=raw_title,
+                    normalised_text=normalised_text,
+                    source_of_truth="human_confirmed",
+                )
+            elif existing_alias.sku_id != obj.sku_id:
+                # A concurrent conflicting insert must abort the whole confirmation.
+                raise RuntimeError(
+                    "The normalized title became an alias for a different SKU."
+                )
+
+    def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
+        create_alias = ListingConfirmationForm.base_fields[
+            "create_alias"
+        ].to_python(request.POST.get("create_alias"))
+        if (
+            request.method == "POST"
+            and create_alias
+            and not request.user.has_perm("catalogue.add_skualias")
+        ):
+            raise PermissionDenied
+
+        return super().changeform_view(
+            request,
+            object_id=object_id,
+            form_url=form_url,
+            extra_context=extra_context,
         )
 
     def has_add_permission(self, request):
