@@ -38,6 +38,7 @@ class Listing(models.Model):
     resolution_confidence = models.DecimalField(max_digits=5, decimal_places=4)
     resolution_method = models.CharField(max_length=20, choices=RESOLUTION_METHOD_CHOICES)
     resolved_at = models.DateTimeField()
+    reviewed_unresolved_at = models.DateTimeField(null=True, blank=True)
     # The timestamp PricePoint.day buckets on: COALESCE(raw_listing.occurred_at,
     # raw_listing.fetched_at), written by the resolver (phase 3) via
     # listings.observation.observed_at_for. Nullable only because TASK_004's

@@ -62,6 +62,14 @@ def resolve_raw_listing(raw_listing: RawListing) -> Listing:
             **values,
         )
 
+    machine_result_changed = listing.resolution_method != values["resolution_method"]
+    if values["resolution_method"] == "exact_alias":
+        machine_result_changed = machine_result_changed or listing.sku_id != values["sku_id"]
+
+    if machine_result_changed:
+        # A completed review survives only while the machine result stays identical.
+        values["reviewed_unresolved_at"] = None
+
     changed_fields = []
     for field_name, value in values.items():
         if getattr(listing, field_name) != value:
