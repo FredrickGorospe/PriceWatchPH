@@ -15,6 +15,7 @@ RESOLUTION_METHOD_CHOICES = [
     ("exact_alias", "Exact alias"),
     ("fuzzy_match", "Fuzzy match"),
     ("human_confirmed", "Human confirmed"),
+    ("unresolved", "Unresolved"),
 ]
 
 PRICE_KIND_CHOICES = [
@@ -31,8 +32,8 @@ TRADE_SIDE_CHOICES = [
 class Listing(models.Model):
     raw_listing = models.OneToOneField(RawListing, on_delete=models.PROTECT, related_name="listing")
     sku = models.ForeignKey(Sku, null=True, blank=True, on_delete=models.SET_NULL, related_name="listings")
-    price = models.DecimalField(max_digits=12, decimal_places=2)
-    condition = models.CharField(max_length=20, choices=CONDITION_CHOICES)
+    price = models.DecimalField(max_digits=12, decimal_places=2, null=True)
+    condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, null=True)
     location = models.TextField()
     resolution_confidence = models.DecimalField(max_digits=5, decimal_places=4)
     resolution_method = models.CharField(max_length=20, choices=RESOLUTION_METHOD_CHOICES)
