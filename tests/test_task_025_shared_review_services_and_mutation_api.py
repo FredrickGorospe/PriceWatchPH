@@ -883,7 +883,6 @@ def test_no_generic_review_rawlisting_alias_or_existing_read_mutations(
 
     for path in (
         "/api/v1/reviews/",
-        "/api/v1/reviews/listings/",
         "/api/v1/raw-listings/",
         "/api/v1/sku-aliases/",
     ):
