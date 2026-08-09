@@ -9,12 +9,35 @@ from listings.models import Listing
 from listings.normalisation import normalise_title
 from listings.observation import observed_at_for
 
+# The only Source allowed to supply the narrow "this is an asking price"
+# fact, and the only value recognized for it — every other source or value
+# falls through to NULL. See TASK_027 §6.
+_ASKING_PRICE_KIND = "asking"
+_ASKING_TRUSTED_SOURCE = "manual_capture"
+
+
+def _price_kind_and_trade_side(*, payload: dict, source_name: str) -> tuple:
+    trade_side = payload.get("stated_trade_side")
+    if trade_side is not None:
+        return "realised", trade_side
+
+    if (
+        source_name == _ASKING_TRUSTED_SOURCE
+        and payload.get("stated_price_kind") == _ASKING_PRICE_KIND
+    ):
+        return _ASKING_PRICE_KIND, None
+
+    return None, None
+
 
 def _automatic_values(raw_listing: RawListing) -> dict:
     normalised_title = normalise_title(raw_listing.raw_title)
     alias = SkuAlias.objects.filter(normalised_text=normalised_title).first()
     payload = raw_listing.payload if isinstance(raw_listing.payload, dict) else {}
-    trade_side = payload.get("stated_trade_side")
+    price_kind, trade_side = _price_kind_and_trade_side(
+        payload=payload,
+        source_name=raw_listing.source.name,
+    )
 
     if alias is None:
         sku_id = None
@@ -33,7 +56,7 @@ def _automatic_values(raw_listing: RawListing) -> dict:
         "resolution_confidence": resolution_confidence,
         "resolution_method": resolution_method,
         "observed_at": observed_at_for(raw_listing),
-        "price_kind": "realised" if trade_side is not None else None,
+        "price_kind": price_kind,
         "trade_side": trade_side,
     }
 

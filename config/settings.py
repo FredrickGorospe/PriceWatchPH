@@ -16,6 +16,13 @@ SELLER_PSEUDONYM_KEY = os.environ["DJANGO_SELLER_PSEUDONYM_KEY"]
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 
+# Explicit development/demo-data opt-in for TASK_027's bootstrap_demo_data
+# command. Disabled by default; only the literal string "1" enables it — no
+# DEBUG or hostname heuristic, so turning it on requires a deliberate
+# environment change, never an accident of running with DEBUG=1. See
+# TASK_027 §4.
+ENABLE_DEMO_DATA = os.environ.get("PRICEWATCHPH_ENABLE_DEMO_DATA", "0") == "1"
+
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
