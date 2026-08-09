@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from datetime import timezone as datetime_timezone
 
 from rest_framework import serializers
@@ -12,6 +13,66 @@ class UTCDateTimeField(serializers.DateTimeField):
     def __init__(self, **kwargs):
         kwargs["default_timezone"] = datetime_timezone.utc
         super().__init__(**kwargs)
+
+
+class StrictRequestSerializer(serializers.Serializer):
+    def to_internal_value(self, data):
+        if not isinstance(data, Mapping):
+            raise serializers.ValidationError(
+                {"non_field_errors": ["Expected a JSON object."]}
+            )
+
+        unknown_fields = sorted(set(data) - set(self.fields))
+        if unknown_fields:
+            raise serializers.ValidationError(
+                {field: ["Unknown field."] for field in unknown_fields}
+            )
+        return super().to_internal_value(data)
+
+
+class StrictPositiveIntegerField(serializers.IntegerField):
+    def to_internal_value(self, data):
+        if type(data) is not int:
+            self.fail("invalid")
+        return super().to_internal_value(data)
+
+
+class StrictBooleanField(serializers.BooleanField):
+    def to_internal_value(self, data):
+        if type(data) is not bool:
+            self.fail("invalid", input=data)
+        return data
+
+
+class MarkReviewedUnresolvedRequestSerializer(StrictRequestSerializer):
+    pass
+
+
+class ConfirmSkuRequestSerializer(StrictRequestSerializer):
+    sku_id = StrictPositiveIntegerField(min_value=1)
+    create_alias = StrictBooleanField(required=False, default=False)
+
+
+class MarkReviewedUnresolvedResponseSerializer(serializers.Serializer):
+    operation = serializers.CharField(read_only=True)
+    listing_id = serializers.IntegerField(read_only=True)
+    reviewed_unresolved_at = UTCDateTimeField(read_only=True)
+
+
+class ConfirmSkuResponseSerializer(serializers.Serializer):
+    operation = serializers.CharField(read_only=True)
+    listing_id = serializers.IntegerField(read_only=True)
+    sku_id = serializers.IntegerField(read_only=True)
+    resolution_method = serializers.CharField(read_only=True)
+    resolution_confidence = serializers.DecimalField(
+        max_digits=5,
+        decimal_places=4,
+        coerce_to_string=True,
+        read_only=True,
+    )
+    resolved_at = UTCDateTimeField(read_only=True)
+    reviewed_unresolved_at = UTCDateTimeField(allow_null=True, read_only=True)
+    alias_status = serializers.CharField(read_only=True)
 
 
 class SkuSerializer(serializers.ModelSerializer):

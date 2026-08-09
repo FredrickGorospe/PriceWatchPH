@@ -1,17 +1,13 @@
-from decimal import Decimal
-
 from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin.utils import unquote
 from django.core.exceptions import PermissionDenied
-from django.db import transaction
 from django.db.models.functions import Coalesce
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.http import Http404, HttpResponseNotAllowed, HttpResponseRedirect
 from django.urls import path, reverse
-from django.utils import timezone
 
 from catalogue.models import Sku, SkuAlias
+from listings import review_services
 from listings.models import Listing
 from listings.normalisation import normalise_title
 
@@ -216,67 +212,63 @@ class ListingAdmin(admin.ModelAdmin):
         if request.method != "POST":
             return HttpResponseNotAllowed(["POST"])
 
-        with transaction.atomic():
-            listing = get_object_or_404(
-                self.get_queryset(request).select_for_update(of=("self",)),
-                pk=unquote(object_id),
-            )
-            if not self.has_change_permission(request, listing):
-                raise PermissionDenied
-
-            if not self._is_reviewable_unresolved(listing):
-                self.message_user(
+        try:
+            result = review_services.mark_reviewed_unresolved(
+                actor=request.user,
+                listing_id=int(unquote(object_id)),
+                audit_writer=lambda listing, change_message: self.log_change(
                     request,
-                    "This listing is not eligible to be marked reviewed unresolved.",
-                    level=messages.WARNING,
+                    listing,
+                    change_message,
+                ),
+            )
+        except review_services.ReviewPermissionDenied as error:
+            raise PermissionDenied from error
+        except review_services.ReviewNotFound as error:
+            raise Http404(error.detail) from error
+        except review_services.ReviewConflict:
+            self.message_user(
+                request,
+                "This listing is not eligible to be marked reviewed unresolved.",
+                level=messages.WARNING,
+            )
+            return HttpResponseRedirect(
+                reverse(
+                    "admin:listings_listing_change",
+                    args=[unquote(object_id)],
                 )
-                return HttpResponseRedirect(
-                    reverse("admin:listings_listing_change", args=[listing.pk])
-                )
-
-            listing.reviewed_unresolved_at = timezone.now()
-            listing.save(update_fields=["reviewed_unresolved_at"])
-            self.log_change(request, listing, "Marked reviewed unresolved.")
+            )
 
         self.message_user(request, "Listing marked reviewed unresolved.")
         return HttpResponseRedirect(
-            reverse("admin:listings_listing_change", args=[listing.pk])
+            reverse("admin:listings_listing_change", args=[result.listing_id])
         )
 
     def save_model(self, request, obj, form, change):
-        obj.resolution_method = "human_confirmed"
-        obj.resolution_confidence = Decimal("1.0000")
-        obj.resolved_at = timezone.now()
-        obj.reviewed_unresolved_at = None
-        # A narrow update prevents the confirmation form from becoming generic CRUD.
-        obj.save(
-            update_fields=[
-                "sku",
-                "resolution_method",
-                "resolution_confidence",
-                "resolved_at",
-                "reviewed_unresolved_at",
-            ]
+        result = review_services.confirm_listing_sku(
+            actor=request.user,
+            listing_id=obj.pk,
+            sku_id=form.cleaned_data["sku"].pk,
+            create_alias=form.cleaned_data["create_alias"],
+            audit_writer=lambda listing, change_message: self.log_change(
+                request,
+                listing,
+                change_message,
+            ),
         )
+        obj.sku_id = result.sku_id
+        obj.resolution_method = result.resolution_method
+        obj.resolution_confidence = result.resolution_confidence
+        obj.resolved_at = result.resolved_at
+        obj.reviewed_unresolved_at = result.reviewed_unresolved_at
+        # ModelAdmin logs after save_model, so suppress only that duplicate hook.
+        request._listing_review_service_log_pending = True
 
-        if form.cleaned_data["create_alias"]:
-            raw_title = obj.raw_listing.raw_title
-            normalised_text = normalise_title(raw_title)
-            existing_alias = SkuAlias.objects.filter(
-                normalised_text=normalised_text,
-            ).first()
-            if existing_alias is None:
-                SkuAlias.objects.create(
-                    sku=obj.sku,
-                    alias_text=raw_title,
-                    normalised_text=normalised_text,
-                    source_of_truth="human_confirmed",
-                )
-            elif existing_alias.sku_id != obj.sku_id:
-                # A concurrent conflicting insert must abort the whole confirmation.
-                raise RuntimeError(
-                    "The normalized title became an alias for a different SKU."
-                )
+    def log_change(self, request, obj, message):
+        if getattr(request, "_listing_review_service_log_pending", False):
+            del request._listing_review_service_log_pending
+            return None
+        return super().log_change(request, obj, message)
 
     def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
         create_alias = ListingConfirmationForm.base_fields[

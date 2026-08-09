@@ -5,6 +5,16 @@ from api import views
 app_name = "api-v1"
 
 urlpatterns = [
+    path(
+        "reviews/listings/<int:pk>/mark-reviewed-unresolved/",
+        views.MarkReviewedUnresolvedView.as_view(),
+        name="review-mark-reviewed-unresolved",
+    ),
+    path(
+        "reviews/listings/<int:pk>/confirm-sku/",
+        views.ConfirmSkuView.as_view(),
+        name="review-confirm-sku",
+    ),
     path("skus/", views.SkuListView.as_view(), name="sku-list"),
     path("skus/<int:pk>/", views.SkuDetailView.as_view(), name="sku-detail"),
     path(
