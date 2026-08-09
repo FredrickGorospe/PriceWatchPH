@@ -58,6 +58,28 @@
   background: var(--accent-soft);
 }
 
+.header nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.signOut {
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  color: var(--muted-ink);
+  background: var(--surface);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.signOut:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
 .main {
   width: min(100% - 2rem, var(--content-width));
   margin-inline: auto;

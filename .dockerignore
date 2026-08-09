@@ -25,6 +25,12 @@
 .coverage.*
 htmlcov
 
+# Frontend generated output belongs to the pinned image builder stage.
+frontend/node_modules
+frontend/dist
+frontend/coverage
+frontend/.vite
+
 # Virtual environments
 .venv
 venv

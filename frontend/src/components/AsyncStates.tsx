@@ -1,7 +1,13 @@
+import { useLocation } from 'react-router';
+
 import styles from './AsyncStates.module.css';
 
 
 export function AccessRequiredState() {
+  const location = useLocation();
+  const returnPath = `${location.pathname}${location.search}`;
+  const loginUrl = `/auth/login/?next=${encodeURIComponent(returnPath)}`;
+
   return (
     <section className={styles.state} role="status" aria-labelledby="access-heading">
       <p className={styles.eyebrow}>Permission required</p>
@@ -11,7 +17,10 @@ export function AccessRequiredState() {
         this persisted evidence.
       </p>
       <p>
-        <a className={styles.primaryLink} href="/admin/login/">Django admin sign-in</a>
+        <a className={styles.primaryLink} href={loginUrl}>Sign in to PriceWatch PH</a>
+      </p>
+      <p>
+        <a href="/admin/login/">Django admin sign-in</a>
       </p>
       <p className={styles.secondaryText}>
         Already signed in? Request access, or reload after your permissions change.

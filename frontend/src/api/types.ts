@@ -70,3 +70,37 @@ export interface Page<T> {
   previous: string | null;
   results: T[];
 }
+
+export interface ReviewRawEvidence {
+  raw_title: string;
+  normalised_title: string;
+  raw_price_text: string;
+  source: { id: number; name: string };
+  url: string;
+  occurred_at: UTCDateTimeString | null;
+  fetched_at: UTCDateTimeString;
+}
+
+export interface ReviewDerivedListing {
+  price: DecimalString | null;
+  condition: ListingCondition | null;
+  location: string;
+  resolution_method: string;
+  resolution_confidence: DecimalString;
+  resolved_at: UTCDateTimeString;
+  reviewed_unresolved_at: UTCDateTimeString | null;
+  observed_at: UTCDateTimeString | null;
+  price_kind: string | null;
+  trade_side: string | null;
+}
+
+export interface ReviewListing {
+  id: number;
+  raw_evidence: ReviewRawEvidence;
+  derived_listing: ReviewDerivedListing;
+  current_sku: SkuSummary | null;
+}
+
+export interface ReviewOperationResponse {
+  alias_status?: 'not_requested' | 'created' | 'already_exists';
+}

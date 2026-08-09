@@ -5,6 +5,17 @@ from api import views
 app_name = "api-v1"
 
 urlpatterns = [
+    path("session/csrf/", views.session_csrf, name="session-csrf"),
+    path(
+        "reviews/listings/",
+        views.ReviewListingListView.as_view(),
+        name="review-listing-list",
+    ),
+    path(
+        "reviews/listings/<int:pk>/",
+        views.ReviewListingDetailView.as_view(),
+        name="review-listing-detail",
+    ),
     path(
         "reviews/listings/<int:pk>/mark-reviewed-unresolved/",
         views.MarkReviewedUnresolvedView.as_view(),

@@ -1,0 +1,148 @@
+.pageHeading {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.pageHeading h1,
+.pageHeading p {
+  margin: 0;
+}
+
+.pageHeading > p {
+  color: var(--muted-ink);
+}
+
+.eyebrow {
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.queue {
+  display: grid;
+  gap: 1rem;
+}
+
+.card,
+.choice {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.cardAction {
+  margin: 1rem 0 0;
+}
+
+.status {
+  padding: 2rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-large);
+  color: var(--muted-ink);
+  background: var(--surface);
+  text-align: center;
+}
+
+.success {
+  padding: 0.8rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--success) 35%, white);
+  border-radius: var(--radius-medium);
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.pagination,
+.searchPagination,
+.actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pagination button,
+.choice button {
+  border: 1px solid var(--border-strong);
+  border-radius: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pagination button:disabled,
+.choice button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.choice {
+  margin-top: 1rem;
+}
+
+.choice h2 {
+  margin-top: 0;
+}
+
+.searchControls {
+  margin: 1rem 0;
+  display: flex;
+  align-items: end;
+  gap: 0.75rem;
+}
+
+.searchControls label {
+  flex: 1;
+}
+
+.searchControls span,
+.searchControls input {
+  display: block;
+}
+
+.searchControls span {
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.searchControls input {
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 0.65rem;
+  font: inherit;
+}
+
+.results {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.option,
+.aliasOption {
+  display: flex;
+  align-items: start;
+  gap: 0.55rem;
+}
+
+.aliasOption {
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .pageHeading,
+  .searchControls,
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

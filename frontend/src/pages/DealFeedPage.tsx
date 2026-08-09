@@ -55,6 +55,10 @@ function DealCard({ deal }: { deal: DealFlag }) {
 
       <p className={styles.reason}>{deal.reason}</p>
 
+      <p>
+        <Link to={`/reviews/${deal.listing.id}`}>Review or correct SKU</Link>
+      </p>
+
       <dl className={styles.evidenceGrid}>
         <div><dt>Baseline day</dt><dd>{formatDateOnly(baseline.day)}</dd></div>
         <div><dt>Baseline median</dt><dd>{formatMoneyDecimal(baseline.median)}</dd></div>

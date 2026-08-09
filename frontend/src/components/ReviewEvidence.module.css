@@ -1,0 +1,45 @@
+.evidence {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.region {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  background: var(--surface-subtle);
+}
+
+.region h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
+}
+
+.region dl {
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.region dt {
+  color: var(--muted-ink);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.region dd,
+.region p {
+  margin: 0.15rem 0 0;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 840px) {
+  .evidence {
+    grid-template-columns: 1fr;
+  }
+}

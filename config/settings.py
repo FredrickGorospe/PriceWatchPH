@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -53,7 +54,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -80,7 +81,29 @@ DATABASES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+FRONTEND_DIST_DIR = BASE_DIR / "frontend" / "dist"
+
+# Vite owns its hashed filenames, so static collection must preserve them.
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
+# The prefix keeps Vite assets separate from Django and admin static files.
+STATICFILES_DIRS = (
+    [("frontend", FRONTEND_DIST_DIR)]
+    if FRONTEND_DIST_DIR.is_dir()
+    else []
+)
+
+LOGIN_REDIRECT_URL = "/deals"
+LOGOUT_REDIRECT_URL = "/auth/login/"
 
 # Storage timezone is UTC everywhere; USE_TZ makes Django store
 # timezone-aware datetimes rather than naive ones.

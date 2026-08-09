@@ -5,7 +5,9 @@ from rest_framework import serializers
 
 from catalogue.models import Sku
 from listings.models import Listing
+from listings.normalisation import normalise_title
 from pricing.models import DealFlag, PricePoint
+from sources.models import Source
 
 
 class UTCDateTimeField(serializers.DateTimeField):
@@ -108,6 +110,72 @@ class SkuSummarySerializer(serializers.ModelSerializer):
             "variant",
             "category",
         )
+        read_only_fields = fields
+
+
+class ReviewSourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = ("id", "name")
+        read_only_fields = fields
+
+
+class ReviewRawEvidenceSerializer(serializers.Serializer):
+    raw_title = serializers.CharField(read_only=True)
+    normalised_title = serializers.SerializerMethodField()
+    raw_price_text = serializers.CharField(read_only=True)
+    source = ReviewSourceSerializer(read_only=True)
+    url = serializers.URLField(read_only=True)
+    occurred_at = UTCDateTimeField(allow_null=True, read_only=True)
+    fetched_at = UTCDateTimeField(read_only=True)
+
+    def get_normalised_title(self, raw_listing):
+        return normalise_title(raw_listing.raw_title)
+
+
+class ReviewDerivedListingSerializer(serializers.ModelSerializer):
+    price = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        allow_null=True,
+        coerce_to_string=True,
+        read_only=True,
+    )
+    resolution_confidence = serializers.DecimalField(
+        max_digits=5,
+        decimal_places=4,
+        coerce_to_string=True,
+        read_only=True,
+    )
+    resolved_at = UTCDateTimeField(read_only=True)
+    reviewed_unresolved_at = UTCDateTimeField(allow_null=True, read_only=True)
+    observed_at = UTCDateTimeField(allow_null=True, read_only=True)
+
+    class Meta:
+        model = Listing
+        fields = (
+            "price",
+            "condition",
+            "location",
+            "resolution_method",
+            "resolution_confidence",
+            "resolved_at",
+            "reviewed_unresolved_at",
+            "observed_at",
+            "price_kind",
+            "trade_side",
+        )
+        read_only_fields = fields
+
+
+class ReviewListingSerializer(serializers.ModelSerializer):
+    raw_evidence = ReviewRawEvidenceSerializer(source="raw_listing", read_only=True)
+    derived_listing = ReviewDerivedListingSerializer(source="*", read_only=True)
+    current_sku = SkuSummarySerializer(source="sku", allow_null=True, read_only=True)
+
+    class Meta:
+        model = Listing
+        fields = ("id", "raw_evidence", "derived_listing", "current_sku")
         read_only_fields = fields
 
 

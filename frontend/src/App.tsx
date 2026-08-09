@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { Link, Navigate, Route, Routes } from 'react-router';
 
+import { logout } from './api/client';
 import DealFeedPage from './pages/DealFeedPage';
+import ReviewDetailPage from './pages/ReviewDetailPage';
+import ReviewQueuePage from './pages/ReviewQueuePage';
 import SkuDetailPage from './pages/SkuDetailPage';
 import styles from './App.module.css';
 
@@ -16,6 +20,26 @@ function NotFoundPage() {
   );
 }
 
+function SignOutButton() {
+  const [busy, setBusy] = useState(false);
+
+  async function signOut() {
+    setBusy(true);
+    try {
+      await logout();
+      window.location.assign('/auth/login/');
+    } catch {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <button className={styles.signOut} type="button" disabled={busy} onClick={signOut}>
+      Sign out
+    </button>
+  );
+}
+
 export default function App() {
   return (
     <div className={styles.app}>
@@ -27,6 +51,8 @@ export default function App() {
           </Link>
           <nav aria-label="Primary navigation">
             <Link className={styles.navLink} to="/deals">Deals</Link>
+            <Link className={styles.navLink} to="/reviews">Review</Link>
+            <SignOutButton />
           </nav>
         </div>
       </header>
@@ -35,6 +61,8 @@ export default function App() {
           <Route path="/" element={<Navigate to="/deals" replace />} />
           <Route path="/deals" element={<DealFeedPage />} />
           <Route path="/skus/:skuId" element={<SkuDetailPage />} />
+          <Route path="/reviews" element={<ReviewQueuePage />} />
+          <Route path="/reviews/:listingId" element={<ReviewDetailPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

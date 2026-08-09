@@ -4,7 +4,8 @@ import { defineConfig } from 'vitest/config';
 
 const djangoTarget = process.env.VITE_DJANGO_PROXY_TARGET ?? 'http://localhost:8000';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/static/frontend/' : '/',
   plugins: [react()],
   server: {
     port: 5173,
@@ -12,6 +13,7 @@ export default defineConfig({
     proxy: {
       '/api': { target: djangoTarget },
       '/admin': { target: djangoTarget },
+      '/auth': { target: djangoTarget },
       '/static': { target: djangoTarget },
     },
   },
@@ -20,4 +22,4 @@ export default defineConfig({
     setupFiles: './src/test/setup.ts',
     css: true,
   },
-});
+}));

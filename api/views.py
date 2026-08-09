@@ -1,4 +1,11 @@
+from django.db.models import Q
+from django.db.models.functions import Coalesce
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_GET
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.exceptions import ValidationError
@@ -24,6 +31,7 @@ from api.serializers import (
     MarkReviewedUnresolvedRequestSerializer,
     MarkReviewedUnresolvedResponseSerializer,
     PricePointSerializer,
+    ReviewListingSerializer,
     SkuSerializer,
 )
 from catalogue.models import Sku
@@ -42,6 +50,20 @@ class SkuListView(Task023ReadView, generics.ListAPIView):
     serializer_class = SkuSerializer
     pagination_class = FixedPageNumberPagination
     required_model_permissions = ("catalogue.view_sku",)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "q" not in self.request.query_params:
+            return queryset
+
+        query = self.request.query_params.get("q", "").strip()
+        if not 2 <= len(query) <= 100:
+            raise ValidationError({"q": "Must contain 2 through 100 characters."})
+        return queryset.filter(
+            Q(brand__icontains=query)
+            | Q(model__icontains=query)
+            | Q(variant__icontains=query)
+        )
 
 
 class SkuDetailView(Task023ReadView, generics.RetrieveAPIView):
@@ -95,6 +117,63 @@ class DealFlagListView(Task023ReadView, generics.ListAPIView):
         "pricing.view_pricepoint",
         "pricing.view_dealflag",
     )
+
+
+class ReviewListingReadView(Task023ReadView):
+    serializer_class = ReviewListingSerializer
+    required_model_permissions = ("listings.change_listing",)
+    http_method_names = ("get",)
+
+
+class ReviewListingListView(ReviewListingReadView, generics.ListAPIView):
+    pagination_class = FixedPageNumberPagination
+
+    def get_queryset(self):
+        return (
+            Listing.objects.filter(
+                sku__isnull=True,
+                reviewed_unresolved_at__isnull=True,
+            )
+            .select_related("raw_listing", "raw_listing__source", "sku")
+            .annotate(
+                review_evidence_at=Coalesce(
+                    "raw_listing__occurred_at",
+                    "raw_listing__fetched_at",
+                )
+            )
+            .order_by("review_evidence_at", "pk")
+        )
+
+
+class ReviewListingDetailView(ReviewListingReadView, generics.RetrieveAPIView):
+    queryset = Listing.objects.select_related(
+        "raw_listing",
+        "raw_listing__source",
+        "sku",
+    )
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except Listing.DoesNotExist:
+            return Response(
+                {"code": "listing_not_found", "detail": "Listing not found."},
+                status=HTTP_404_NOT_FOUND,
+            )
+
+    def get_object(self):
+        try:
+            return self.get_queryset().get(pk=self.kwargs["pk"])
+        except Listing.DoesNotExist:
+            # Keep the missing response stable without exposing queryset details.
+            raise
+
+
+@csrf_protect
+@require_GET
+@never_cache
+def session_csrf(request):
+    return JsonResponse({"csrf_token": get_token(request)})
 
 
 class ReviewMutationView(APIView):
