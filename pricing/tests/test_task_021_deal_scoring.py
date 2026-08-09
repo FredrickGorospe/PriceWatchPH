@@ -178,12 +178,25 @@ def _score(listing):
 
 
 def _confirm_listing(listing, sku):
+    from django.contrib.auth import get_user_model
+    from django.contrib.auth.models import Permission
     from listings.admin import ListingAdmin
     from listings.models import Listing
 
+    actor = get_user_model().objects.create_user(
+        username=f"task021-reviewer-{listing.pk}",
+        is_staff=True,
+    )
+    actor.user_permissions.add(
+        Permission.objects.get(
+            content_type__app_label="listings",
+            codename="change_listing",
+        )
+    )
     listing.sku = sku
-    form = SimpleNamespace(cleaned_data={"create_alias": False})
+    form = SimpleNamespace(cleaned_data={"sku": sku, "create_alias": False})
     request = RequestFactory().post("/")
+    request.user = actor
     ListingAdmin(Listing, AdminSite()).save_model(
         request,
         listing,
