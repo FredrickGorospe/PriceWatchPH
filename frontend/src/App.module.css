@@ -1,0 +1,110 @@
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.headerInner {
+  width: min(100% - 2rem, var(--content-width));
+  min-height: 4.5rem;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.brand {
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.brandMark {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.7rem;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.navLink {
+  color: var(--muted-ink);
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.main {
+  width: min(100% - 2rem, var(--content-width));
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4.5rem);
+}
+
+.footer {
+  width: min(100% - 2rem, var(--content-width));
+  margin-inline: auto;
+  padding: 1.5rem 0 2rem;
+  color: var(--muted-ink);
+  font-size: 0.82rem;
+}
+
+.notFound {
+  max-width: 36rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.notFound h1 {
+  margin: 0 0 0.6rem;
+}
+
+.notFound p:not(.eyebrow) {
+  color: var(--muted-ink);
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.primaryLink {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: #fff;
+  border-radius: 0.6rem;
+  padding: 0.72rem 1rem;
+  background: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}

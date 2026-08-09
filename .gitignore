@@ -15,5 +15,11 @@ venv/
 .DS_Store
 .idea/
 
+# TASK_024 frontend build and package-manager output.
+/frontend/node_modules/
+/frontend/dist/
+/frontend/coverage/
+/frontend/.vite/
+
 # Legacy project MCP configuration is non-Codex and machine-local.
 /.mcp.json

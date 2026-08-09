@@ -1,0 +1,51 @@
+.state {
+  max-width: 42rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.state h1,
+.state h2 {
+  margin: 0 0 0.65rem;
+  color: var(--ink);
+}
+
+.state p {
+  color: var(--muted-ink);
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--danger);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.primaryLink,
+.primaryButton {
+  display: inline-flex;
+  border: 0;
+  border-radius: 0.6rem;
+  padding: 0.72rem 1rem;
+  color: #fff;
+  background: var(--accent);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primaryLink:hover,
+.primaryButton:hover {
+  background: var(--accent-strong);
+}
+
+.secondaryText {
+  margin-bottom: 0;
+  font-size: 0.88rem;
+}

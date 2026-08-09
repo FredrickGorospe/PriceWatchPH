@@ -1,0 +1,168 @@
+.backLink {
+  display: inline-flex;
+  margin-bottom: 1.2rem;
+  color: var(--accent-strong);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero {
+  padding: clamp(1.5rem, 5vw, 3rem);
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 38%),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.hero h1,
+.hero p,
+.catalogueFacts {
+  margin: 0;
+}
+
+.hero h1 {
+  margin-top: 0.3rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.hero > div > p:last-child {
+  margin-top: 0.7rem;
+  color: var(--muted-ink);
+}
+
+.eyebrow {
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.catalogueFacts {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 1.5rem;
+}
+
+.catalogueFacts dt {
+  color: var(--muted-ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.catalogueFacts dd {
+  margin: 0.25rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.historyControls {
+  margin-top: 2rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.historyControls h2,
+.historyControls p {
+  margin: 0;
+}
+
+.historyControls label,
+.historyControls label span {
+  display: block;
+}
+
+.historyControls label span {
+  margin-bottom: 0.35rem;
+  color: var(--muted-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.historyControls select {
+  min-width: 12rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.6rem;
+  padding: 0.65rem 2.2rem 0.65rem 0.75rem;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+}
+
+.status,
+.loadedStatus {
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-medium);
+  color: var(--muted-ink);
+  background: var(--surface);
+  text-align: center;
+}
+
+.loadedStatus {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--success) 35%, var(--border));
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.state {
+  max-width: 40rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.state h1 {
+  margin: 0.4rem 0 0.65rem;
+}
+
+.state p:not(.eyebrow) {
+  color: var(--muted-ink);
+}
+
+.state a {
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .hero,
+  .historyControls {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .catalogueFacts {
+    width: 100%;
+  }
+}
+
+@media (max-width: 440px) {
+  .catalogueFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .historyControls label,
+  .historyControls select {
+    width: 100%;
+  }
+}
