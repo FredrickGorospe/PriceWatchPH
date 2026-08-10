@@ -878,12 +878,22 @@ def test_pricing_reads_do_not_execute_pricing_or_create_evidence(
     before = (PricePoint.objects.count(), DealFlag.objects.count())
 
     with (
+        # Patched where price_listings.py actually looks these up (its own
+        # `from pricing.baselines import build_pricepoint` /
+        # `from pricing.scoring import score_listing` bindings), not at the
+        # source modules — patching the source module only replaces that
+        # module's own attribute, leaving any consumer's earlier `from x
+        # import y` binding pointed at the original function. If this test
+        # happens to trigger price_listings.py's first import (e.g. via the
+        # Command.handle patch below needing to import the module to find
+        # it), that binding would be captured pre-patch and this test's
+        # mocks would silently have no effect on it.
         patch(
-            "pricing.baselines.build_pricepoint",
+            "pricing.management.commands.price_listings.build_pricepoint",
             side_effect=AssertionError("HTTP read executed baseline construction"),
         ),
         patch(
-            "pricing.scoring.score_listing",
+            "pricing.management.commands.price_listings.score_listing",
             side_effect=AssertionError("HTTP read executed deal scoring"),
         ),
         patch(
