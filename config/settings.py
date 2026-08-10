@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "listings",
     "pricing",
     "outcomes",
+    "alerts",
 ]
 
 MIDDLEWARE = [
