@@ -1,6 +1,8 @@
 from collections.abc import Mapping
 from datetime import timezone as datetime_timezone
 
+from django.utils import timezone as django_timezone
+from django.utils.dateparse import parse_datetime
 from rest_framework import serializers
 
 from catalogue.models import Sku
@@ -46,6 +48,29 @@ class StrictBooleanField(serializers.BooleanField):
         return data
 
 
+class StrictDecimalField(serializers.DecimalField):
+    # Money must arrive as a JSON string, never a JSON number/bool/null — a
+    # JSON number would reach Python as a float. See TASK_028 specification
+    # Section 8.1.
+    def to_internal_value(self, data):
+        if not isinstance(data, str):
+            self.fail("invalid")
+        return super().to_internal_value(data)
+
+
+class StrictUTCDateTimeField(UTCDateTimeField):
+    # Transaction timestamps must carry an explicit offset — a naive string
+    # would force a silent timezone assumption. See TASK_028 specification
+    # Section 8.1.
+    def to_internal_value(self, data):
+        if not isinstance(data, str):
+            self.fail("invalid", format="ISO 8601 datetime with an explicit UTC offset")
+        parsed = parse_datetime(data)
+        if parsed is None or django_timezone.is_naive(parsed):
+            self.fail("invalid", format="ISO 8601 datetime with an explicit UTC offset")
+        return self.enforce_timezone(parsed)
+
+
 class MarkReviewedUnresolvedRequestSerializer(StrictRequestSerializer):
     pass
 
@@ -75,6 +100,56 @@ class ConfirmSkuResponseSerializer(serializers.Serializer):
     resolved_at = UTCDateTimeField(read_only=True)
     reviewed_unresolved_at = UTCDateTimeField(allow_null=True, read_only=True)
     alias_status = serializers.CharField(read_only=True)
+
+
+class SkipOutcomeRequestSerializer(StrictRequestSerializer):
+    skip_reason = serializers.CharField()
+
+
+class PurchaseEvidenceRequestSerializer(StrictRequestSerializer):
+    bought_at = StrictUTCDateTimeField()
+    bought_price = StrictDecimalField(max_digits=12, decimal_places=2)
+
+
+class SaleEvidenceRequestSerializer(StrictRequestSerializer):
+    sold_at = StrictUTCDateTimeField()
+    sold_price = StrictDecimalField(max_digits=12, decimal_places=2)
+
+
+class OutcomeStateSerializer(serializers.Serializer):
+    deal_flag_id = serializers.IntegerField(read_only=True)
+    outcome_id = serializers.IntegerField(read_only=True, allow_null=True)
+    lifecycle_state = serializers.CharField(read_only=True)
+    acted = serializers.BooleanField(read_only=True, allow_null=True)
+    skip_reason = serializers.CharField(read_only=True, allow_null=True)
+    bought_at = UTCDateTimeField(read_only=True, allow_null=True)
+    bought_price = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        allow_null=True,
+        coerce_to_string=True,
+        read_only=True,
+    )
+    sold_at = UTCDateTimeField(read_only=True, allow_null=True)
+    sold_price = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        allow_null=True,
+        coerce_to_string=True,
+        read_only=True,
+    )
+    days_held = serializers.IntegerField(read_only=True, allow_null=True)
+    realised_margin = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        allow_null=True,
+        coerce_to_string=True,
+        read_only=True,
+    )
+
+
+class OutcomeOperationResultSerializer(OutcomeStateSerializer):
+    operation = serializers.CharField(read_only=True)
 
 
 class SkuSerializer(serializers.ModelSerializer):

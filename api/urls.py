@@ -39,4 +39,34 @@ urlpatterns = [
         name="listing-detail",
     ),
     path("deal-flags/", views.DealFlagListView.as_view(), name="dealflag-list"),
+    path(
+        "deal-flags/<int:pk>/outcome/",
+        views.DealFlagOutcomeDetailView.as_view(),
+        name="dealflag-outcome-detail",
+    ),
+    path(
+        "deal-flags/<int:pk>/outcome/skip/",
+        views.OutcomeSkipView.as_view(),
+        name="dealflag-outcome-skip",
+    ),
+    path(
+        "deal-flags/<int:pk>/outcome/record-purchase/",
+        views.OutcomeRecordPurchaseView.as_view(),
+        name="dealflag-outcome-record-purchase",
+    ),
+    path(
+        "deal-flags/<int:pk>/outcome/record-sale/",
+        views.OutcomeRecordSaleView.as_view(),
+        name="dealflag-outcome-record-sale",
+    ),
+    path(
+        "deal-flags/<int:pk>/outcome/correct-purchase/",
+        views.OutcomeCorrectPurchaseView.as_view(),
+        name="dealflag-outcome-correct-purchase",
+    ),
+    path(
+        "deal-flags/<int:pk>/outcome/correct-sale/",
+        views.OutcomeCorrectSaleView.as_view(),
+        name="dealflag-outcome-correct-sale",
+    ),
 ]

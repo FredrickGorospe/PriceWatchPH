@@ -30,13 +30,19 @@ from api.serializers import (
     ListingSerializer,
     MarkReviewedUnresolvedRequestSerializer,
     MarkReviewedUnresolvedResponseSerializer,
+    OutcomeOperationResultSerializer,
+    OutcomeStateSerializer,
     PricePointSerializer,
+    PurchaseEvidenceRequestSerializer,
     ReviewListingSerializer,
+    SaleEvidenceRequestSerializer,
+    SkipOutcomeRequestSerializer,
     SkuSerializer,
 )
 from catalogue.models import Sku
 from listings import review_services
 from listings.models import Listing
+from outcomes import outcome_services
 from pricing.models import DealFlag, PricePoint
 
 
@@ -250,3 +256,173 @@ class ConfirmSkuView(ReviewMutationView):
 
         response = ConfirmSkuResponseSerializer(result)
         return Response(response.data, status=HTTP_200_OK)
+
+
+class DealFlagOutcomeBaseView(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    parser_classes = (JSONParser,)
+
+    @staticmethod
+    def invalid_request(errors):
+        return Response(
+            {
+                "code": "invalid_request",
+                "detail": "Request validation failed.",
+                "errors": errors,
+            },
+            status=HTTP_400_BAD_REQUEST,
+        )
+
+    @staticmethod
+    def service_error(error):
+        if isinstance(error, outcome_services.OutcomePermissionDenied):
+            response_status = HTTP_403_FORBIDDEN
+        elif isinstance(error, outcome_services.OutcomeNotFound):
+            response_status = HTTP_404_NOT_FOUND
+        elif isinstance(error, outcome_services.OutcomeValidationError):
+            response_status = HTTP_400_BAD_REQUEST
+        else:
+            response_status = HTTP_409_CONFLICT
+        return Response(
+            {"code": error.code, "detail": error.detail},
+            status=response_status,
+        )
+
+
+class DealFlagOutcomeDetailView(DealFlagOutcomeBaseView):
+    http_method_names = ("get",)
+
+    def get(self, request, pk):
+        try:
+            state = outcome_services.get_outcome_state(
+                actor=request.user,
+                deal_flag_id=pk,
+            )
+        except (
+            outcome_services.OutcomePermissionDenied,
+            outcome_services.OutcomeNotFound,
+            outcome_services.OutcomeConflict,
+        ) as error:
+            return self.service_error(error)
+
+        return Response(OutcomeStateSerializer(state).data, status=HTTP_200_OK)
+
+
+class OutcomeMutationView(DealFlagOutcomeBaseView):
+    http_method_names = ("post",)
+
+
+class OutcomeSkipView(OutcomeMutationView):
+    def post(self, request, pk):
+        serializer = SkipOutcomeRequestSerializer(data=request.data)
+        if not serializer.is_valid():
+            return self.invalid_request(serializer.errors)
+
+        try:
+            result = outcome_services.skip(
+                actor=request.user,
+                deal_flag_id=pk,
+                **serializer.validated_data,
+            )
+        except (
+            outcome_services.OutcomePermissionDenied,
+            outcome_services.OutcomeNotFound,
+            outcome_services.OutcomeConflict,
+            outcome_services.OutcomeValidationError,
+        ) as error:
+            return self.service_error(error)
+
+        return Response(OutcomeOperationResultSerializer(result).data, status=HTTP_200_OK)
+
+
+class OutcomeRecordPurchaseView(OutcomeMutationView):
+    def post(self, request, pk):
+        serializer = PurchaseEvidenceRequestSerializer(data=request.data)
+        if not serializer.is_valid():
+            return self.invalid_request(serializer.errors)
+
+        try:
+            result = outcome_services.record_purchase(
+                actor=request.user,
+                deal_flag_id=pk,
+                **serializer.validated_data,
+            )
+        except (
+            outcome_services.OutcomePermissionDenied,
+            outcome_services.OutcomeNotFound,
+            outcome_services.OutcomeConflict,
+            outcome_services.OutcomeValidationError,
+        ) as error:
+            return self.service_error(error)
+
+        return Response(OutcomeOperationResultSerializer(result).data, status=HTTP_200_OK)
+
+
+class OutcomeRecordSaleView(OutcomeMutationView):
+    def post(self, request, pk):
+        serializer = SaleEvidenceRequestSerializer(data=request.data)
+        if not serializer.is_valid():
+            return self.invalid_request(serializer.errors)
+
+        try:
+            result = outcome_services.record_sale(
+                actor=request.user,
+                deal_flag_id=pk,
+                **serializer.validated_data,
+            )
+        except (
+            outcome_services.OutcomePermissionDenied,
+            outcome_services.OutcomeNotFound,
+            outcome_services.OutcomeConflict,
+            outcome_services.OutcomeValidationError,
+        ) as error:
+            return self.service_error(error)
+
+        return Response(OutcomeOperationResultSerializer(result).data, status=HTTP_200_OK)
+
+
+class OutcomeCorrectPurchaseView(OutcomeMutationView):
+    def post(self, request, pk):
+        serializer = PurchaseEvidenceRequestSerializer(data=request.data)
+        if not serializer.is_valid():
+            return self.invalid_request(serializer.errors)
+
+        try:
+            result = outcome_services.correct_purchase(
+                actor=request.user,
+                deal_flag_id=pk,
+                **serializer.validated_data,
+            )
+        except (
+            outcome_services.OutcomePermissionDenied,
+            outcome_services.OutcomeNotFound,
+            outcome_services.OutcomeConflict,
+            outcome_services.OutcomeValidationError,
+        ) as error:
+            return self.service_error(error)
+
+        return Response(OutcomeOperationResultSerializer(result).data, status=HTTP_200_OK)
+
+
+class OutcomeCorrectSaleView(OutcomeMutationView):
+    def post(self, request, pk):
+        serializer = SaleEvidenceRequestSerializer(data=request.data)
+        if not serializer.is_valid():
+            return self.invalid_request(serializer.errors)
+
+        try:
+            result = outcome_services.correct_sale(
+                actor=request.user,
+                deal_flag_id=pk,
+                **serializer.validated_data,
+            )
+        except (
+            outcome_services.OutcomePermissionDenied,
+            outcome_services.OutcomeNotFound,
+            outcome_services.OutcomeConflict,
+            outcome_services.OutcomeValidationError,
+        ) as error:
+            return self.service_error(error)
+
+        return Response(OutcomeOperationResultSerializer(result).data, status=HTTP_200_OK)
