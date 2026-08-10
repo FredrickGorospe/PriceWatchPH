@@ -3,6 +3,7 @@ import { Link, Navigate, Route, Routes } from 'react-router';
 
 import { logout } from './api/client';
 import DealFeedPage from './pages/DealFeedPage';
+import OutcomeWorkflowPage from './pages/OutcomeWorkflowPage';
 import ReviewDetailPage from './pages/ReviewDetailPage';
 import ReviewQueuePage from './pages/ReviewQueuePage';
 import SkuDetailPage from './pages/SkuDetailPage';
@@ -60,6 +61,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/deals" replace />} />
           <Route path="/deals" element={<DealFeedPage />} />
+          <Route path="/deals/:dealFlagId/outcome" element={<OutcomeWorkflowPage />} />
           <Route path="/skus/:skuId" element={<SkuDetailPage />} />
           <Route path="/reviews" element={<ReviewQueuePage />} />
           <Route path="/reviews/:listingId" element={<ReviewDetailPage />} />

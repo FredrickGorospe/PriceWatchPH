@@ -58,6 +58,9 @@ function DealCard({ deal }: { deal: DealFlag }) {
       <p>
         <Link to={`/reviews/${deal.listing.id}`}>Review or correct SKU</Link>
       </p>
+      <p>
+        <Link to={`/deals/${deal.id}/outcome`}>Track outcome</Link>
+      </p>
 
       <dl className={styles.evidenceGrid}>
         <div><dt>Baseline day</dt><dd>{formatDateOnly(baseline.day)}</dd></div>

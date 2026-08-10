@@ -1,0 +1,136 @@
+.pageHeading {
+  margin-bottom: 1.5rem;
+}
+
+.pageHeading h1,
+.pageHeading p {
+  margin: 0;
+}
+
+.eyebrow {
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.status {
+  padding: 2rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-large);
+  color: var(--muted-ink);
+  background: var(--surface);
+  text-align: center;
+}
+
+.lifecycle {
+  margin: 0.5rem 0 1.5rem;
+  font-weight: 700;
+}
+
+.success {
+  padding: 0.8rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--success) 35%, white);
+  border-radius: var(--radius-medium);
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.evidence {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+.evidence h2 {
+  margin-top: 0;
+}
+
+.evidence dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.evidence dt {
+  color: var(--muted-ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.evidence dd {
+  margin: 0.22rem 0 0;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.forms {
+  display: grid;
+  gap: 1rem;
+}
+
+.formRegion {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.formRegion h2 {
+  margin-top: 0;
+}
+
+.field {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.field span {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.field input {
+  width: 100%;
+  max-width: 22rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 0.65rem;
+  font: inherit;
+}
+
+.formRegion button {
+  margin-top: 0.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.formRegion button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.backLink {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .evidence dl {
+    grid-template-columns: 1fr;
+  }
+}

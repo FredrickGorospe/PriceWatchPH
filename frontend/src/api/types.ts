@@ -104,3 +104,30 @@ export interface ReviewListing {
 export interface ReviewOperationResponse {
   alias_status?: 'not_requested' | 'created' | 'already_exists';
 }
+
+export type OutcomeLifecycleState = 'untracked' | 'skipped' | 'open' | 'closed';
+
+export interface OutcomeState {
+  deal_flag_id: number;
+  outcome_id: number | null;
+  lifecycle_state: OutcomeLifecycleState;
+  acted: boolean | null;
+  skip_reason: string | null;
+  bought_at: UTCDateTimeString | null;
+  bought_price: DecimalString | null;
+  sold_at: UTCDateTimeString | null;
+  sold_price: DecimalString | null;
+  days_held: number | null;
+  realised_margin: DecimalString | null;
+}
+
+export type OutcomeOperationName =
+  | 'skip'
+  | 'record_purchase'
+  | 'record_sale'
+  | 'correct_purchase'
+  | 'correct_sale';
+
+export interface OutcomeOperationResult extends OutcomeState {
+  operation: OutcomeOperationName;
+}
