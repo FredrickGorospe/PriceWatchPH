@@ -23,6 +23,17 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 # TASK_027 §4.
 ENABLE_DEMO_DATA = os.environ.get("PRICEWATCHPH_ENABLE_DEMO_DATA", "0") == "1"
 
+# TASK_031: outbound Telegram alerting is opt-in, matching ENABLE_DEMO_DATA's
+# literal-"1"-only convention — no DEBUG or hostname heuristic. The other
+# four values are read raw here and validated lazily by
+# alerts.config.load_alert_config(), never at settings-import time, so
+# importing settings with alerts disabled never requires them to be set.
+ENABLE_ALERTS = os.environ.get("PRICEWATCHPH_ENABLE_ALERTS", "0") == "1"
+TELEGRAM_BOT_TOKEN = os.environ.get("PRICEWATCHPH_TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = os.environ.get("PRICEWATCHPH_TELEGRAM_CHAT_ID", "")
+ALERT_ACTIVATION_AT = os.environ.get("PRICEWATCHPH_ALERT_ACTIVATION_AT", "")
+PUBLIC_BASE_URL = os.environ.get("PRICEWATCHPH_PUBLIC_BASE_URL", "")
+
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
