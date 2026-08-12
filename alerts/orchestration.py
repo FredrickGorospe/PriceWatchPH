@@ -97,6 +97,21 @@ def send_pending_deal_alerts(*, sender: AlertSender | None = None) -> AlertRunSu
                     failure_detail=None,
                 )
         except IntegrityError:
+            # The unique index on deal_flag_id is the only conflict boundary
+            # this insert can violate under normal operation — status,
+            # claimed_at, terminal_at and failure_detail are literal values
+            # above that always satisfy every CheckConstraint, and the
+            # PROTECT/immutability triggers on DealFlag mean deal_flag_id can
+            # never dangle. So an unrelated IntegrityError should not be
+            # possible here — but if the database ever proves otherwise, it is
+            # a genuine defect, not a lost race, and must surface rather than
+            # being silently swallowed. Confirm a competing claim actually won
+            # before treating this as the expected conflict: PostgreSQL's
+            # unique index is not deferrable, so a UniqueViolation can only
+            # fire after the winner's row has already committed, and Read
+            # Committed guarantees this query sees it.
+            if not AlertDelivery.objects.filter(deal_flag=deal_flag).exists():
+                raise
             # Losing the race is normal operation, not a delivery failure: the
             # winner sends, so this worker counts neither sent nor failed.
             continue
