@@ -39,5 +39,26 @@ services:
     restart: unless-stopped
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --forwarded-allow-ips=127.0.0.1,::1
 
+  scheduler:
+    build: .
+    env_file:
+      - .env
+    environment:
+      TZ: UTC
+      PRICEWATCHPH_SCHEDULER_CRON: ${PRICEWATCHPH_SCHEDULER_CRON:?PRICEWATCHPH_SCHEDULER_CRON must be set and non-empty}
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    volumes:
+      - scheduler_lock:/run/pricewatchph-scheduler
+    restart: unless-stopped
+    command:
+      - /usr/local/bin/python
+      - /app/production_scheduler.py
+      - --serve
+
 volumes:
   postgres_data:
+  scheduler_lock:

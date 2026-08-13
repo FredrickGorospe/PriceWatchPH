@@ -44,6 +44,9 @@ TELEGRAM_CHAT_ID = os.environ.get("PRICEWATCHPH_TELEGRAM_CHAT_ID", "")
 ALERT_ACTIVATION_AT = os.environ.get("PRICEWATCHPH_ALERT_ACTIVATION_AT", "")
 PUBLIC_BASE_URL = os.environ.get("PRICEWATCHPH_PUBLIC_BASE_URL", "")
 
+# TASK_036 validates this deployment cadence in the standalone scheduler.
+SCHEDULER_CRON = os.environ.get("PRICEWATCHPH_SCHEDULER_CRON", "")
+
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
