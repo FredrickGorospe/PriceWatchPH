@@ -13,6 +13,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    restart: unless-stopped
+
+  migrate:
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    command: python manage.py migrate --noinput
 
   web:
     build: .
@@ -21,9 +32,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     ports:
       - "8000:8000"
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: unless-stopped
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --forwarded-allow-ips=127.0.0.1,::1
 
 volumes:
   postgres_data:

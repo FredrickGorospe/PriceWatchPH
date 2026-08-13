@@ -16,6 +16,16 @@ SELLER_PSEUDONYM_KEY = os.environ["DJANGO_SELLER_PSEUDONYM_KEY"]
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 
+BEHIND_HTTPS_PROXY = (
+    os.environ.get("DJANGO_BEHIND_HTTPS_PROXY", "0") == "1"
+)
+
+if BEHIND_HTTPS_PROXY:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 # Explicit development/demo-data opt-in for TASK_027's bootstrap_demo_data
 # command. Disabled by default; only the literal string "1" enables it — no
 # DEBUG or hostname heuristic, so turning it on requires a deliberate
