@@ -1,0 +1,118 @@
+/* A list of instrument readouts. Always a <dl>: label/value is real data. */
+.list {
+  margin: 0;
+  display: grid;
+  gap: var(--pw-s4) var(--pw-s5);
+}
+
+/* Dense audit evidence: as many columns as fit, never wider than readable. */
+.grid {
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+
+/* A horizontal instrument face — the dominant readouts of a panel. */
+.strip {
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  justify-content: start;
+  gap: var(--pw-s6);
+}
+
+.pair {
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.readout {
+  min-width: 0;
+}
+
+.label {
+  margin: 0;
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-tiny);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.value {
+  margin: 0.28rem 0 0;
+  color: var(--pw-ink);
+  font-size: var(--pw-text-sm);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.mono {
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-sm);
+  letter-spacing: -0.01em;
+}
+
+.md .value {
+  font-size: var(--pw-text-md);
+  font-weight: 650;
+}
+
+/* The one value the eye should land on first in a panel. */
+.lg .value {
+  margin-top: 0.35rem;
+  font-size: var(--pw-text-readout);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  /* Etched into the instrument face rather than printed on top of it. */
+  text-shadow: 0 1px 0 rgb(0 0 0 / 70%);
+}
+
+.positive .value {
+  color: var(--pw-positive);
+}
+
+.caution .value {
+  color: var(--pw-caution);
+}
+
+.negative .value {
+  color: var(--pw-negative);
+}
+
+.accent .value {
+  color: var(--pw-accent-bright);
+}
+
+.muted .value {
+  color: var(--pw-ink-dim);
+}
+
+.hint {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--pw-ink-faint);
+  font-family: var(--pw-font-sans);
+  font-size: var(--pw-text-tiny);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 34rem) {
+  .strip {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: var(--pw-s4);
+  }
+}
+
+/* Value with a seated indicator lamp; the text still carries the state. */
+.lamped {
+  display: flex;
+  align-items: center;
+  gap: var(--pw-s2);
+}
+
+.lampSlot {
+  display: inline-flex;
+  flex: 0 0 auto;
+}

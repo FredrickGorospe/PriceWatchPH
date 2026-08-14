@@ -3,23 +3,244 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
     <title>Sign in | PriceWatch PH</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #e8eef7;
+        background: #0c1016;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { min-width: 20rem; min-height: 100%; }
+
+      body {
+        min-width: 20rem;
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: clamp(1rem, 4vw, 2.5rem);
+        background:
+          radial-gradient(120% 55% at 50% -8%, rgb(76 157 245 / 9%), transparent 62%),
+          linear-gradient(180deg, #121926, #0c1016 45%, #070a0e);
+      }
+
+      main { width: min(100%, 27rem); }
+
+      .brand {
+        margin: 0 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .brand-mark {
+        width: 2rem;
+        height: 2rem;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgb(255 255 255 / 14%);
+        border-radius: 5px;
+        color: #83bcfc;
+        background: linear-gradient(180deg, #232c39, #151b24);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 22%), 0 1px 2px rgb(0 0 0 / 55%);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+
+      .brand-name { font-size: 0.8125rem; font-weight: 750; }
+
+      .brand-sub {
+        display: block;
+        margin-top: 0.08rem;
+        color: #7f8fa7;
+        font-size: 0.625rem;
+        font-weight: 650;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .panel {
+        padding: clamp(1.5rem, 6vw, 2rem);
+        border: 1px solid rgb(255 255 255 / 14%);
+        border-radius: 12px;
+        background: linear-gradient(180deg, #1f2731, #191f2a 22%);
+        box-shadow:
+          inset 0 1px 0 rgb(255 255 255 / 9%),
+          0 1px 1px rgb(0 0 0 / 40%),
+          0 14px 36px rgb(0 0 0 / 38%);
+      }
+
+      .eyebrow {
+        margin: 0 0 0.5rem;
+        color: #83bcfc;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.55rem, 7vw, 2.125rem);
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+      }
+
+      .intro {
+        margin: 0.65rem 0 1.5rem;
+        color: #a7b4c6;
+        font-size: 0.875rem;
+        line-height: 1.55;
+      }
+
+      .alert {
+        margin: 0 0 1rem;
+        padding: 0.75rem;
+        border: 1px solid rgb(240 115 111 / 38%);
+        border-radius: 8px;
+        color: #f6b1ae;
+        background: rgb(240 115 111 / 10%);
+        font-size: 0.8125rem;
+        line-height: 1.45;
+      }
+
+      form { display: grid; gap: 1rem; }
+
+      label {
+        display: grid;
+        gap: 0.5rem;
+        color: #a7b4c6;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      input {
+        width: 100%;
+        min-height: 2.75rem;
+        padding: 0 0.8rem;
+        border: 1px solid rgb(0 0 0 / 62%);
+        border-radius: 8px;
+        color: #e8eef7;
+        background: #10151d;
+        box-shadow:
+          inset 0 2px 4px rgb(0 0 0 / 55%),
+          inset 0 1px 0 rgb(0 0 0 / 40%),
+          0 1px 0 rgb(255 255 255 / 9%);
+        font: inherit;
+        font-size: 0.875rem;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #4c9df5;
+        box-shadow: inset 0 2px 4px rgb(0 0 0 / 55%), 0 0 0 3px rgb(76 157 245 / 14%);
+      }
+
+      button {
+        min-height: 2.75rem;
+        margin-top: 0.25rem;
+        padding: 0 1rem;
+        border: 1px solid #2f6fb8;
+        border-radius: 8px;
+        color: #04121f;
+        background: linear-gradient(180deg, #6cb2f8, #4c9df5 55%, #3f8cdf);
+        box-shadow:
+          inset 0 1px 0 rgb(255 255 255 / 45%),
+          0 1px 1px rgb(0 0 0 / 55%),
+          0 4px 10px rgb(47 111 184 / 35%);
+        font: inherit;
+        font-size: 0.875rem;
+        font-weight: 750;
+        cursor: pointer;
+      }
+
+      button:hover { background: linear-gradient(180deg, #8cc3fa, #5aa8f7 55%, #4a97ea); }
+      button:active { transform: translateY(1px); box-shadow: inset 0 2px 5px rgb(6 40 74 / 55%); }
+
+      input:focus-visible,
+      button:focus-visible {
+        outline: 2px solid #83bcfc;
+        outline-offset: 3px;
+      }
+
+      .account-note {
+        margin: 1.25rem 0 0;
+        padding-top: 1rem;
+        border-top: 1px solid rgb(255 255 255 / 7%);
+        color: #7f8fa7;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      @media (max-width: 30rem) {
+        body { align-items: start; padding-top: 1.25rem; }
+        .panel { padding: 1.25rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { transition-duration: 0.01ms !important; }
+      }
+    </style>
   </head>
   <body>
     <main>
-      <h1>Sign in to PriceWatch PH</h1>
-      {% if form.errors %}
-        <p role="alert">Your username and password did not match. Please try again.</p>
-      {% endif %}
-      <form method="post">
-        {% csrf_token %}
-        {{ form.username.label_tag }}
-        {{ form.username }}
-        {{ form.password.label_tag }}
-        {{ form.password }}
-        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
-        <button type="submit">Sign in</button>
-      </form>
+      <div class="brand" aria-label="PriceWatch PH">
+        <span class="brand-mark" aria-hidden="true">PW</span>
+        <span class="brand-name">
+          PriceWatch PH
+          <span class="brand-sub">Market instrument</span>
+        </span>
+      </div>
+      <section class="panel" aria-labelledby="sign-in-heading">
+        <p class="eyebrow">Authorized access</p>
+        <h1 id="sign-in-heading">Sign in</h1>
+        <p class="intro">Use your PriceWatch PH staff account to open protected market evidence.</p>
+        {% if form.errors %}
+          <p class="alert" role="alert">Your username or password was not accepted. Please try again.</p>
+        {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <label for="id_username">
+            Username
+            <input
+              type="text"
+              name="username"
+              value="{{ form.username.value|default_if_none:'' }}"
+              autocomplete="username"
+              autocapitalize="none"
+              maxlength="150"
+              required
+              autofocus
+              id="id_username"
+            >
+          </label>
+          <label for="id_password">
+            Password
+            <input
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              required
+              id="id_password"
+            >
+          </label>
+          {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+          <button type="submit">Sign in to PriceWatch PH</button>
+        </form>
+        <p class="account-note">Accounts and permissions are issued by a PriceWatch PH administrator.</p>
+      </section>
     </main>
   </body>
 </html>

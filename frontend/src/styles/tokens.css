@@ -1,0 +1,145 @@
+/*
+ * PriceWatch PH design tokens.
+ *
+ * One cool-neutral graphite chassis lit from directly above, so every raised
+ * surface carries a top edge highlight and every recessed surface carries a
+ * top inner shadow. Depth is semantic: see --pw-depth-* below.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Surface hierarchy -------------------------------------------------- */
+  /* L0 chassis */
+  --pw-chassis: #0c1016;
+  --pw-chassis-deep: #070a0e;
+  /* L1 workspace panel */
+  --pw-panel: #191f2a;
+  --pw-panel-high: #1f2731;
+  /* L2 inset analytical well */
+  --pw-well: #0b0f15;
+  --pw-well-high: #10151d;
+  /* L3 raised control */
+  --pw-control-top: #262f3c;
+  --pw-control-bottom: #1b222c;
+
+  /* Edges and material boundaries -------------------------------------- */
+  --pw-edge: rgb(255 255 255 / 7%);
+  --pw-edge-strong: rgb(255 255 255 / 14%);
+  --pw-edge-bright: rgb(255 255 255 / 22%);
+  --pw-edge-dark: rgb(0 0 0 / 55%);
+  --pw-highlight: rgb(255 255 255 / 9%);
+
+  /* Ink ---------------------------------------------------------------- */
+  --pw-ink: #e8eef7;
+  --pw-ink-dim: #a7b4c6;
+  --pw-ink-faint: #7f8fa7;
+
+  /* Cool interaction accent -------------------------------------------- */
+  --pw-accent: #4c9df5;
+  --pw-accent-bright: #83bcfc;
+  --pw-accent-deep: #2f6fb8;
+  --pw-accent-wash: rgb(76 157 245 / 14%);
+  --pw-accent-line: rgb(76 157 245 / 42%);
+
+  /* Market semantics --------------------------------------------------- */
+  --pw-positive: #45c191;
+  --pw-positive-wash: rgb(69 193 145 / 13%);
+  --pw-caution: #e0a544;
+  --pw-caution-wash: rgb(224 165 68 / 13%);
+  --pw-negative: #f0736f;
+  --pw-negative-wash: rgb(240 115 111 / 13%);
+  --pw-neutral: #8fa0b8;
+  --pw-neutral-wash: rgb(143 160 184 / 12%);
+
+  /* Type --------------------------------------------------------------- */
+  --pw-font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --pw-font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+
+  --pw-text-micro: 0.625rem;
+  --pw-text-tiny: 0.6875rem;
+  --pw-text-xs: 0.75rem;
+  --pw-text-sm: 0.8125rem;
+  --pw-text-body: 0.9375rem;
+  --pw-text-md: 1.0625rem;
+  --pw-text-lg: 1.3125rem;
+  --pw-text-xl: 1.625rem;
+  --pw-text-2xl: 2.125rem;
+  --pw-text-readout: clamp(1.5rem, 4vw, 2rem);
+
+  /* Space -------------------------------------------------------------- */
+  --pw-s1: 0.25rem;
+  --pw-s2: 0.5rem;
+  --pw-s3: 0.75rem;
+  --pw-s4: 1rem;
+  --pw-s5: 1.5rem;
+  --pw-s6: 2rem;
+  --pw-s7: 2.75rem;
+  --pw-s8: 4rem;
+
+  /* Radii -------------------------------------------------------------- */
+  --pw-r-xs: 3px;
+  --pw-r-sm: 5px;
+  --pw-r-md: 8px;
+  --pw-r-lg: 12px;
+  --pw-r-xl: 16px;
+
+  /* Depth levels ------------------------------------------------------- */
+  /* L2: recessed well — instrument readouts and dense evidence sit here. */
+  --pw-depth-inset:
+    inset 0 2px 5px rgb(0 0 0 / 60%),
+    inset 0 1px 0 rgb(0 0 0 / 75%),
+    0 1px 0 var(--pw-highlight);
+  /* L1: mounted panel resting on the chassis. */
+  --pw-depth-surface:
+    0 1px 1px rgb(0 0 0 / 40%),
+    0 6px 16px rgb(0 0 0 / 28%);
+  /* L3: pressable control, lit from above. */
+  --pw-depth-raised:
+    inset 0 1px 0 var(--pw-edge-bright),
+    0 1px 1px rgb(0 0 0 / 55%),
+    0 3px 6px rgb(0 0 0 / 32%);
+  /* L4: control under the finger. */
+  --pw-depth-pressed:
+    inset 0 2px 5px rgb(0 0 0 / 62%),
+    inset 0 1px 0 rgb(0 0 0 / 45%);
+  /* Floating chrome: overlays and frosted bars. */
+  --pw-depth-float:
+    0 1px 0 var(--pw-highlight) inset,
+    0 18px 44px rgb(0 0 0 / 55%),
+    0 3px 10px rgb(0 0 0 / 40%);
+
+  /* Frost — environment chrome only, never dense data surfaces. */
+  --pw-frost-bg: color-mix(in srgb, var(--pw-panel) 78%, transparent);
+  --pw-frost-filter: blur(18px) saturate(150%);
+
+  /* Motion ------------------------------------------------------------- */
+  --pw-t-fast: 90ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  --pw-t-med: 170ms cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  /* Layout ------------------------------------------------------------- */
+  --pw-measure: 78rem;
+
+  /* Compatibility aliases for the pre-redesign variable names. */
+  --ink: var(--pw-ink);
+  --muted-ink: var(--pw-ink-dim);
+  --surface: var(--pw-panel);
+  --surface-subtle: var(--pw-well);
+  --border: var(--pw-edge);
+  --border-strong: var(--pw-edge-strong);
+  --accent: var(--pw-accent);
+  --accent-strong: var(--pw-accent-bright);
+  --accent-soft: var(--pw-accent-wash);
+  --danger: var(--pw-negative);
+  --success: var(--pw-positive);
+  --success-soft: var(--pw-positive-wash);
+  --content-width: var(--pw-measure);
+  --radius-medium: var(--pw-r-md);
+  --radius-large: var(--pw-r-lg);
+  --shadow: var(--pw-depth-surface);
+  --shadow-strong: var(--pw-depth-float);
+}

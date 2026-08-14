@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
 import {
+  type AccessDisposition,
   bootstrapCsrf,
   correctPurchase,
   correctSale,
@@ -12,8 +13,22 @@ import {
   recordSale,
   skipOutcome,
 } from '../api/client';
+import { useReportAuthUiState } from '../auth/AuthUiContext';
 import type { OutcomeLifecycleState, OutcomeOperationResult, OutcomeState } from '../api/types';
-import { AccessRequiredState, RequestFailureState } from '../components/AsyncStates';
+import {
+  AccessRequiredState,
+  EmptyState,
+  LoadingState,
+  RequestFailureState,
+} from '../components/AsyncStates';
+import Button from '../components/Button';
+import Field from '../components/Field';
+import MetricReadout, { ReadoutList } from '../components/MetricReadout';
+import type { ReadoutTone } from '../components/MetricReadout';
+import PageHeader from '../components/PageHeader';
+import StatusIndicator from '../components/StatusIndicator';
+import type { Tone } from '../components/StatusIndicator';
+import indicatorStyles from '../components/StatusIndicator.module.css';
 import { formatMoneyDecimal } from '../formatting/decimal';
 import { formatManilaTimestamp, manilaLocalInputToUtcInstant, utcInstantToManilaLocalInput } from '../formatting/time';
 import styles from './OutcomeWorkflowPage.module.css';
@@ -22,7 +37,7 @@ import styles from './OutcomeWorkflowPage.module.css';
 type PageState =
   | { status: 'loading' }
   | { status: 'success'; outcome: OutcomeState }
-  | { status: 'forbidden' }
+  | { status: 'forbidden'; access: AccessDisposition }
   | { status: 'missing'; detail: string }
   | { status: 'invalid'; detail: string }
   | { status: 'error' };
@@ -45,8 +60,24 @@ const IDLE_OPERATION: OperationState = {
 
 const MONEY_PATTERN = /^\d+(\.\d{1,2})?$/;
 
+const LIFECYCLE_TONES: Record<OutcomeLifecycleState, Tone> = {
+  untracked: 'neutral',
+  skipped: 'caution',
+  open: 'accent',
+  closed: 'positive',
+};
+
 function lifecycleLabel(state: OutcomeLifecycleState): string {
   return state.charAt(0).toUpperCase() + state.slice(1);
+}
+
+// Sign of the realised margin, for readout tone only; the Decimal string
+// itself is always rendered verbatim beside it.
+function marginTone(margin: string | null): ReadoutTone {
+  if (margin === null) {
+    return 'muted';
+  }
+  return margin.trim().startsWith('-') ? 'negative' : 'positive';
 }
 
 interface MoneyTimestampFormProps {
@@ -58,6 +89,8 @@ interface MoneyTimestampFormProps {
   defaultAt?: string;
   defaultPrice?: string;
   disabled: boolean;
+  /** Corrections restate recorded evidence; recordings create it. */
+  correction?: boolean;
   onSubmit: (utcAt: string, price: string) => void;
 }
 
@@ -70,6 +103,7 @@ function MoneyTimestampForm({
   defaultAt = '',
   defaultPrice = '',
   disabled,
+  correction,
   onSubmit,
 }: MoneyTimestampFormProps) {
   const [at, setAt] = useState(defaultAt);
@@ -91,31 +125,48 @@ function MoneyTimestampForm({
   }
 
   return (
-    <section className={styles.formRegion} aria-label={regionLabel}>
-      <h2>{heading}</h2>
-      <label className={styles.field}>
-        <span>{timestampLabel}</span>
-        <input
+    <section
+      className={`pw-panel ${styles.formRegion} ${correction ? styles.correctionRegion : ''}`}
+      aria-label={regionLabel}
+    >
+      <div className={styles.formHead}>
+        <h2>{heading}</h2>
+        <span className={styles.formTag}>{correction ? 'Correction' : 'Record'}</span>
+      </div>
+      <div className={styles.formGrid}>
+        <Field
+          label={timestampLabel}
           type="datetime-local"
           required
+          numeric
           value={at}
           onChange={(event) => setAt(event.target.value)}
         />
-      </label>
-      <label className={styles.field}>
-        <span>{priceLabel}</span>
-        <input
+        <Field
+          label={priceLabel}
           type="text"
           inputMode="decimal"
           required
+          numeric
+          invalid={showPriceError}
           value={price}
           onChange={(event) => setPrice(event.target.value)}
         />
-      </label>
+      </div>
       {showPriceError && (
-        <p role="alert">Enter a price with up to two decimal places.</p>
+        <p className={styles.fieldAlert} role="alert">
+          Enter a price with up to two decimal places.
+        </p>
       )}
-      <button type="button" disabled={disabled} onClick={handleSubmit}>{submitLabel}</button>
+      <div className={styles.formActions}>
+        <Button
+          variant={correction ? 'secondary' : 'primary'}
+          disabled={disabled}
+          onClick={handleSubmit}
+        >
+          {submitLabel}
+        </Button>
+      </div>
     </section>
   );
 }
@@ -130,20 +181,25 @@ function SkipForm({
   const [reason, setReason] = useState('');
 
   return (
-    <section className={styles.formRegion} aria-label="Skip this deal flag">
-      <h2>Skip this deal flag</h2>
-      <label className={styles.field}>
-        <span>Reason</span>
-        <input
+    <section className={`pw-panel ${styles.formRegion}`} aria-label="Skip this deal flag">
+      <div className={styles.formHead}>
+        <h2>Skip this deal flag</h2>
+        <span className={styles.formTag}>Record</span>
+      </div>
+      <div className={styles.formGrid}>
+        <Field
+          label="Reason"
           type="text"
           required
           value={reason}
           onChange={(event) => setReason(event.target.value)}
         />
-      </label>
-      <button type="button" disabled={disabled} onClick={() => onSubmit(reason)}>
-        Skip deal flag
-      </button>
+      </div>
+      <div className={styles.formActions}>
+        <Button variant="caution" disabled={disabled} onClick={() => onSubmit(reason)}>
+          Skip deal flag
+        </Button>
+      </div>
     </section>
   );
 }
@@ -154,47 +210,56 @@ function OutcomeEvidence({ outcome }: { outcome: OutcomeState }) {
   const showSale = lifecycleState === 'closed';
 
   return (
-    <section className={styles.evidence} aria-label="Outcome evidence">
-      <h2>Outcome evidence</h2>
-      <dl>
+    <section className={`pw-panel ${styles.evidence}`} aria-label="Outcome evidence">
+      <div className={styles.formHead}>
+        <h2>Outcome evidence</h2>
+        <span className={styles.formTag}>Recorded</span>
+      </div>
+
+      {/* Realised margin is the result; it outranks every other recorded fact. */}
+      {showPurchase && (
+        <ReadoutList layout="strip" className={`pw-well ${styles.resultPanel}`}>
+          <MetricReadout
+            label={lifecycleState === 'open' ? 'Realised margin (not yet realised)' : 'Realised margin'}
+            size="lg"
+            mono
+            tone={marginTone(outcome.realised_margin)}
+          >
+            {formatMoneyDecimal(outcome.realised_margin)}
+          </MetricReadout>
+          <MetricReadout label="Days held" size="md" mono tone="muted">
+            {outcome.days_held === null
+              ? 'Not yet available (no sale recorded)'
+              : `${outcome.days_held} day(s) held`}
+          </MetricReadout>
+        </ReadoutList>
+      )}
+
+      <ReadoutList layout="pair" className={styles.evidenceGrid}>
         {lifecycleState === 'skipped' && (
-          <div><dt>Skip reason</dt><dd>{outcome.skip_reason}</dd></div>
+          <MetricReadout label="Skip reason">{outcome.skip_reason}</MetricReadout>
         )}
         {showPurchase && (
           <>
-            <div>
-              <dt>Purchased at (Asia/Manila)</dt>
-              <dd>{formatManilaTimestamp(outcome.bought_at)}</dd>
-            </div>
-            <div><dt>Purchase price</dt><dd>{formatMoneyDecimal(outcome.bought_price)}</dd></div>
+            <MetricReadout label="Purchased at (Asia/Manila)" mono>
+              {formatManilaTimestamp(outcome.bought_at)}
+            </MetricReadout>
+            <MetricReadout label="Purchase price" mono>
+              {formatMoneyDecimal(outcome.bought_price)}
+            </MetricReadout>
           </>
         )}
         {showSale && (
           <>
-            <div>
-              <dt>Sold at (Asia/Manila)</dt>
-              <dd>{formatManilaTimestamp(outcome.sold_at)}</dd>
-            </div>
-            <div><dt>Sale price</dt><dd>{formatMoneyDecimal(outcome.sold_price)}</dd></div>
+            <MetricReadout label="Sold at (Asia/Manila)" mono>
+              {formatManilaTimestamp(outcome.sold_at)}
+            </MetricReadout>
+            <MetricReadout label="Sale price" mono>
+              {formatMoneyDecimal(outcome.sold_price)}
+            </MetricReadout>
           </>
         )}
-        {showPurchase && (
-          <div>
-            <dt>Days held</dt>
-            <dd>
-              {outcome.days_held === null
-                ? 'Not yet available (no sale recorded)'
-                : `${outcome.days_held} day(s) held`}
-            </dd>
-          </div>
-        )}
-        {showPurchase && (
-          <div>
-            <dt>{lifecycleState === 'open' ? 'Realised margin (not yet realised)' : 'Realised margin'}</dt>
-            <dd>{formatMoneyDecimal(outcome.realised_margin)}</dd>
-          </div>
-        )}
-      </dl>
+      </ReadoutList>
     </section>
   );
 }
@@ -226,7 +291,7 @@ export default function OutcomeWorkflowPage() {
           return;
         }
         if (error instanceof OutcomeApiError && error.status === 403) {
-          setState({ status: 'forbidden' });
+          setState({ status: 'forbidden', access: error.access });
           return;
         }
         if (
@@ -267,7 +332,7 @@ export default function OutcomeWorkflowPage() {
       setOperation({ ...IDLE_OPERATION, successMessage });
     } catch (error) {
       if (error instanceof OutcomeApiError && error.status === 403) {
-        setState({ status: 'forbidden' });
+        setState({ status: 'forbidden', access: error.access });
         return;
       }
       if (error instanceof OutcomeApiError && error.status === 409 && error.code === 'invalid_outcome_state') {
@@ -308,16 +373,24 @@ export default function OutcomeWorkflowPage() {
     }
   }
 
+  useReportAuthUiState(
+    state.status === 'success'
+      ? 'authorized'
+      : state.status === 'forbidden'
+        ? state.access
+        : 'unknown',
+  );
+
   if (state.status === 'forbidden') {
-    return <AccessRequiredState />;
+    return <AccessRequiredState access={state.access} />;
   }
   if (state.status === 'missing') {
-    return <p className={styles.status} role="status">{state.detail}</p>;
+    return <EmptyState message={state.detail} />;
   }
   if (state.status === 'invalid') {
     return (
-      <section aria-labelledby="outcome-invalid-heading">
-        <p className={styles.eyebrow}>Operational error</p>
+      <section className={`pw-panel ${styles.invalidState}`} aria-labelledby="outcome-invalid-heading">
+        <StatusIndicator tone="negative">Operational error</StatusIndicator>
         <h1 id="outcome-invalid-heading">Outcome requires manual correction</h1>
         <p>{state.detail}</p>
         <p className={styles.backLink}><Link to="/deals">Back to deal feed</Link></p>
@@ -334,7 +407,7 @@ export default function OutcomeWorkflowPage() {
     );
   }
   if (state.status === 'loading') {
-    return <p className={styles.status} role="status">Loading outcome...</p>;
+    return <LoadingState message="Loading outcome..." />;
   }
 
   const { outcome } = state;
@@ -343,52 +416,52 @@ export default function OutcomeWorkflowPage() {
 
   return (
     <article aria-labelledby="outcome-heading">
-      <header className={styles.pageHeading}>
-        <p className={styles.eyebrow}>Outcome workflow</p>
-        <h1 id="outcome-heading">Outcome for deal flag {outcome.deal_flag_id}</h1>
-      </header>
+      <PageHeader
+        eyebrow="Outcome workflow"
+        title={`Outcome for deal flag ${outcome.deal_flag_id}`}
+        titleId="outcome-heading"
+      />
 
-      <p className={styles.lifecycle}>Current state: {lifecycleLabel(outcome.lifecycle_state)}</p>
+      {/* One lifecycle readout, lamp seated in the same chip as its wording. */}
+      <p className={`${styles.lifecycle} ${indicatorStyles[LIFECYCLE_TONES[outcome.lifecycle_state]]}`}>
+        <span className={indicatorStyles.lamp} aria-hidden="true" />
+        Current state: {lifecycleLabel(outcome.lifecycle_state)}
+      </p>
 
       {operation.successMessage && (
         <p className={styles.success} role="status">{operation.successMessage}</p>
       )}
 
       {operation.errorMessage && (
-        <div role="alert">
+        <div className={styles.operationAlert} role="alert">
+          <StatusIndicator tone="negative">Operation failed</StatusIndicator>
           <p>{operation.errorMessage}</p>
           {operation.fieldErrors && (
-            <ul>
+            <ul className={styles.fieldErrors}>
               {Object.entries(operation.fieldErrors).flatMap(([field, messages]) => (
                 messages.map((message) => <li key={`${field}-${message}`}>{field}: {message}</li>)
               ))}
             </ul>
           )}
           {operation.reload && (
-            <button type="button" onClick={() => setAttempt((value) => value + 1)}>
+            <Button small onClick={() => setAttempt((value) => value + 1)}>
               Reload outcome
-            </button>
+            </Button>
           )}
         </div>
       )}
 
       {outcome.lifecycle_state === 'untracked' && (
-        <p>No outcome has been recorded for this deal flag yet.</p>
+        <EmptyState
+          className={styles.untracked}
+          message="No outcome has been recorded for this deal flag yet."
+          detail="Record a purchase if you acted on this flag, or skip it with a reason."
+        />
       )}
 
       {outcome.lifecycle_state !== 'untracked' && <OutcomeEvidence outcome={outcome} />}
 
       <div className={styles.forms}>
-        {outcome.lifecycle_state === 'untracked' && (
-          <SkipForm
-            disabled={submitting}
-            onSubmit={(reason) => void runOperation(
-              () => skipOutcome(numericDealFlagId, reason),
-              'Deal flag marked skipped.',
-            )}
-          />
-        )}
-
         {(outcome.lifecycle_state === 'untracked' || outcome.lifecycle_state === 'skipped') && (
           <MoneyTimestampForm
             regionLabel="Record purchase"
@@ -400,6 +473,16 @@ export default function OutcomeWorkflowPage() {
             onSubmit={(at, price) => void runOperation(
               () => recordPurchase(numericDealFlagId, at, price),
               'Purchase recorded.',
+            )}
+          />
+        )}
+
+        {outcome.lifecycle_state === 'untracked' && (
+          <SkipForm
+            disabled={submitting}
+            onSubmit={(reason) => void runOperation(
+              () => skipOutcome(numericDealFlagId, reason),
+              'Deal flag marked skipped.',
             )}
           />
         )}
@@ -430,6 +513,7 @@ export default function OutcomeWorkflowPage() {
             defaultAt={utcInstantToManilaLocalInput(outcome.bought_at)}
             defaultPrice={outcome.bought_price ?? ''}
             disabled={submitting}
+            correction
             onSubmit={(at, price) => void runOperation(
               () => correctPurchase(numericDealFlagId, at, price),
               'Purchase evidence corrected.',
@@ -448,6 +532,7 @@ export default function OutcomeWorkflowPage() {
             defaultAt={utcInstantToManilaLocalInput(outcome.sold_at)}
             defaultPrice={outcome.sold_price ?? ''}
             disabled={submitting}
+            correction
             onSubmit={(at, price) => void runOperation(
               () => correctSale(numericDealFlagId, at, price),
               'Sale evidence corrected.',

@@ -2,6 +2,9 @@ import type { ReviewListing } from '../api/types';
 import { formatMoneyDecimal } from '../formatting/decimal';
 import { conditionLabel, skuDisplayName } from '../formatting/sku';
 import { formatManilaTimestamp } from '../formatting/time';
+import MetricReadout, { ReadoutList } from './MetricReadout';
+import StatusIndicator from './StatusIndicator';
+import type { Tone } from './StatusIndicator';
 import styles from './ReviewEvidence.module.css';
 
 
@@ -10,6 +13,21 @@ function resolutionLabel(method: string): string {
     .split('_')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ');
+}
+
+// Confidence in how the SKU was reached, so the reviewer knows how much of the
+// derived state to trust before confirming it.
+function resolutionTone(method: string): Tone {
+  if (method === 'unresolved') {
+    return 'caution';
+  }
+  if (method === 'fuzzy_match') {
+    return 'caution';
+  }
+  if (method === 'human_confirmed' || method === 'exact_alias') {
+    return 'positive';
+  }
+  return 'neutral';
 }
 
 function valueOrUnavailable(value: string | null): string {
@@ -22,44 +40,83 @@ export default function ReviewEvidence({ review }: { review: ReviewListing }) {
 
   return (
     <div className={styles.evidence}>
-      <section className={styles.region} aria-label="Raw source evidence">
-        <h2>Raw source evidence</h2>
-        <dl>
-          <div><dt>Raw title</dt><dd>{raw.raw_title}</dd></div>
-          <div><dt>Normalized title</dt><dd>{raw.normalised_title}</dd></div>
-          <div><dt>Raw price text</dt><dd>{raw.raw_price_text}</dd></div>
-          <div><dt>Source</dt><dd>{raw.source.name}</dd></div>
-          <div><dt>Occurred</dt><dd>{formatManilaTimestamp(raw.occurred_at)}</dd></div>
-          <div><dt>Fetched</dt><dd>{formatManilaTimestamp(raw.fetched_at)}</dd></div>
-          <div><dt>Source listing</dt><dd><a href={raw.url}>Open original listing</a></dd></div>
-        </dl>
+      {/* Immutable source text: recessed and monospaced, never editable. */}
+      <section className={`pw-well ${styles.region} ${styles.rawRegion}`} aria-label="Raw source evidence">
+        <div className={styles.regionHead}>
+          <h2>Raw source evidence</h2>
+          <span className={styles.sealTag}>Immutable</span>
+        </div>
+        <ReadoutList className={styles.regionList}>
+          <MetricReadout label="Raw title" mono className={styles.wideReadout}>
+            {raw.raw_title}
+          </MetricReadout>
+          <MetricReadout label="Normalized title" mono className={styles.wideReadout}>
+            {raw.normalised_title}
+          </MetricReadout>
+          <MetricReadout label="Raw price text" mono>{raw.raw_price_text}</MetricReadout>
+          <MetricReadout label="Source" mono>{raw.source.name}</MetricReadout>
+          <MetricReadout label="Occurred" mono>
+            {formatManilaTimestamp(raw.occurred_at)}
+          </MetricReadout>
+          <MetricReadout label="Fetched" mono>
+            {formatManilaTimestamp(raw.fetched_at)}
+          </MetricReadout>
+        </ReadoutList>
+        <p className={styles.sourceLink}>
+          <a href={raw.url}>Open original listing</a>
+        </p>
       </section>
 
-      <section className={styles.region} aria-label="Derived listing state">
-        <h2>Derived listing state</h2>
-        <dl>
-          <div><dt>Price</dt><dd>{formatMoneyDecimal(derived.price)}</dd></div>
-          <div><dt>Condition</dt><dd>{conditionLabel(derived.condition)}</dd></div>
-          <div><dt>Location</dt><dd>{valueOrUnavailable(derived.location)}</dd></div>
-          <div><dt>Resolution</dt><dd>{resolutionLabel(derived.resolution_method)}</dd></div>
-          <div><dt>Confidence</dt><dd>{derived.resolution_confidence}</dd></div>
-          <div><dt>Resolved</dt><dd>{formatManilaTimestamp(derived.resolved_at)}</dd></div>
-          <div><dt>Observed</dt><dd>{formatManilaTimestamp(derived.observed_at)}</dd></div>
-          <div><dt>Price kind</dt><dd>{valueOrUnavailable(derived.price_kind)}</dd></div>
-          <div><dt>Trade side</dt><dd>{valueOrUnavailable(derived.trade_side)}</dd></div>
-          <div>
-            <dt>Reviewed unresolved</dt>
-            <dd>{formatManilaTimestamp(derived.reviewed_unresolved_at)}</dd>
-          </div>
-        </dl>
+      <section className={`pw-well-soft ${styles.region}`} aria-label="Derived listing state">
+        <div className={styles.regionHead}>
+          <h2>Derived listing state</h2>
+        </div>
+        <ReadoutList className={styles.regionList}>
+          <MetricReadout label="Price" size="md" mono>
+            {formatMoneyDecimal(derived.price)}
+          </MetricReadout>
+          <MetricReadout label="Condition" mono>
+            {conditionLabel(derived.condition)}
+          </MetricReadout>
+          <MetricReadout label="Resolution" mono lamp={resolutionTone(derived.resolution_method)}>
+            {resolutionLabel(derived.resolution_method)}
+          </MetricReadout>
+          <MetricReadout label="Confidence" mono>{derived.resolution_confidence}</MetricReadout>
+          <MetricReadout label="Location" mono>
+            {valueOrUnavailable(derived.location)}
+          </MetricReadout>
+          <MetricReadout label="Resolved" mono>
+            {formatManilaTimestamp(derived.resolved_at)}
+          </MetricReadout>
+          <MetricReadout label="Observed" mono>
+            {formatManilaTimestamp(derived.observed_at)}
+          </MetricReadout>
+          <MetricReadout label="Price kind" mono>
+            {valueOrUnavailable(derived.price_kind)}
+          </MetricReadout>
+          <MetricReadout label="Trade side" mono>
+            {valueOrUnavailable(derived.trade_side)}
+          </MetricReadout>
+          <MetricReadout label="Reviewed unresolved" mono>
+            {formatManilaTimestamp(derived.reviewed_unresolved_at)}
+          </MetricReadout>
+        </ReadoutList>
       </section>
 
-      <section className={styles.region} aria-label="Current curated SKU">
-        <h2>Current curated SKU</h2>
+      <section className={`pw-well-soft ${styles.region} ${styles.skuRegion}`} aria-label="Current curated SKU">
+        <div className={styles.regionHead}>
+          <h2>Current curated SKU</h2>
+        </div>
         {review.current_sku === null ? (
-          <p>No SKU currently assigned.</p>
+          <>
+            <StatusIndicator tone="caution">Unassigned</StatusIndicator>
+            <p className={styles.skuValue}>No SKU currently assigned.</p>
+          </>
         ) : (
-          <p>{skuDisplayName(review.current_sku)}</p>
+          <>
+            <StatusIndicator tone="positive">Assigned</StatusIndicator>
+            <p className={styles.skuValue}>{skuDisplayName(review.current_sku)}</p>
+          </>
         )}
       </section>
     </div>

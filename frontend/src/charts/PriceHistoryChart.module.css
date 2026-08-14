@@ -1,52 +1,62 @@
 .section {
-  margin-top: 2rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-large);
+  width: 100%;
+  min-width: 0;
+  margin-top: var(--pw-s4);
   overflow: hidden;
-  background: var(--surface);
-  box-shadow: var(--shadow);
 }
 
 .sectionHeading {
-  padding: 1.25rem clamp(1rem, 3vw, 1.75rem);
+  padding: var(--pw-s4) clamp(0.9rem, 3vw, 1.35rem);
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
-  border-bottom: 1px solid var(--border);
+  gap: var(--pw-s3);
+  border-bottom: 1px solid var(--pw-edge);
 }
 
-.sectionHeading h2,
-.sectionHeading p {
-  margin: 0;
+.sectionHeading h2 {
+  margin: 0.15rem 0 0;
+  font-size: var(--pw-text-md);
 }
 
 .sectionHeading > p {
-  color: var(--muted-ink);
-  font-size: 0.85rem;
+  margin: 0;
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-xs);
 }
 
 .eyebrow {
-  color: var(--accent-strong);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  margin: 0;
+  color: var(--pw-accent-bright);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-micro);
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
+/* The plot is a recessed screen set into the panel face. */
 .chart {
   min-width: 0;
-  padding: 0.75rem 0.5rem 0;
+  margin: clamp(0.6rem, 2vw, 0.9rem);
+  padding: var(--pw-s3) var(--pw-s2) 0;
+  border: 1px solid var(--pw-edge-dark);
+  border-radius: var(--pw-r-md);
+  background:
+    linear-gradient(180deg, rgb(76 157 245 / 4%), transparent 40%),
+    var(--pw-well);
+  box-shadow: var(--pw-depth-inset);
+  font-size: var(--pw-text-xs);
 }
 
 .tooltip {
   max-width: 18rem;
-  padding: 0.8rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 0.55rem;
-  background: var(--surface);
-  box-shadow: var(--shadow-strong);
-  font-size: 0.8rem;
+  padding: var(--pw-s3);
+  border: 1px solid var(--pw-edge-strong);
+  border-radius: var(--pw-r-sm);
+  background: var(--pw-panel-high);
+  box-shadow: var(--pw-depth-float);
+  font-size: var(--pw-text-xs);
 }
 
 .tooltip > strong,
@@ -54,9 +64,17 @@
   display: block;
 }
 
+.tooltip > strong {
+  color: var(--pw-ink);
+  font-variant-numeric: tabular-nums;
+}
+
 .tooltip > span {
-  margin-top: 0.15rem;
-  color: var(--muted-ink);
+  margin-top: 0.1rem;
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-tiny);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .tooltip dl,
@@ -65,64 +83,103 @@
 }
 
 .tooltip dl {
-  margin-top: 0.65rem;
+  margin-top: var(--pw-s3);
+  padding-top: var(--pw-s2);
+  border-top: 1px solid var(--pw-edge);
+  display: grid;
+  gap: 0.2rem;
 }
 
 .tooltip dl div {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--pw-s4);
+}
+
+.tooltip dt {
+  color: var(--pw-ink-faint);
 }
 
 .tooltip dd {
   margin: 0;
+  color: var(--pw-ink);
+  font-family: var(--pw-font-mono);
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * The authoritative evidence table stays fully opaque and crisp: no frost, no
+ * translucency, nothing between the reader and the persisted numbers. Capped
+ * so a long history scrolls inside its own well instead of running the page to
+ * several screens, which is what makes the sticky header worth having.
+ */
 .tableWrap {
+  width: 100%;
+  min-width: 0;
   max-width: 100%;
-  overflow-x: auto;
-  border-top: 1px solid var(--border);
+  max-height: min(60vh, 34rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-top: 1px solid var(--pw-edge);
+  background: var(--pw-well);
+  box-shadow: inset 0 2px 5px rgb(0 0 0 / 45%);
 }
 
 .tableWrap table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.82rem;
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-xs);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .tableWrap caption {
-  padding: 1rem 1.25rem;
-  color: var(--ink);
-  font-size: 0.9rem;
-  font-weight: 750;
+  position: sticky;
+  left: 0;
+  padding: var(--pw-s4) var(--pw-s4) var(--pw-s3);
+  color: var(--pw-ink-dim);
+  font-family: var(--pw-font-sans);
+  font-size: var(--pw-text-sm);
+  font-weight: 700;
   text-align: left;
 }
 
 .tableWrap th,
 .tableWrap td {
-  padding: 0.75rem 1rem;
-  border-top: 1px solid var(--border);
+  padding: 0.55rem var(--pw-s4);
+  border-top: 1px solid var(--pw-edge);
+  color: var(--pw-ink-dim);
   text-align: left;
+  vertical-align: top;
+}
+
+.tableWrap td:nth-child(-n + 5) {
+  color: var(--pw-ink);
 }
 
 .tableWrap th {
-  color: var(--muted-ink);
-  background: var(--surface-subtle);
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: var(--pw-ink-faint);
+  background: var(--pw-panel);
+  box-shadow: inset 0 -1px 0 var(--pw-edge-strong);
+  font-family: var(--pw-font-sans);
+  font-size: var(--pw-text-tiny);
+  font-weight: 700;
+  /* Not uppercased: `p25`/`p75` are persisted field names, not display labels. */
+  letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
-.tableWrap tbody tr:hover {
-  background: var(--accent-soft);
+.tableWrap tbody tr:hover td {
+  background: rgb(76 157 245 / 8%);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .sectionHeading {
-    align-items: start;
+    align-items: flex-start;
     flex-direction: column;
   }
 }

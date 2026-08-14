@@ -1,0 +1,97 @@
+.field {
+  display: block;
+  min-width: 0;
+}
+
+.wrap {
+  display: block;
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--pw-s2);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-tiny);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/*
+ * Inputs are milled into the surface, but the well stays lighter than a pure
+ * black so a fillable field never reads as disabled.
+ */
+.control {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--pw-s3);
+  border: 1px solid var(--pw-edge-dark);
+  border-radius: var(--pw-r-md);
+  color: var(--pw-ink);
+  background-color: var(--pw-well-high);
+  box-shadow:
+    inset 0 2px 4px rgb(0 0 0 / 55%),
+    inset 0 1px 0 rgb(0 0 0 / 40%),
+    0 1px 0 var(--pw-highlight);
+  font: inherit;
+  font-size: var(--pw-text-sm);
+  transition: border-color var(--pw-t-fast), box-shadow var(--pw-t-fast);
+}
+
+.control::placeholder {
+  color: var(--pw-ink-faint);
+}
+
+.control:hover:not(:disabled) {
+  border-color: rgb(0 0 0 / 70%);
+  background-color: #121822;
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--pw-accent);
+  box-shadow:
+    inset 0 2px 4px rgb(0 0 0 / 55%),
+    0 0 0 3px var(--pw-accent-wash);
+}
+
+.control:focus-visible {
+  outline: none;
+}
+
+.control:disabled {
+  color: var(--pw-ink-faint);
+  background-color: var(--pw-panel);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.numeric {
+  font-family: var(--pw-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Native select keeps its own picker; only the well and arrow are ours. */
+.select {
+  padding-right: var(--pw-s6);
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--pw-ink-dim) 50%),
+    linear-gradient(135deg, var(--pw-ink-dim) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.05rem) calc(50% + 1px),
+    calc(100% - 0.65rem) calc(50% + 1px);
+  background-size: 0.4rem 0.4rem;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.hint {
+  margin: var(--pw-s2) 0 0;
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-xs);
+}
+
+.error {
+  border-color: color-mix(in srgb, var(--pw-negative) 60%, var(--pw-edge-dark));
+}

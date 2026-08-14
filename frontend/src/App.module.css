@@ -4,129 +4,259 @@
   grid-template-rows: auto 1fr auto;
 }
 
+/* Keyboard users reach the workspace without walking the nav every time. */
+.skipLink {
+  position: absolute;
+  top: var(--pw-s2);
+  left: var(--pw-s2);
+  z-index: 100;
+  padding: var(--pw-s2) var(--pw-s3);
+  border-radius: var(--pw-r-sm);
+  color: #04121f;
+  background: var(--pw-accent);
+  font-size: var(--pw-text-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform var(--pw-t-fast);
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+}
+
+/* Frosted chrome — one of only three translucent surfaces in the product. */
 .header {
   position: sticky;
   top: 0;
-  z-index: 10;
-  border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  backdrop-filter: blur(14px);
+  z-index: 20;
+  border-bottom: 1px solid var(--pw-edge);
+  box-shadow:
+    0 1px 0 var(--pw-highlight) inset,
+    0 10px 24px rgb(0 0 0 / 45%);
 }
 
 .headerInner {
-  width: min(100% - 2rem, var(--content-width));
-  min-height: 4.5rem;
+  width: min(100% - 2rem, var(--pw-measure));
+  min-height: 3.75rem;
   margin-inline: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: var(--pw-s4);
 }
 
 .brand {
-  color: var(--ink);
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  font-weight: 760;
-  letter-spacing: -0.02em;
+  gap: var(--pw-s3);
+  color: var(--pw-ink);
+  font-size: var(--pw-text-sm);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* A machined identity plate, not a logo bubble. */
+.brandMark {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--pw-edge-strong);
+  border-radius: var(--pw-r-sm);
+  color: var(--pw-accent-bright);
+  background: linear-gradient(180deg, #232c39, #151b24);
+  box-shadow:
+    inset 0 1px 0 var(--pw-edge-bright),
+    0 1px 2px rgb(0 0 0 / 55%);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-tiny);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.brandText {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brandSub {
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-micro);
+  font-weight: 650;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: var(--pw-s3);
+  min-width: 0;
+}
+
+.authState {
+  color: var(--pw-ink-faint);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-tiny);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.signInLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 var(--pw-s4);
+  border: 1px solid var(--pw-accent-deep);
+  border-radius: var(--pw-r-md);
+  color: #04121f;
+  background: linear-gradient(180deg, #6cb2f8, var(--pw-accent) 55%, #3f8cdf);
+  box-shadow: var(--pw-depth-raised);
+  font-size: var(--pw-text-sm);
+  font-weight: 750;
   text-decoration: none;
 }
 
-.brandMark {
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 0.7rem;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: var(--accent);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+.signInLink:hover {
+  color: #04121f;
+  background: linear-gradient(180deg, #8cc3fa, #5aa8f7 55%, #4a97ea);
+}
+
+/* The nav rail is a recessed track; the active tab sits engaged inside it. */
+.navRail {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--pw-edge-dark);
+  border-radius: var(--pw-r-md);
+  background: rgb(0 0 0 / 28%);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 50%), 0 1px 0 var(--pw-highlight);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.navRail::-webkit-scrollbar {
+  display: none;
 }
 
 .navLink {
-  color: var(--muted-ink);
-  border-radius: 0.5rem;
-  padding: 0.6rem 0.8rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid transparent;
+  border-radius: var(--pw-r-sm);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
   font-weight: 650;
   text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--pw-t-fast), background-color var(--pw-t-fast);
 }
 
 .navLink:hover {
-  color: var(--accent-strong);
-  background: var(--accent-soft);
+  color: var(--pw-ink);
+  background: rgb(255 255 255 / 5%);
 }
 
-.header nav {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+/* Mechanically engaged: raised out of the track and lit from above. */
+.navLinkActive {
+  border-color: var(--pw-edge-strong);
+  color: var(--pw-ink);
+  background: linear-gradient(180deg, var(--pw-control-top), var(--pw-control-bottom));
+  box-shadow:
+    inset 0 1px 0 var(--pw-edge-bright),
+    0 1px 2px rgb(0 0 0 / 55%);
 }
 
-.signOut {
-  border: 1px solid var(--border-strong);
-  border-radius: 0.5rem;
-  padding: 0.55rem 0.7rem;
-  color: var(--muted-ink);
-  background: var(--surface);
-  font: inherit;
-  font-weight: 650;
-  cursor: pointer;
-}
-
-.signOut:disabled {
-  cursor: wait;
-  opacity: 0.6;
+.navLinkActive::after {
+  content: '';
+  display: block;
+  height: 2px;
+  margin: 0.35rem -0.2rem -0.15rem;
+  border-radius: 2px;
+  background: var(--pw-accent);
+  box-shadow: 0 0 6px 0 var(--pw-accent-line);
 }
 
 .main {
-  width: min(100% - 2rem, var(--content-width));
+  width: min(100% - 2rem, var(--pw-measure));
+  /* Dense tables must scroll inside their own wells, not widen this grid item. */
+  min-width: 0;
   margin-inline: auto;
-  padding-block: clamp(2rem, 5vw, 4.5rem);
+  padding-block: clamp(1.75rem, 4vw, 3rem);
 }
 
 .footer {
-  width: min(100% - 2rem, var(--content-width));
+  width: min(100% - 2rem, var(--pw-measure));
   margin-inline: auto;
-  padding: 1.5rem 0 2rem;
-  color: var(--muted-ink);
-  font-size: 0.82rem;
+  padding: var(--pw-s5) 0 var(--pw-s6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pw-s2) var(--pw-s4);
+  border-top: 1px solid var(--pw-edge);
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-xs);
+}
+
+.footerNote {
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-tiny);
+  letter-spacing: 0.02em;
 }
 
 .notFound {
   max-width: 36rem;
-  padding: clamp(1.5rem, 4vw, 3rem);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-large);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .notFound h1 {
-  margin: 0 0 0.6rem;
+  margin: 0.4rem 0 0.6rem;
+  font-size: var(--pw-text-xl);
 }
 
 .notFound p:not(.eyebrow) {
-  color: var(--muted-ink);
+  margin: 0 0 var(--pw-s4);
+  color: var(--pw-ink-dim);
 }
 
 .eyebrow {
-  margin: 0 0 0.6rem;
-  color: var(--accent-strong);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  margin: 0;
+  color: var(--pw-negative);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.primaryLink {
-  display: inline-flex;
-  margin-top: 1rem;
-  color: #fff;
-  border-radius: 0.6rem;
-  padding: 0.72rem 1rem;
-  background: var(--accent);
-  font-weight: 700;
-  text-decoration: none;
+@media (max-width: 40rem) {
+  .headerInner {
+    min-height: 3.5rem;
+    padding-block: var(--pw-s2);
+    flex-wrap: wrap;
+    row-gap: var(--pw-s2);
+  }
+
+  .brandSub {
+    display: none;
+  }
+
+  .headerControls {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+
+  .navRail {
+    flex: 1 1 auto;
+  }
+
+  .navLink {
+    flex: 1 0 auto;
+    text-align: center;
+  }
 }

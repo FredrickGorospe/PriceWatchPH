@@ -1,0 +1,78 @@
+/*
+ * Shared material primitives.
+ *
+ * These are global, `pw-`-prefixed classes rather than CSS-module `composes`
+ * because cross-file composition is not supported by the pinned Vite build.
+ * Each class owns depth and material only — never layout — so a component's
+ * own module can size and arrange it without fighting the cascade.
+ */
+
+/* L1 — a mounted workspace panel resting on the chassis. */
+.pw-panel {
+  position: relative;
+  border: 1px solid var(--pw-edge-strong);
+  border-radius: var(--pw-r-lg);
+  background: linear-gradient(180deg, var(--pw-panel-high), var(--pw-panel) 55%);
+  box-shadow:
+    inset 0 1px 0 var(--pw-highlight),
+    var(--pw-depth-surface);
+}
+
+/* L2 — an analytical region milled into the panel above it. */
+.pw-well {
+  border: 1px solid var(--pw-edge-dark);
+  border-radius: var(--pw-r-md);
+  background: var(--pw-well);
+  box-shadow: var(--pw-depth-inset);
+}
+
+/* L2 variant for regions that must stay lighter than a full well. */
+.pw-well-soft {
+  border: 1px solid var(--pw-edge-dark);
+  border-radius: var(--pw-r-md);
+  background: var(--pw-well-high);
+  box-shadow: var(--pw-depth-inset);
+}
+
+/* Floating chrome. Frost is reserved for environment, never for evidence. */
+.pw-frost {
+  border: 1px solid var(--pw-edge);
+  border-radius: var(--pw-r-lg);
+  background: var(--pw-frost-bg);
+  box-shadow: var(--pw-depth-float);
+}
+
+/* Frost as a full-bleed sticky bar: seam at one edge, no corner radius. */
+.pw-frost-bar {
+  border: 0;
+  background: var(--pw-frost-bg);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .pw-frost,
+  .pw-frost-bar {
+    -webkit-backdrop-filter: var(--pw-frost-filter);
+    backdrop-filter: var(--pw-frost-filter);
+  }
+}
+
+/* Uppercase micro label used on every instrument face. */
+.pw-micro-label {
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-tiny);
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+/* Machine-produced values: monospace, tabular, never body copy. */
+.pw-technical {
+  font-family: var(--pw-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.pw-tabular {
+  font-variant-numeric: tabular-nums;
+}

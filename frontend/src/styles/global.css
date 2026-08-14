@@ -1,28 +1,14 @@
+@import './tokens.css';
+@import './surfaces.css';
+
 :root {
-  color: #17233a;
-  background: #f4f7fb;
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  color: var(--pw-ink);
+  background: var(--pw-chassis);
+  font-family: var(--pw-font-sans);
+  font-size: var(--pw-text-body);
   font-synthesis: none;
+  line-height: 1.55;
   text-rendering: optimizeLegibility;
-  --ink: #17233a;
-  --muted-ink: #5a667b;
-  --surface: #ffffff;
-  --surface-subtle: #f6f8fb;
-  --border: #dfe5ed;
-  --border-strong: #b9c3d0;
-  --accent: #2858d7;
-  --accent-strong: #1c45b0;
-  --accent-soft: #eef3ff;
-  --danger: #a53a3a;
-  --success: #15704b;
-  --success-soft: #eef9f4;
-  --content-width: 74rem;
-  --radius-medium: 0.8rem;
-  --radius-large: 1.15rem;
-  --shadow: 0 12px 36px rgb(25 40 70 / 7%);
-  --shadow-strong: 0 18px 48px rgb(25 40 70 / 16%);
 }
 
 * {
@@ -31,39 +17,117 @@
 
 html {
   min-width: 20rem;
-  background: #f4f7fb;
+  background: var(--pw-chassis);
 }
 
 body {
+  position: relative;
   min-width: 20rem;
   min-height: 100vh;
   margin: 0;
+  color: var(--pw-ink);
+  background: var(--pw-chassis);
+}
+
+/*
+ * A single cool wash from the top edge implies the light source every raised
+ * and recessed surface in the app is lit by. No decorative imagery.
+ *
+ * Painted by a fixed layer rather than `background-attachment: fixed`, which
+ * fails to repaint on scroll in some compositors.
+ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
-    radial-gradient(circle at 50% -16rem, rgb(40 88 215 / 10%), transparent 34rem),
-    #f4f7fb;
+    radial-gradient(120% 55% at 50% -8%, rgb(76 157 245 / 9%), transparent 62%),
+    linear-gradient(180deg, #121926, var(--pw-chassis) 45%, var(--pw-chassis-deep));
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--pw-text-xl);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--pw-text-md);
+  font-weight: 700;
+}
+
+a {
+  color: var(--pw-accent-bright);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--pw-ink);
 }
 
 button,
 select,
+input,
 a {
   -webkit-tap-highlight-color: transparent;
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
 a,
 button,
-select {
+select,
+input,
+[tabindex] {
   outline-offset: 3px;
 }
 
 a:focus-visible,
 button:focus-visible,
-select:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--accent) 72%, white);
+select:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--pw-accent-bright);
+  outline-offset: 3px;
 }
 
 button:focus:not(:focus-visible),
 a:focus:not(:focus-visible) {
   outline: none;
+}
+
+/* Native control chrome, so checkboxes and radios match the instrument. */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--pw-accent);
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--pw-accent-line);
+  color: var(--pw-ink);
+}
+
+/* Recessed scroll gutters, consistent with the inset surfaces. */
+* {
+  scrollbar-color: #37414f transparent;
+  scrollbar-width: thin;
 }
 
 .visuallyHidden {
@@ -73,7 +137,7 @@ a:focus:not(:focus-visible) {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }

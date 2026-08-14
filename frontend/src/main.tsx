@@ -2,8 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 
-import App from './App';
+// Loaded before the app so component modules always win the cascade over the
+// shared `pw-` material classes.
 import './styles/global.css';
+import App from './App';
 
 
 const rootElement = document.getElementById('root');

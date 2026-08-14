@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import {
+  type AccessDisposition,
   bootstrapCsrf,
   confirmReviewSku,
   getReviewListing,
@@ -11,17 +12,27 @@ import {
   ReviewApiError,
   searchSkus,
 } from '../api/client';
+import { useReportAuthUiState } from '../auth/AuthUiContext';
 import type { Page, ReviewListing, Sku } from '../api/types';
-import { AccessRequiredState, RequestFailureState } from '../components/AsyncStates';
+import {
+  AccessRequiredState,
+  EmptyState,
+  LoadingState,
+  RequestFailureState,
+} from '../components/AsyncStates';
+import Button from '../components/Button';
+import Field from '../components/Field';
+import PageHeader from '../components/PageHeader';
 import ReviewEvidence from '../components/ReviewEvidence';
-import { skuDisplayName } from '../formatting/sku';
+import StatusIndicator from '../components/StatusIndicator';
+import { categoryLabel, skuDisplayName } from '../formatting/sku';
 import styles from './ReviewPages.module.css';
 
 
 type DetailState =
   | { status: 'loading' }
   | { status: 'success'; review: ReviewListing }
-  | { status: 'forbidden' }
+  | { status: 'forbidden'; access: AccessDisposition }
   | { status: 'missing' }
   | { status: 'error' };
 
@@ -90,7 +101,7 @@ export default function ReviewDetailPage() {
           return;
         }
         if (error instanceof ReviewApiError && error.status === 403) {
-          setState({ status: 'forbidden' });
+          setState({ status: 'forbidden', access: error.access });
           return;
         }
         if (
@@ -120,7 +131,7 @@ export default function ReviewDetailPage() {
       setSearchState({ status: 'success', page: await searchSkus(query) });
     } catch (error) {
       if (error instanceof ReviewApiError && error.status === 403) {
-        setState({ status: 'forbidden' });
+        setState({ status: 'forbidden', access: error.access });
         return;
       }
       setSearchState({ status: 'error', message: 'SKU search could not be loaded.' });
@@ -133,7 +144,7 @@ export default function ReviewDetailPage() {
       setSearchState({ status: 'success', page: await getSkuSearchPage(url) });
     } catch (error) {
       if (error instanceof ReviewApiError && error.status === 403) {
-        setState({ status: 'forbidden' });
+        setState({ status: 'forbidden', access: error.access });
         return;
       }
       setSearchState({ status: 'error', message: 'SKU search could not be loaded.' });
@@ -149,7 +160,7 @@ export default function ReviewDetailPage() {
       });
     } catch (error) {
       if (error instanceof ReviewApiError && error.status === 403) {
-        setState({ status: 'forbidden' });
+        setState({ status: 'forbidden', access: error.access });
         return;
       }
       const mapped = error instanceof ReviewApiError
@@ -177,7 +188,7 @@ export default function ReviewDetailPage() {
       navigate('/reviews', { state: { successMessage } });
     } catch (error) {
       if (error instanceof ReviewApiError && error.status === 403) {
-        setState({ status: 'forbidden' });
+        setState({ status: 'forbidden', access: error.access });
         return;
       }
       const mapped = error instanceof ReviewApiError
@@ -197,11 +208,19 @@ export default function ReviewDetailPage() {
     }
   }
 
+  useReportAuthUiState(
+    state.status === 'success'
+      ? 'authorized'
+      : state.status === 'forbidden'
+        ? state.access
+        : 'unknown',
+  );
+
   if (state.status === 'forbidden') {
-    return <AccessRequiredState />;
+    return <AccessRequiredState access={state.access} />;
   }
   if (state.status === 'missing') {
-    return <p className={styles.status} role="status">Review listing not found.</p>;
+    return <EmptyState message="Review listing not found." />;
   }
   if (state.status === 'error') {
     return (
@@ -213,28 +232,44 @@ export default function ReviewDetailPage() {
     );
   }
   if (state.status === 'loading') {
-    return <p className={styles.status} role="status">Loading review evidence...</p>;
+    return <LoadingState message="Loading review evidence..." />;
   }
 
   const review = state.review;
   const canMarkUnresolved = review.current_sku === null
     && ['unresolved', 'fuzzy_match'].includes(review.derived_listing.resolution_method);
+  const submitting = operation.status === 'submitting';
+  const selectionSummary = selectedSku !== null
+    ? skuDisplayName(selectedSku)
+    : review.current_sku !== null
+      ? skuDisplayName(review.current_sku)
+      : null;
 
   return (
     <article aria-labelledby="review-detail-heading">
-      <header className={styles.pageHeading}>
-        <div>
-          <p className={styles.eyebrow}>Human review</p>
-          <h1 id="review-detail-heading">Review listing {review.id}</h1>
-        </div>
-      </header>
+      <PageHeader
+        eyebrow="Human review"
+        title={`Review listing ${review.id}`}
+        titleId="review-detail-heading"
+        aside={(
+          <StatusIndicator tone={review.current_sku === null ? 'caution' : 'positive'}>
+            {review.current_sku === null ? 'Needs a SKU' : 'SKU assigned'}
+          </StatusIndicator>
+        )}
+      />
 
       <ReviewEvidence review={review} />
 
-      <section className={styles.choice} aria-label="Curated SKU choice">
-        <h2>Curated SKU choice</h2>
+      <section className={`pw-panel ${styles.choice}`} aria-label="Curated SKU choice">
+        <div className={styles.choiceHead}>
+          <h2>Curated SKU choice</h2>
+          <p className={styles.choiceHint}>
+            Pick the canonical SKU this raw listing really is, then confirm.
+          </p>
+        </div>
+
         {review.current_sku !== null && (
-          <label className={styles.option}>
+          <label className={`pw-well-soft ${styles.option}`}>
             <input
               type="radio"
               name="sku-choice"
@@ -246,26 +281,42 @@ export default function ReviewDetailPage() {
         )}
 
         <div className={styles.searchControls}>
-          <label>
-            <span>Search existing SKUs</span>
-            <input
-              type="search"
-              value={searchText}
-              onChange={(event) => setSearchText(event.target.value)}
-            />
-          </label>
-          <button type="button" onClick={() => void runSearch()}>Search catalogue</button>
+          <Field
+            className={styles.searchField}
+            label="Search existing SKUs"
+            type="search"
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                void runSearch();
+              }
+            }}
+          />
+          <Button className={styles.searchButton} onClick={() => void runSearch()}>
+            Search catalogue
+          </Button>
         </div>
 
-        {searchState.status === 'loading' && <p role="status">Searching catalogue...</p>}
-        {searchState.status === 'error' && <p role="alert">{searchState.message}</p>}
+        {searchState.status === 'loading' && (
+          <p className={styles.inlineStatus} role="status">Searching catalogue...</p>
+        )}
+        {searchState.status === 'error' && (
+          <p className={styles.inlineAlert} role="alert">{searchState.message}</p>
+        )}
         {searchState.status === 'success' && searchState.page.results.length === 0 && (
-          <p role="status">No matching SKUs found.</p>
+          <p className={styles.inlineStatus} role="status">No matching SKUs found.</p>
         )}
         {searchState.status === 'success' && searchState.page.results.length > 0 && (
           <div className={styles.results}>
             {searchState.page.results.map((sku) => (
-              <label className={styles.option} key={sku.id}>
+              <label
+                className={`pw-well-soft ${styles.option} ${
+                  selectedSku?.id === sku.id ? styles.optionSelected : ''
+                }`}
+                key={sku.id}
+              >
                 <input
                   type="radio"
                   name="sku-choice"
@@ -273,25 +324,30 @@ export default function ReviewDetailPage() {
                   onChange={() => setSelectedSku(sku)}
                 />
                 {skuDisplayName(sku)}
+                <span className={styles.optionMeta} aria-hidden="true">
+                  {categoryLabel(sku.category)}
+                </span>
               </label>
             ))}
             <div className={styles.searchPagination}>
-              <button
-                type="button"
+              <Button
+                small
+                variant="ghost"
                 disabled={searchState.page.previous === null}
                 onClick={() => searchState.page.previous
                   && void loadSearchPage(searchState.page.previous)}
               >
                 Previous SKU results
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                small
+                variant="ghost"
                 disabled={searchState.page.next === null}
                 onClick={() => searchState.page.next
                   && void loadSearchPage(searchState.page.next)}
               >
                 Next SKU results
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -306,40 +362,49 @@ export default function ReviewDetailPage() {
         </label>
 
         {operation.status === 'error' && (
-          <div role="alert">
+          <div className={styles.operationAlert} role="alert">
+            <StatusIndicator tone="negative">Operation failed</StatusIndicator>
             <p>{operation.message}</p>
             {operation.fieldErrors && (
-              <ul>
+              <ul className={styles.fieldErrors}>
                 {Object.entries(operation.fieldErrors).flatMap(([field, messages]) => (
                   messages.map((message) => <li key={`${field}-${message}`}>{field}: {message}</li>)
                 ))}
               </ul>
             )}
             {operation.reload && (
-              <button type="button" onClick={() => setAttempt((value) => value + 1)}>
+              <Button small onClick={() => setAttempt((value) => value + 1)}>
                 Reload review evidence
-              </button>
+              </Button>
             )}
           </div>
         )}
 
-        <div className={styles.actions}>
-          <button
-            type="button"
-            disabled={operation.status === 'submitting'}
-            onClick={() => void confirm(review)}
-          >
-            Confirm selected SKU
-          </button>
-          {canMarkUnresolved && (
-            <button
-              type="button"
-              disabled={operation.status === 'submitting'}
-              onClick={() => void markUnresolved(review)}
+        {/* Frosted action rail: the primary action is never scrolled away. */}
+        <div className={`pw-frost ${styles.actions}`}>
+          <p className={styles.actionsSummary}>
+            {selectionSummary === null
+              ? 'No SKU selected yet.'
+              : `Confirming: ${selectionSummary}`}
+          </p>
+          <div className={styles.actionsButtons}>
+            {canMarkUnresolved && (
+              <Button
+                variant="caution"
+                disabled={submitting}
+                onClick={() => void markUnresolved(review)}
+              >
+                Mark reviewed unresolved
+              </Button>
+            )}
+            <Button
+              variant="primary"
+              disabled={submitting}
+              onClick={() => void confirm(review)}
             >
-              Mark reviewed unresolved
-            </button>
-          )}
+              Confirm selected SKU
+            </Button>
+          </div>
         </div>
       </section>
     </article>

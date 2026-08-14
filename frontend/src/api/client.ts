@@ -21,15 +21,50 @@ export type ApiErrorKind =
   | 'malformed'
   | 'aborted';
 
+export type AccessDisposition = 'unauthenticated' | 'unauthorized' | 'unknown';
+
+const UNAUTHENTICATED_DETAILS = new Set([
+  'Authentication credentials were not provided.',
+  'Not authenticated.',
+]);
+
+function accessDisposition(
+  status: number | null,
+  detail: string | null,
+  code: string | null = null,
+): AccessDisposition {
+  if (status !== 403) {
+    return 'unknown';
+  }
+  if (detail !== null && UNAUTHENTICATED_DETAILS.has(detail)) {
+    return 'unauthenticated';
+  }
+  if (
+    code === 'permission_denied'
+    || detail === 'You do not have permission to perform this action.'
+    || detail === 'Active staff status and required permissions are required.'
+  ) {
+    return 'unauthorized';
+  }
+  return 'unknown';
+}
+
 export class ApiError extends Error {
   readonly kind: ApiErrorKind;
   readonly status: number | null;
+  readonly access: AccessDisposition;
 
-  constructor(kind: ApiErrorKind, message: string, status: number | null = null) {
+  constructor(
+    kind: ApiErrorKind,
+    message: string,
+    status: number | null = null,
+    access: AccessDisposition = 'unknown',
+  ) {
     super(message);
     this.name = 'ApiError';
     this.kind = kind;
     this.status = status;
+    this.access = access;
   }
 }
 
@@ -38,6 +73,7 @@ export class ReviewApiError extends Error {
   readonly code: string | null;
   readonly detail: string | null;
   readonly errors: Record<string, string[]> | null;
+  readonly access: AccessDisposition;
 
   constructor(
     message: string,
@@ -52,6 +88,7 @@ export class ReviewApiError extends Error {
     this.code = code;
     this.detail = detail;
     this.errors = errors;
+    this.access = accessDisposition(status, detail, code);
   }
 }
 
@@ -64,6 +101,7 @@ export class OutcomeApiError extends Error {
   readonly code: string | null;
   readonly detail: string | null;
   readonly errors: Record<string, string[]> | null;
+  readonly access: AccessDisposition;
 
   constructor(
     message: string,
@@ -78,6 +116,7 @@ export class OutcomeApiError extends Error {
     this.code = code;
     this.detail = detail;
     this.errors = errors;
+    this.access = accessDisposition(status, detail, code);
   }
 }
 
@@ -134,7 +173,22 @@ async function requestJson(
   }
 
   if (response.status === 403) {
-    throw new ApiError('forbidden', 'The API requires staff access.', 403);
+    let detail: string | null = null;
+    try {
+      const value = await response.json() as unknown;
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        const candidate = (value as Record<string, unknown>).detail;
+        detail = typeof candidate === 'string' ? candidate : null;
+      }
+    } catch {
+      // Some compatibility responses have no JSON body; retain the combined state.
+    }
+    throw new ApiError(
+      'forbidden',
+      'The API requires staff access.',
+      403,
+      accessDisposition(403, detail),
+    );
   }
   if (response.status === 404) {
     throw new ApiError('not-found', 'The requested API resource does not exist.', 404);

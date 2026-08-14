@@ -1,148 +1,260 @@
-.pageHeading {
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.pageHeading h1,
-.pageHeading p {
-  margin: 0;
-}
-
-.pageHeading > p {
-  color: var(--muted-ink);
-}
-
-.eyebrow {
-  color: var(--accent-strong);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
 .queue {
   display: grid;
-  gap: 1rem;
+  gap: var(--pw-s4);
 }
 
-.card,
-.choice {
-  padding: clamp(1rem, 3vw, 1.5rem);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-large);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+.card {
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+  display: grid;
+  gap: var(--pw-s4);
 }
 
-.cardAction {
-  margin: 1rem 0 0;
+.cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pw-s3);
+  padding-bottom: var(--pw-s3);
+  border-bottom: 1px solid var(--pw-edge);
 }
 
-.status {
-  padding: 2rem;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-large);
-  color: var(--muted-ink);
-  background: var(--surface);
-  text-align: center;
+.cardTitle {
+  margin: 0;
+  color: var(--pw-ink);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
+/* A recorded confirmation, not a celebration. */
 .success {
-  padding: 0.8rem 1rem;
-  border: 1px solid color-mix(in srgb, var(--success) 35%, white);
-  border-radius: var(--radius-medium);
-  color: var(--success);
-  background: var(--success-soft);
+  margin: 0 0 var(--pw-s4);
+  padding: var(--pw-s3) var(--pw-s4);
+  border: 1px solid var(--pw-edge-dark);
+  border-left: 2px solid var(--pw-positive);
+  border-radius: var(--pw-r-sm);
+  color: var(--pw-ink);
+  background: var(--pw-positive-wash);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 35%);
+  font-size: var(--pw-text-sm);
+  font-weight: 600;
 }
 
 .pagination,
-.searchPagination,
-.actions {
-  margin-top: 1rem;
+.searchPagination {
+  margin-top: var(--pw-s4);
   display: flex;
   justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.pagination button,
-.choice button {
-  border: 1px solid var(--border-strong);
-  border-radius: 0.6rem;
-  padding: 0.65rem 0.9rem;
-  color: var(--ink);
-  background: var(--surface);
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.pagination button:disabled,
-.choice button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
+  gap: var(--pw-s3);
 }
 
 .choice {
-  margin-top: 1rem;
+  margin-top: var(--pw-s4);
+  padding: clamp(1rem, 2.5vw, 1.5rem);
 }
 
-.choice h2 {
-  margin-top: 0;
+.choiceHead {
+  margin-bottom: var(--pw-s4);
+  padding-bottom: var(--pw-s3);
+  border-bottom: 1px solid var(--pw-edge);
+}
+
+.choiceHead h2 {
+  margin: 0;
+  font-size: var(--pw-text-md);
+}
+
+.choiceHint {
+  margin: var(--pw-s1) 0 0;
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-sm);
 }
 
 .searchControls {
-  margin: 1rem 0;
+  margin: var(--pw-s4) 0;
   display: flex;
-  align-items: end;
-  gap: 0.75rem;
+  align-items: flex-end;
+  gap: var(--pw-s3);
 }
 
-.searchControls label {
-  flex: 1;
+.searchField {
+  flex: 1 1 auto;
 }
 
-.searchControls span,
-.searchControls input {
-  display: block;
-}
-
-.searchControls span {
-  margin-bottom: 0.3rem;
-  font-weight: 700;
-}
-
-.searchControls input {
-  width: 100%;
-  border: 1px solid var(--border-strong);
-  border-radius: 0.5rem;
-  padding: 0.65rem;
-  font: inherit;
+.searchButton {
+  flex: 0 0 auto;
 }
 
 .results {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--pw-s2);
 }
 
-.option,
-.aliasOption {
+/*
+ * A selectable row is a physical control: unselected it sits flush in the
+ * panel, selected it is lit and latched by an accent edge.
+ */
+.option {
   display: flex;
-  align-items: start;
-  gap: 0.55rem;
+  align-items: center;
+  gap: var(--pw-s3);
+  padding: var(--pw-s3);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--pw-t-fast),
+    color var(--pw-t-fast),
+    background-color var(--pw-t-fast);
+}
+
+.option:hover {
+  border-color: var(--pw-edge-strong);
+  color: var(--pw-ink);
+}
+
+.option:has(input:checked) {
+  border-left: 2px solid var(--pw-accent);
+  color: var(--pw-ink);
+  background-color: var(--pw-accent-wash);
+}
+
+.option:has(input:focus-visible) {
+  outline: 2px solid var(--pw-accent-bright);
+  outline-offset: 2px;
+}
+
+/* Fallback for engines without :has — React still sets the class. */
+.optionSelected {
+  border-left: 2px solid var(--pw-accent);
+  color: var(--pw-ink);
+  background-color: var(--pw-accent-wash);
+}
+
+.optionMeta {
+  margin-left: auto;
+  color: var(--pw-ink-faint);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .aliasOption {
-  margin-top: 1.25rem;
+  margin-top: var(--pw-s4);
+  display: flex;
+  align-items: center;
+  gap: var(--pw-s3);
+  padding: var(--pw-s3);
+  border: 1px dashed var(--pw-edge-strong);
+  border-radius: var(--pw-r-md);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
+  cursor: pointer;
 }
 
-@media (max-width: 640px) {
-  .pageHeading,
-  .searchControls,
+.aliasOption:hover {
+  border-color: var(--pw-accent-line);
+  color: var(--pw-ink);
+}
+
+.inlineStatus,
+.inlineAlert {
+  margin: 0;
+  padding: var(--pw-s3);
+  border-radius: var(--pw-r-sm);
+  font-size: var(--pw-text-sm);
+}
+
+.inlineStatus {
+  color: var(--pw-ink-faint);
+  background: rgb(255 255 255 / 3%);
+}
+
+.inlineAlert {
+  color: var(--pw-negative);
+  background: var(--pw-negative-wash);
+}
+
+.operationAlert {
+  margin-top: var(--pw-s4);
+  padding: var(--pw-s4);
+  border: 1px solid color-mix(in srgb, var(--pw-negative) 35%, var(--pw-edge-dark));
+  border-radius: var(--pw-r-md);
+  background: var(--pw-negative-wash);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 40%);
+}
+
+.operationAlert p {
+  margin: var(--pw-s3) 0 0;
+  color: var(--pw-ink);
+  font-size: var(--pw-text-sm);
+}
+
+.fieldErrors {
+  margin: var(--pw-s3) 0 var(--pw-s3);
+  padding-left: var(--pw-s5);
+  color: var(--pw-ink-dim);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-xs);
+}
+
+/*
+ * The action rail stays reachable while long evidence is being read. Its frost
+ * runs heavier than the nav's because dense evidence scrolls directly beneath
+ * it — chrome may be translucent, but never at the cost of legibility.
+ */
+.actions {
+  background: color-mix(in srgb, var(--pw-panel) 93%, transparent);
+  position: sticky;
+  bottom: var(--pw-s3);
+  margin-top: var(--pw-s5);
+  padding: var(--pw-s3) var(--pw-s4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pw-s3);
+}
+
+.actionsSummary {
+  margin: 0;
+  min-width: 0;
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
+  overflow-wrap: anywhere;
+}
+
+.actionsButtons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pw-s3);
+}
+
+@media (max-width: 40rem) {
+  .searchControls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .actions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .actionsButtons {
+    flex-direction: column-reverse;
+  }
+
+  .actionsButtons button {
+    width: 100%;
+  }
+
+  .pagination button,
+  .searchPagination button {
+    flex: 1 1 0;
   }
 }

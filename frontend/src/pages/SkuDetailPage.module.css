@@ -1,168 +1,153 @@
 .backLink {
   display: inline-flex;
-  margin-bottom: 1.2rem;
-  color: var(--accent-strong);
-  font-size: 0.88rem;
-  font-weight: 700;
+  align-items: center;
+  gap: var(--pw-s2);
+  margin-bottom: var(--pw-s4);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
+  font-weight: 650;
   text-decoration: none;
 }
 
-.hero {
-  padding: clamp(1.5rem, 5vw, 3rem);
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 2rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-large);
-  background:
-    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 38%),
-    var(--surface);
-  box-shadow: var(--shadow);
+.backLink:hover {
+  color: var(--pw-accent-bright);
 }
 
-.hero h1,
-.hero p,
-.catalogueFacts {
+.nameplate {
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  display: grid;
+  gap: var(--pw-s5);
+}
+
+.nameplateIdentity {
+  min-width: 0;
+}
+
+.category {
   margin: 0;
+  color: var(--pw-accent-bright);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-micro);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-.hero h1 {
-  margin-top: 0.3rem;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  letter-spacing: -0.045em;
+.skuName {
+  margin: 0.3rem 0 0;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
   line-height: 1.05;
+  overflow-wrap: anywhere;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 55%);
 }
 
-.hero > div > p:last-child {
-  margin-top: 0.7rem;
-  color: var(--muted-ink);
+.subtitle {
+  margin: var(--pw-s2) 0 0;
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-sm);
+}
+
+/* Catalogue facts are stamped into the nameplate, not floated above it. */
+.catalogueFacts {
+  padding: var(--pw-s4);
+  gap: var(--pw-s4) clamp(1.5rem, 6vw, 4rem);
+}
+
+/*
+ * The only sticky control surface on the page, so the condition selector stays
+ * reachable while reading a long evidence table.
+ */
+.historyControls {
+  position: sticky;
+  top: 3.75rem;
+  z-index: 10;
+  margin-top: var(--pw-s5);
+  padding: var(--pw-s3) var(--pw-s4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--pw-s3) var(--pw-s5);
+}
+
+.historyControlsText h2 {
+  margin: 0.15rem 0 0;
+  font-size: var(--pw-text-md);
+}
+
+.historyControlsInputs {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--pw-s3);
+}
+
+.historyControlsInputs > span {
+  margin-bottom: 0.4rem;
+}
+
+.conditionField {
+  min-width: 11rem;
 }
 
 .eyebrow {
-  color: var(--accent-strong);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.catalogueFacts {
-  flex: 0 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 1.5rem;
-}
-
-.catalogueFacts dt {
-  color: var(--muted-ink);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.catalogueFacts dd {
-  margin: 0.25rem 0 0;
-  font-size: 1.05rem;
-  font-weight: 750;
-  font-variant-numeric: tabular-nums;
-}
-
-.historyControls {
-  margin-top: 2rem;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-
-.historyControls h2,
-.historyControls p {
   margin: 0;
-}
-
-.historyControls label,
-.historyControls label span {
-  display: block;
-}
-
-.historyControls label span {
-  margin-bottom: 0.35rem;
-  color: var(--muted-ink);
-  font-size: 0.75rem;
+  color: var(--pw-accent-bright);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-micro);
   font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-.historyControls select {
-  min-width: 12rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 0.6rem;
-  padding: 0.65rem 2.2rem 0.65rem 0.75rem;
-  color: var(--ink);
-  background: var(--surface);
-  font: inherit;
+.historyState {
+  margin-top: var(--pw-s4);
 }
 
-.status,
+/* A confirmation strip, not a success banner: the request simply completed. */
 .loadedStatus {
-  margin-top: 1.5rem;
-  padding: 1.2rem;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-medium);
-  color: var(--muted-ink);
-  background: var(--surface);
-  text-align: center;
-}
-
-.loadedStatus {
-  border-style: solid;
-  border-color: color-mix(in srgb, var(--success) 35%, var(--border));
-  color: var(--success);
-  background: var(--success-soft);
+  margin: var(--pw-s4) 0 0;
+  padding: var(--pw-s2) var(--pw-s3);
+  border: 1px solid var(--pw-edge-dark);
+  border-left: 2px solid var(--pw-positive);
+  border-radius: var(--pw-r-sm);
+  color: var(--pw-ink-dim);
+  background: var(--pw-positive-wash);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-xs);
+  font-variant-numeric: tabular-nums;
 }
 
 .state {
   max-width: 40rem;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-large);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  padding: clamp(1.25rem, 4vw, 2rem);
 }
 
 .state h1 {
-  margin: 0.4rem 0 0.65rem;
+  margin: var(--pw-s3) 0 var(--pw-s2);
+  font-size: var(--pw-text-xl);
 }
 
-.state p:not(.eyebrow) {
-  color: var(--muted-ink);
+.state p {
+  margin: 0 0 var(--pw-s4);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
 }
 
-.state a {
-  color: var(--accent-strong);
-  font-weight: 700;
-}
-
-@media (max-width: 720px) {
-  .hero,
+@media (max-width: 46rem) {
   .historyControls {
-    align-items: start;
+    position: static;
+    align-items: stretch;
     flex-direction: column;
   }
 
-  .catalogueFacts {
-    width: 100%;
-  }
-}
-
-@media (max-width: 440px) {
-  .catalogueFacts {
-    grid-template-columns: 1fr;
+  .historyControlsInputs {
+    align-items: flex-end;
+    justify-content: space-between;
   }
 
-  .historyControls label,
-  .historyControls select {
-    width: 100%;
+  .conditionField {
+    flex: 1 1 auto;
   }
 }

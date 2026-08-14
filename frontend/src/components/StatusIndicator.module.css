@@ -1,0 +1,72 @@
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pw-s2);
+  min-height: 1.75rem;
+  padding: 0 var(--pw-s3) 0 var(--pw-s2);
+  border: 1px solid var(--pw-edge-dark);
+  border-radius: var(--pw-r-sm);
+  background: var(--pw-well);
+  box-shadow:
+    inset 0 1px 3px rgb(0 0 0 / 55%),
+    0 1px 0 var(--pw-highlight);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-tiny);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* A seated indicator lamp: bezel ring, lit lens, short throw of glow. */
+.lamp {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 65%),
+    0 0 0 2px rgb(255 255 255 / 6%),
+    0 0 6px 0 color-mix(in srgb, var(--tone) 70%, transparent);
+}
+
+.label {
+  color: var(--pw-ink);
+}
+
+.bare {
+  border: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.accent {
+  --tone: var(--pw-accent);
+}
+
+.positive {
+  --tone: var(--pw-positive);
+}
+
+.caution {
+  --tone: var(--pw-caution);
+}
+
+.negative {
+  --tone: var(--pw-negative);
+}
+
+.neutral {
+  --tone: var(--pw-neutral);
+}
+
+/* Unlit lens for states that are recorded but inactive. */
+.neutral .lamp {
+  background: #3d4757;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 65%),
+    0 0 0 2px rgb(255 255 255 / 6%);
+}

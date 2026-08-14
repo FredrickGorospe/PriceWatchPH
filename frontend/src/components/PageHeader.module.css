@@ -1,0 +1,65 @@
+.header {
+  margin-bottom: var(--pw-s5);
+  padding-bottom: var(--pw-s4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--pw-s4) var(--pw-s6);
+  /* A machined seam, not a card: the header is part of the chassis. */
+  border-bottom: 1px solid var(--pw-edge);
+  box-shadow: 0 1px 0 var(--pw-highlight);
+}
+
+.identity {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--pw-s2);
+  color: var(--pw-accent-bright);
+  font-size: var(--pw-text-tiny);
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0.35rem 0 0;
+  color: var(--pw-ink);
+  font-size: var(--pw-text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.032em;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 55%);
+}
+
+.description {
+  max-width: 30rem;
+  margin: 0;
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
+  text-align: right;
+  text-wrap: balance;
+}
+
+.aside {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 46rem) {
+  .header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--pw-s3);
+  }
+
+  .description {
+    max-width: none;
+    text-align: left;
+  }
+}

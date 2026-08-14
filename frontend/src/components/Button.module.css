@@ -1,0 +1,109 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pw-s2);
+  min-height: 2.5rem;
+  padding: 0 var(--pw-s4);
+  border: 1px solid var(--pw-edge-strong);
+  border-radius: var(--pw-r-md);
+  color: var(--pw-ink);
+  background: linear-gradient(180deg, var(--pw-control-top), var(--pw-control-bottom));
+  box-shadow: var(--pw-depth-raised);
+  font: inherit;
+  font-size: var(--pw-text-sm);
+  font-weight: 650;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--pw-t-fast),
+    box-shadow var(--pw-t-fast),
+    background-color var(--pw-t-fast),
+    border-color var(--pw-t-fast);
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--pw-edge-bright);
+  background: linear-gradient(180deg, #2c3644, #202836);
+}
+
+/* The control physically depresses into the panel it is mounted on. */
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: var(--pw-depth-pressed);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  border-color: var(--pw-edge);
+  color: var(--pw-ink-faint);
+  background: var(--pw-panel);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Primary — the one clearly pressable object per action group. */
+.primary {
+  border-color: var(--pw-accent-deep);
+  color: #04121f;
+  background: linear-gradient(180deg, #6cb2f8, var(--pw-accent) 55%, #3f8cdf);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 45%),
+    0 1px 1px rgb(0 0 0 / 55%),
+    0 4px 10px rgb(47 111 184 / 35%);
+  font-weight: 750;
+}
+
+.primary:hover:not(:disabled) {
+  border-color: var(--pw-accent);
+  background: linear-gradient(180deg, #8cc3fa, #5aa8f7 55%, #4a97ea);
+}
+
+.primary:active:not(:disabled) {
+  box-shadow:
+    inset 0 2px 5px rgb(6 40 74 / 55%),
+    inset 0 1px 0 rgb(6 40 74 / 40%);
+}
+
+/* Caution — reversible operational actions that are not the primary path. */
+.caution {
+  border-color: color-mix(in srgb, var(--pw-caution) 40%, var(--pw-edge-strong));
+  color: var(--pw-caution);
+  background: linear-gradient(180deg, #2b2618, #211d13);
+}
+
+.caution:hover:not(:disabled) {
+  border-color: var(--pw-caution);
+  background: linear-gradient(180deg, #342d1c, #272117);
+}
+
+/* Ghost — low-weight navigation and pagination. */
+.ghost {
+  border-color: var(--pw-edge);
+  color: var(--pw-ink-dim);
+  background: rgb(255 255 255 / 3%);
+  box-shadow: none;
+}
+
+.ghost:hover:not(:disabled) {
+  border-color: var(--pw-edge);
+  color: var(--pw-ink);
+  background: rgb(255 255 255 / 4%);
+}
+
+.ghost:active:not(:disabled) {
+  box-shadow: var(--pw-depth-pressed);
+}
+
+.small {
+  min-height: 2.125rem;
+  padding: 0 var(--pw-s3);
+  font-size: var(--pw-text-xs);
+}
+
+.block {
+  width: 100%;
+}

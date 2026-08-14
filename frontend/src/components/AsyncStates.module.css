@@ -1,51 +1,167 @@
 .state {
   max-width: 42rem;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-large);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.stateHead {
+  display: flex;
+  align-items: center;
+  gap: var(--pw-s3);
 }
 
 .state h1,
 .state h2 {
-  margin: 0 0 0.65rem;
-  color: var(--ink);
+  margin: var(--pw-s3) 0 var(--pw-s2);
+  color: var(--pw-ink);
+  font-size: var(--pw-text-lg);
 }
 
 .state p {
-  color: var(--muted-ink);
+  margin: 0 0 var(--pw-s3);
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
 }
 
-.eyebrow {
-  margin: 0 0 0.5rem;
-  color: var(--danger);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
+.actions {
+  margin-top: var(--pw-s4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pw-s3);
 }
 
-.primaryLink,
-.primaryButton {
+/* An out-of-app destination, so it is an anchor wearing the primary control. */
+.primaryLink {
   display: inline-flex;
-  border: 0;
-  border-radius: 0.6rem;
-  padding: 0.72rem 1rem;
-  color: #fff;
-  background: var(--accent);
-  font: inherit;
-  font-weight: 700;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 var(--pw-s4);
+  border: 1px solid var(--pw-accent-deep);
+  border-radius: var(--pw-r-md);
+  color: #04121f;
+  background: linear-gradient(180deg, #6cb2f8, var(--pw-accent) 55%, #3f8cdf);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 45%),
+    0 1px 1px rgb(0 0 0 / 55%),
+    0 4px 10px rgb(47 111 184 / 35%);
+  font-size: var(--pw-text-sm);
+  font-weight: 750;
   text-decoration: none;
-  cursor: pointer;
 }
 
-.primaryLink:hover,
-.primaryButton:hover {
-  background: var(--accent-strong);
+.primaryLink:hover {
+  color: #04121f;
+  background: linear-gradient(180deg, #8cc3fa, #5aa8f7 55%, #4a97ea);
+}
+
+.primaryLink:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 5px rgb(6 40 74 / 55%);
+}
+
+.actions a:not(.primaryLink) {
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
+  font-weight: 600;
+}
+
+.actions a:not(.primaryLink):hover {
+  color: var(--pw-accent-bright);
 }
 
 .secondaryText {
-  margin-bottom: 0;
-  font-size: 0.88rem;
+  margin: var(--pw-s4) 0 0;
+  padding-top: var(--pw-s3);
+  border-top: 1px solid var(--pw-edge);
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-xs);
+}
+
+/*
+ * Transient states are recessed panels, not floating cards: nothing has
+ * arrived yet, so nothing should look mounted on top of the workspace.
+ */
+.transient {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pw-s3);
+  min-height: 8rem;
+  padding: var(--pw-s5) var(--pw-s4);
+  text-align: center;
+}
+
+.transientBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pw-s2);
+}
+
+.message {
+  margin: 0;
+  color: var(--pw-ink-dim);
+  font-size: var(--pw-text-sm);
+  font-weight: 600;
+}
+
+.detail {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--pw-ink-faint);
+  font-size: var(--pw-text-xs);
+}
+
+/* A scanning read-head sweeping the well while a request is in flight. */
+.scanner {
+  position: relative;
+  width: min(14rem, 60%);
+  height: 3px;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 6%);
+  overflow: hidden;
+}
+
+.scanner::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  width: 38%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, transparent, var(--pw-accent), transparent);
+  animation: sweep 1.35s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-110%);
+  }
+
+  100% {
+    transform: translateX(370%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanner::after {
+    animation: none;
+    width: 100%;
+    background: var(--pw-accent-line);
+  }
+}
+
+/* Empty is a verified result, not a failure: neutral lamp, no alarm colour. */
+.emptyMark {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--pw-edge-dark);
+  border-radius: var(--pw-r-sm);
+  background: rgb(255 255 255 / 3%);
+  box-shadow: inset 0 1px 0 var(--pw-edge);
+  color: var(--pw-ink-faint);
+  font-family: var(--pw-font-mono);
+  font-size: var(--pw-text-md);
+  line-height: 1;
 }

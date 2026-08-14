@@ -1,15 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import {
+  type AccessDisposition,
   bootstrapCsrf,
   getReviewListingPage,
   isCancelledRequest,
   ReviewApiError,
 } from '../api/client';
+import { useReportAuthUiState } from '../auth/AuthUiContext';
 import type { Page, ReviewListing } from '../api/types';
-import { AccessRequiredState, RequestFailureState } from '../components/AsyncStates';
+import {
+  AccessRequiredState,
+  EmptyState,
+  LoadingState,
+  RequestFailureState,
+} from '../components/AsyncStates';
+import Button, { ButtonLink } from '../components/Button';
+import PageHeader from '../components/PageHeader';
 import ReviewEvidence from '../components/ReviewEvidence';
+import StatusIndicator from '../components/StatusIndicator';
 import styles from './ReviewPages.module.css';
 
 
@@ -18,7 +28,7 @@ const REVIEW_QUEUE_PATH = '/api/v1/reviews/listings/';
 type QueueState =
   | { status: 'loading' }
   | { status: 'success'; page: Page<ReviewListing> }
-  | { status: 'forbidden' }
+  | { status: 'forbidden'; access: AccessDisposition }
   | { status: 'error' };
 
 interface QueueRequest {
@@ -58,7 +68,7 @@ export default function ReviewQueuePage() {
           return;
         }
         if (error instanceof ReviewApiError && error.status === 403) {
-          setState({ status: 'forbidden' });
+          setState({ status: 'forbidden', access: error.access });
           return;
         }
         setState({ status: 'error' });
@@ -69,26 +79,40 @@ export default function ReviewQueuePage() {
     return () => controller.abort();
   }, [request]);
 
+  useReportAuthUiState(
+    state.status === 'success'
+      ? 'authorized'
+      : state.status === 'forbidden'
+        ? state.access
+        : 'unknown',
+  );
+
   if (state.status === 'forbidden') {
-    return <AccessRequiredState />;
+    return <AccessRequiredState access={state.access} />;
   }
+
+  if (state.status === 'loading') {
+    return <LoadingState message="Loading review queue..." />;
+  }
+
+  const queueDepth = state.status === 'success' ? state.page.count : null;
 
   return (
     <section aria-labelledby="review-queue-heading">
-      <header className={styles.pageHeading}>
-        <div>
-          <p className={styles.eyebrow}>Human review</p>
-          <h1 id="review-queue-heading">Review queue</h1>
-        </div>
-        <p>Oldest unresolved source evidence appears first.</p>
-      </header>
+      <PageHeader
+        eyebrow="Human review"
+        title="Review queue"
+        titleId="review-queue-heading"
+        description="Oldest unresolved source evidence appears first."
+        aside={queueDepth === null ? undefined : (
+          <StatusIndicator tone={queueDepth === 0 ? 'neutral' : 'caution'}>
+            {`${queueDepth} awaiting review`}
+          </StatusIndicator>
+        )}
+      />
 
       {navigationState?.successMessage && (
         <p className={styles.success} role="status">{navigationState.successMessage}</p>
-      )}
-
-      {state.status === 'loading' && (
-        <p className={styles.status} role="status">Loading review queue...</p>
       )}
 
       {state.status === 'error' && (
@@ -104,24 +128,30 @@ export default function ReviewQueuePage() {
       )}
 
       {state.status === 'success' && state.page.results.length === 0 && (
-        <p className={styles.status} role="status">No listings are waiting for review.</p>
+        <EmptyState
+          message="No listings are waiting for review."
+          detail="Every ingested listing has been resolved or already reviewed."
+        />
       )}
 
       {state.status === 'success' && state.page.results.length > 0 && (
         <>
           <div className={styles.queue}>
             {state.page.results.map((review) => (
-              <article className={styles.card} key={review.id}>
+              <article className={`pw-panel ${styles.card}`} key={review.id}>
+                <div className={styles.cardHead}>
+                  <h2 className={styles.cardTitle}>Listing {review.id}</h2>
+                  <ButtonLink variant="primary" small to={`/reviews/${review.id}`}>
+                    Review listing {review.id}
+                  </ButtonLink>
+                </div>
                 <ReviewEvidence review={review} />
-                <p className={styles.cardAction}>
-                  <Link to={`/reviews/${review.id}`}>Review listing {review.id}</Link>
-                </p>
               </article>
             ))}
           </div>
           <nav className={styles.pagination} aria-label="Review queue pages">
-            <button
-              type="button"
+            <Button
+              small
               aria-label="Previous review listings"
               disabled={state.page.previous === null}
               onClick={() => state.page.previous && setRequest((current) => ({
@@ -131,9 +161,9 @@ export default function ReviewQueuePage() {
               }))}
             >
               Previous
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
+              small
               aria-label="Next review listings"
               disabled={state.page.next === null}
               onClick={() => state.page.next && setRequest((current) => ({
@@ -143,7 +173,7 @@ export default function ReviewQueuePage() {
               }))}
             >
               Next
-            </button>
+            </Button>
           </nav>
         </>
       )}

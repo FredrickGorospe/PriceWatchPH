@@ -7,9 +7,19 @@ import {
   getSku,
   isCancelledRequest,
 } from '../api/client';
+import { useReportAuthUiState } from '../auth/AuthUiContext';
 import type { ListingCondition, PricePoint, Sku } from '../api/types';
 import PriceHistoryChart from '../charts/PriceHistoryChart';
-import { AccessRequiredState, RequestFailureState } from '../components/AsyncStates';
+import {
+  AccessRequiredState,
+  EmptyState,
+  LoadingState,
+  RequestFailureState,
+} from '../components/AsyncStates';
+import { ButtonLink } from '../components/Button';
+import { SelectField } from '../components/Field';
+import MetricReadout, { ReadoutList } from '../components/MetricReadout';
+import StatusIndicator from '../components/StatusIndicator';
 import { formatMoneyDecimal } from '../formatting/decimal';
 import { categoryLabel, skuDisplayName } from '../formatting/sku';
 import { formatDateOnly } from '../formatting/time';
@@ -87,18 +97,31 @@ export default function SkuDetailPage() {
 
   const skuError = apiError(skuState);
   const historyError = apiError(historyState);
+  const forbiddenError = skuError?.kind === 'forbidden'
+    ? skuError
+    : historyError?.kind === 'forbidden'
+      ? historyError
+      : null;
 
-  if (skuError?.kind === 'forbidden' || historyError?.kind === 'forbidden') {
-    return <AccessRequiredState />;
+  useReportAuthUiState(
+    forbiddenError !== null
+      ? forbiddenError.access
+      : skuState.status === 'success'
+        ? 'authorized'
+        : 'unknown',
+  );
+
+  if (forbiddenError !== null) {
+    return <AccessRequiredState access={forbiddenError.access} />;
   }
 
   if (skuError?.kind === 'not-found' || historyError?.kind === 'not-found') {
     return (
-      <section className={styles.state} role="status">
-        <p className={styles.eyebrow}>Missing catalogue record</p>
+      <section className={`pw-panel ${styles.state}`} role="status">
+        <StatusIndicator tone="caution">Missing catalogue record</StatusIndicator>
         <h1>SKU not found</h1>
         <p>The requested canonical SKU does not exist.</p>
-        <Link to="/deals">Return to deals</Link>
+        <ButtonLink variant="primary" to="/deals">Return to deals</ButtonLink>
       </section>
     );
   }
@@ -114,7 +137,7 @@ export default function SkuDetailPage() {
   }
 
   if (skuState.status === 'loading') {
-    return <p className={styles.status} role="status">Loading SKU...</p>;
+    return <LoadingState message="Checking PriceWatch PH access..." />;
   }
 
   const sku = skuState.value;
@@ -126,50 +149,75 @@ export default function SkuDetailPage() {
 
   return (
     <article>
-      <Link className={styles.backLink} to="/deals">← Back to deals</Link>
-      <header className={styles.hero}>
-        <div>
-          <p className={styles.eyebrow}>{categoryLabel(sku.category)}</p>
-          <h1>{skuDisplayName(sku)}</h1>
-          <p>Canonical catalogue identity</p>
+      <Link className={styles.backLink} to="/deals">
+        <span aria-hidden="true">←</span> Back to deals
+      </Link>
+
+      {/* The asset nameplate: identity above, catalogue facts inset below it. */}
+      <header className={`pw-panel ${styles.nameplate}`}>
+        <div className={styles.nameplateIdentity}>
+          <p className={styles.category}>{categoryLabel(sku.category)}</p>
+          <h1 className={styles.skuName}>{skuDisplayName(sku)}</h1>
+          <p className={styles.subtitle}>Canonical catalogue identity</p>
         </div>
-        <dl className={styles.catalogueFacts}>
-          <div><dt>Launch MSRP</dt><dd>{formatMoneyDecimal(sku.launch_msrp)}</dd></div>
-          <div><dt>Launch date</dt><dd>{formatDateOnly(sku.launch_date)}</dd></div>
-        </dl>
+        <ReadoutList layout="strip" className={`pw-well ${styles.catalogueFacts}`}>
+          <MetricReadout label="Launch MSRP" size="md" mono>
+            {formatMoneyDecimal(sku.launch_msrp)}
+          </MetricReadout>
+          <MetricReadout label="Launch date" size="md" mono tone="muted">
+            {formatDateOnly(sku.launch_date)}
+          </MetricReadout>
+          <MetricReadout label="Catalogue ref" size="md" mono tone="muted">
+            {`SKU-${sku.id}`}
+          </MetricReadout>
+        </ReadoutList>
       </header>
 
-      <section className={styles.historyControls} aria-labelledby="history-controls-heading">
-        <div>
+      <section
+        className={`pw-frost ${styles.historyControls}`}
+        aria-labelledby="history-controls-heading"
+      >
+        <div className={styles.historyControlsText}>
           <p className={styles.eyebrow}>Sealed pricing evidence</p>
           <h2 id="history-controls-heading">History selection</h2>
         </div>
-        <label>
-          <span>Condition</span>
-          <select value={condition} onChange={(event) => selectCondition(event.target.value)}>
+        <div className={styles.historyControlsInputs}>
+          <SelectField
+            label="Condition"
+            className={styles.conditionField}
+            value={condition}
+            onChange={(event) => selectCondition(event.target.value)}
+          >
             {CONDITION_OPTIONS.map((option) => (
               <option key={option.value || 'all'} value={option.value}>{option.label}</option>
             ))}
-          </select>
-        </label>
+          </SelectField>
+        </div>
       </section>
 
       {historyState.status === 'loading' && (
-        <p className={styles.status} role="status">Loading complete price history...</p>
-      )}
-
-      {historyState.status === 'error' && (
-        <RequestFailureState
-          title="Price history could not be loaded."
-          retryLabel="Retry price history"
-          onRetry={() => setHistoryAttempt((attempt) => attempt + 1)}
+        <LoadingState
+          className={styles.historyState}
+          message="Loading complete price history..."
         />
       )}
 
+      {historyState.status === 'error' && (
+        <div className={styles.historyState}>
+          <RequestFailureState
+            title="Price history could not be loaded."
+            retryLabel="Retry price history"
+            onRetry={() => setHistoryAttempt((attempt) => attempt + 1)}
+          />
+        </div>
+      )}
+
       {historyState.status === 'success' && historyState.value.length === 0 && (
-        <p className={styles.status} role="status">
-          No persisted price history is available for this selection.
-        </p>
+        <EmptyState
+          className={styles.historyState}
+          message="No persisted price history is available for this selection."
+          detail="Try a different condition, or wait for the next pricing run."
+        />
       )}
 
       {historyState.status === 'success' && historyState.value.length > 0 && (

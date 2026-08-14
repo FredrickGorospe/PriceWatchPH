@@ -22,12 +22,17 @@ import type { PriceHistoryChartPoint } from './priceHistory';
 import styles from './PriceHistoryChart.module.css';
 
 
+// Cool, legible on the recessed dark plot face, and still distinguishable by
+// dash pattern alone so the series never depend on colour.
 const SERIES_STYLES: Record<ListingCondition, { color: string; dash?: string }> = {
-  new: { color: '#0f766e' },
-  like_new: { color: '#2563eb', dash: '7 3' },
-  used: { color: '#7c3aed', dash: '3 3' },
-  for_parts: { color: '#b45309', dash: '10 3 2 3' },
+  new: { color: '#4ecfb0' },
+  like_new: { color: '#5aa8f7', dash: '7 3' },
+  used: { color: '#a68bf5', dash: '3 3' },
+  for_parts: { color: '#e0a544', dash: '10 3 2 3' },
 };
+
+const AXIS_TICK = { fill: '#7f8fa7', fontSize: 11 };
+const GRID_STROKE = 'rgba(255, 255, 255, 0.07)';
 
 function PriceHistoryTooltip({
   active,
@@ -90,7 +95,7 @@ export default function PriceHistoryChart({ pricePoints }: PriceHistoryChartProp
   const conditions = Array.from(new Set(pricePoints.map((point) => point.condition)));
 
   return (
-    <section className={styles.section} aria-labelledby="price-history-heading">
+    <section className={`pw-panel ${styles.section}`} aria-labelledby="price-history-heading">
       <div className={styles.sectionHeading}>
         <div>
           <p className={styles.eyebrow}>Presentation view</p>
@@ -111,10 +116,16 @@ export default function PriceHistoryChart({ pricePoints }: PriceHistoryChartProp
         </p>
         <ResponsiveContainer width="100%" height={360} minWidth={0}>
           <ComposedChart data={chartPoints} margin={{ top: 18, right: 18, bottom: 24, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis dataKey="day" tickFormatter={formatDateOnly} minTickGap={24} />
-            <YAxis tick={false} width={18} />
-            <Tooltip content={PriceHistoryTooltip} />
+            <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} vertical={false} />
+            <XAxis
+              dataKey="day"
+              tickFormatter={formatDateOnly}
+              minTickGap={24}
+              tick={AXIS_TICK}
+              stroke="rgba(255, 255, 255, 0.14)"
+            />
+            <YAxis tick={false} width={18} stroke="rgba(255, 255, 255, 0.14)" />
+            <Tooltip content={PriceHistoryTooltip} cursor={{ stroke: GRID_STROKE }} />
             <Legend verticalAlign="top" height={52} />
             {conditions.map((condition) => (
               <Area
@@ -126,7 +137,7 @@ export default function PriceHistoryChart({ pricePoints }: PriceHistoryChartProp
                 name={`${conditionLabel(condition)} p25–p75`}
                 stroke="none"
                 fill={SERIES_STYLES[condition].color}
-                fillOpacity={0.12}
+                fillOpacity={0.14}
                 connectNulls={false}
                 isAnimationActive={false}
               />
@@ -142,7 +153,7 @@ export default function PriceHistoryChart({ pricePoints }: PriceHistoryChartProp
                 stroke={SERIES_STYLES[condition].color}
                 strokeWidth={2.5}
                 strokeDasharray={SERIES_STYLES[condition].dash}
-                dot={{ r: 3, strokeWidth: 2, fill: '#ffffff' }}
+                dot={{ r: 2.5, strokeWidth: 2, fill: '#0b0f15' }}
                 activeDot={{ r: 5 }}
                 connectNulls={false}
                 isAnimationActive={false}
