@@ -5,7 +5,7 @@ services:
     # `postgres:16` tag, so the image doesn't silently drift.
     image: postgres:16.14-bookworm
     env_file:
-      - .env
+      - ${PRICEWATCHPH_APP_ENV_FILE:-.env}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -18,7 +18,7 @@ services:
   migrate:
     build: .
     env_file:
-      - .env
+      - ${PRICEWATCHPH_APP_ENV_FILE:-.env}
     depends_on:
       db:
         condition: service_healthy
@@ -28,7 +28,7 @@ services:
   web:
     build: .
     env_file:
-      - .env
+      - ${PRICEWATCHPH_APP_ENV_FILE:-.env}
     depends_on:
       db:
         condition: service_healthy
@@ -59,6 +59,37 @@ services:
       - /app/production_scheduler.py
       - --serve
 
+  backup:
+    image: postgres:16.14-bookworm
+    profiles: ["backup"]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    environment:
+      PGHOST: db
+      PGPORT: "5432"
+      PGDATABASE: ${POSTGRES_DB:-}
+      PGUSER: ${POSTGRES_USER:-}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-}
+    volumes:
+      - ./pg_backup.sh:/usr/local/bin/pg_backup.sh:ro
+      - ${PRICEWATCHPH_BACKUP_DIR:-./backups}:/backups
+    command: ["/usr/local/bin/pg_backup.sh"]
+
+  restore_scratch:
+    image: postgres:16.14-bookworm
+    profiles: ["restore-verify"]
+    restart: "no"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: restore_scratch
+      POSTGRES_PASSWORD: ${PRICEWATCHPH_RESTORE_SCRATCH_PASSWORD:-}
+    volumes:
+      - ${PRICEWATCHPH_BACKUP_DIR:-./backups}:/backups:ro
+      - task037_scratch_data:/var/lib/postgresql/data
+
 volumes:
   postgres_data:
   scheduler_lock:
+  task037_scratch_data:

@@ -21,5 +21,10 @@ venv/
 /frontend/coverage/
 /frontend/.vite/
 
+# PostgreSQL logical backups contain sensitive application data.
+/backups/
+*.dump
+*.dump.sha256
+
 # Legacy project MCP configuration is non-Codex and machine-local.
 /.mcp.json
