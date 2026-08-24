@@ -96,7 +96,9 @@ def test_compose_declares_scheduler_using_the_application_build():
 
     assert scheduler.get("build") == web.get("build")
     assert scheduler.get("image") == web.get("image")
-    assert scheduler.get("env_file") == web.get("env_file") == [".env"]
+    assert scheduler.get("env_file") == web.get("env_file") == [
+        "${PRICEWATCHPH_APP_ENV_FILE:-.env}"
+    ]
     assert scheduler["command"] == [
         "/usr/local/bin/python",
         "/app/production_scheduler.py",

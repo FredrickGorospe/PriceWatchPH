@@ -75,8 +75,17 @@ That is rejected because it duplicates secrets and widens their file surface.
 package provides `/usr/bin/busybox`; its `crond -f` mode stays in the
 foreground and `-L` sends daemon logs to a chosen file. An empirical container
 test proved that a cron child receives an arbitrary environment variable from
-the container without copying it into the crontab. This preserves the existing
-Compose `env_file: .env` convention.
+the container without copying it into the crontab. This preserves the
+application environment source shared with `web`.
+
+**Successor integration amendment (TASK_037).** TASK_036 originally froze
+TASK_034's literal `env_file: .env` application-environment convention.
+TASK_037 later introduced the Compose-only `PRICEWATCHPH_APP_ENV_FILE`
+selector for `db`, `migrate`, and `web`. Because `scheduler` is an application
+peer of `web`, it must continue sharing the same application environment source
+and therefore inherits `${PRICEWATCHPH_APP_ENV_FILE:-.env}`. The default
+remains `.env`. This changes no scheduler timing, pipeline, alert, locking, or
+process semantics.
 
 BusyBox `crond` alone did not exit inside a three-second Docker stop grace
 period when it was PID 1. The Bookworm `tini` package is therefore required.
@@ -157,7 +166,8 @@ test. If implementation needs another file, it stops for owner review.
 properties:
 
 - it uses the same `build` contract and resulting application image as `web`;
-- it uses the existing `env_file: .env` application-environment convention;
+- it uses the same application environment source as `web`,
+  `${PRICEWATCHPH_APP_ENV_FILE:-.env}`, whose default remains `.env`;
 - its command is the fixed list form
   `/usr/local/bin/python /app/production_scheduler.py --serve`;
 - it has no published port, `expose`, healthcheck, custom network, profile, or
@@ -258,9 +268,10 @@ timing fields is written.
 
 Telegram credentials, database credentials, Django secrets, activation time,
 and all other application configuration remain solely in the scheduler
-container environment inherited from `env_file: .env`. BusyBox passes that
-environment to the child. The crontab contains no secret name or value, and
-the scheduler does not print environment mappings.
+container environment inherited from the application environment selector
+`${PRICEWATCHPH_APP_ENV_FILE:-.env}` shared with `web`; its default remains
+`.env`. BusyBox passes that environment to the child. The crontab contains no
+secret name or value, and the scheduler does not print environment mappings.
 
 ## 9. Process and signal lifecycle
 

@@ -42,7 +42,7 @@ services:
   scheduler:
     build: .
     env_file:
-      - .env
+      - ${PRICEWATCHPH_APP_ENV_FILE:-.env}
     environment:
       TZ: UTC
       PRICEWATCHPH_SCHEDULER_CRON: ${PRICEWATCHPH_SCHEDULER_CRON:?PRICEWATCHPH_SCHEDULER_CRON must be set and non-empty}
