@@ -1191,16 +1191,21 @@ def test_task_037_introduces_no_model_or_migration_change():
     assert result.returncode == 0, result.stdout + result.stderr
 
 
-def test_existing_services_are_not_modified_by_task_037():
-    """Only worktree env-file indirection may change in the TASK_034 runtime."""
+def test_existing_services_preserve_task_037_with_successor_contracts():
+    """Successors supersede only database-env and ingress-topology ownership."""
     compose = _compose()
     expected_env_file = ["${PRICEWATCHPH_APP_ENV_FILE:-.env}"]
-    for service_name in ("db", "migrate", "web"):
+    for service_name in ("migrate", "web"):
         assert compose["services"][service_name]["env_file"] == expected_env_file
 
     db = compose["services"]["db"]
-    assert set(db) == {"image", "env_file", "volumes", "healthcheck", "restart"}
+    assert set(db) == {"image", "environment", "volumes", "healthcheck", "restart"}
     assert db["image"].startswith("postgres:16")
+    assert db["environment"] == {
+        "POSTGRES_DB": "${POSTGRES_DB:-}",
+        "POSTGRES_USER": "${POSTGRES_USER:-}",
+        "POSTGRES_PASSWORD": "${POSTGRES_PASSWORD:-}",
+    }
     assert db["volumes"] == ["postgres_data:/var/lib/postgresql/data"]
     assert db["restart"] == "unless-stopped"
 
@@ -1212,21 +1217,12 @@ def test_existing_services_are_not_modified_by_task_037():
     assert migrate["command"] == "python manage.py migrate --noinput"
 
     web = compose["services"]["web"]
-    assert set(web) == {
-        "build", "env_file", "depends_on", "ports", "restart", "command"
-    }
     assert web["build"] == "."
     assert web["depends_on"] == {
         "db": {"condition": "service_healthy"},
         "migrate": {"condition": "service_completed_successfully"},
     }
-    assert web["ports"] == ["8000:8000"]
     assert web["restart"] == "unless-stopped"
-    assert web["command"] == (
-        "gunicorn config.wsgi:application --bind 0.0.0.0:8000 "
-        "--forwarded-allow-ips=127.0.0.1,::1"
-    )
-    assert "caddy" not in compose["services"], "Caddy belongs to TASK_035"
 
 
 # --- the SELLER_PSEUDONYM_KEY contract (task file §9) ---------------------

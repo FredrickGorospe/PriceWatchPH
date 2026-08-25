@@ -27,8 +27,10 @@ removes urgency (`docs/09_PLANNING.md` §9, TASK_037).
   `pricing/migrations/0002_auditable_pricing_evidence.py`,
   `alerts/migrations/0001_initial.py`, `ingestion/demo_data.py`.
 
-TASK_037 is **independent of TASK_035 (Caddy) and TASK_036 (scheduler)** and
-references neither's unmerged changes.
+At its original checkpoint, TASK_037 was **independent of TASK_035 (Caddy)
+and TASK_036 (scheduler)** and referenced neither task's then-unmerged changes.
+The successor amendments in §14 preserve that history while delegating later
+cross-task ownership explicitly.
 
 ### 2.1 Post-incident contract correction
 
@@ -931,13 +933,14 @@ by restore. Choosing a frequency is a NON-BLOCKING deployment decision (§19).
 
 ### IMPLEMENT files allowed — after owner approval
 
-- `docker-compose.yml` — add the `backup` and `restore_scratch` services. The
-  only permitted existing-service change is replacing literal `.env` with
-  `${PRICEWATCHPH_APP_ENV_FILE:-.env}` for the `db`, `migrate`, and `web`
-  `env_file` entries, so a drill in a separate worktree can explicitly select
-  the active application's environment file for read-only non-interference
-  snapshots. Their image/build behavior, commands, dependencies, ports, restart
-  policy, and database volume remain unchanged.
+- `docker-compose.yml` — add the `backup` and `restore_scratch` services. At
+  the TASK_037 checkpoint, the only permitted existing-service change was
+  replacing literal `.env` with `${PRICEWATCHPH_APP_ENV_FILE:-.env}` for the
+  `db`, `migrate`, and `web` `env_file` entries, so a drill in a separate
+  worktree could explicitly select the active application's environment file
+  for read-only non-interference snapshots. Their image/build behavior,
+  commands, dependencies, ports, restart policy, and database volume remained
+  unchanged.
 - `pg_backup.sh` (new, repository root)
 - `pg_restore_verify.sh` (new, repository root)
 - `.gitignore` — add `/backups/`, `*.dump`, `*.dump.sha256`
@@ -952,6 +955,43 @@ previously frozen test module, `CLAUDE.md`, `docs/*`.
 inspection surfaced no evidence that one is needed; §9.2 records the one place
 a schema change might have been tempting (a key fingerprint) and rejects it.
 
+### TASK_037A successor amendment — frozen before TASK_037A implementation
+
+TASK_037A supersedes only TASK_037's historical `db.env_file` allowance. The
+database service must not load the application environment file. Its
+`environment` mapping contains exactly these existing Compose-interpolated
+variables:
+
+```yaml
+POSTGRES_DB: ${POSTGRES_DB:-}
+POSTGRES_USER: ${POSTGRES_USER:-}
+POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-}
+```
+
+`migrate` and `web` retain
+`env_file: ["${PRICEWATCHPH_APP_ENV_FILE:-.env}"]`; TASK_036 independently
+freezes the same application-environment source for `scheduler`. This
+successor amendment adds no environment variable or deployment mechanism and
+changes no TASK_037 backup service, restore-scratch service, backup/restore
+script, exact-resource cleanup rule, restore isolation boundary, image,
+volume, health check, or restart behavior.
+
+TASK_037's original compatibility test also recorded the inherited TASK_034
+runtime topology because TASK_035 had not yet been integrated: `web` published
+host port 8000, Gunicorn used the loopback-only forwarded-IP allowlist, and no
+`caddy` service existed. TASK_035 later becomes the sole authority for public
+ingress. During TASK_037A integration, TASK_035 therefore supersedes only
+TASK_037's inherited assertions about `web` host-port publication, Gunicorn's
+exact forwarded-IP allowlist, Caddy presence, and the exact `web` key set that
+encoded that topology. TASK_037 neither replaces those assertions with
+TASK_035 requirements nor owns their successor values.
+
+TASK_037 continues to freeze the `db`, `migrate`, and non-ingress `web`
+compatibility properties required below, plus every backup, restore,
+exact-resource cleanup, isolation, continuity, artifact, and non-interference
+invariant in this contract. This ingress-ownership delegation changes no
+TASK_037 production behavior.
+
 ## 15. Acceptance criteria — frozen
 
 `tests/test_task_037_backup_and_verified_restore.py` is the authoritative
@@ -960,7 +1000,14 @@ cannot honestly be proven inside an ordinary in-container pytest run: the
 application image contains no `pg_dump`/`pg_restore` (§3.6), and mocking them
 would prove nothing about recovery.
 
-**A. Static/contract tests — always run.** Both services exist and are
+**A. Static/contract tests — always run.** The `db` service has no `env_file`
+and receives exactly `POSTGRES_DB`, `POSTGRES_USER`, and `POSTGRES_PASSWORD`
+through same-named Compose interpolation; application secrets cannot enter
+that service through a blanket environment file. `migrate` and `web` retain
+the application environment selector and their database dependency semantics.
+The exact `web` ingress keys, port publication, Gunicorn forwarded-IP value,
+and Caddy presence are deliberately delegated to TASK_034/TASK_035. Both
+TASK_037 services exist and are
 profile-gated; both use the `db` service's exact image tag; inactive backup
 interpolation may resolve empty, while `pg_backup.sh` rejects every missing or
 empty required PG connection value before artifact creation or `pg_dump`; the
@@ -1038,7 +1085,7 @@ correct. The independent validator should repeat the drill from a fresh clone.
 |---|---|---|---|
 | `PRICEWATCHPH_BACKUP_DIR` | Compose bind mount | `./backups` | Host destination directory |
 | `PRICEWATCHPH_RESTORE_SCRATCH_PASSWORD` | Compose `restore_scratch` env | empty while inactive | Ephemeral, non-empty per-drill credential generated and supplied by `pg_restore_verify.sh` |
-| `PRICEWATCHPH_APP_ENV_FILE` | Existing `db`, `migrate`, and `web` service `env_file` | `.env` | Explicitly select the active application's environment file when the drill runs from a separate worktree |
+| `PRICEWATCHPH_APP_ENV_FILE` | Application service `env_file` (`migrate`, `web`, and the TASK_036 scheduler) | `.env` | Explicitly select the active application's environment file when the drill runs from a separate worktree |
 
 None is read by `config/settings.py`; per §6.3 none may be added to
 `.env.example`.

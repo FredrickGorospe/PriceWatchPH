@@ -4,8 +4,10 @@ services:
     # (see tasks/TASK_001_BOOTSTRAP.md, Unknowns) rather than the floating
     # `postgres:16` tag, so the image doesn't silently drift.
     image: postgres:16.14-bookworm
-    env_file:
-      - ${PRICEWATCHPH_APP_ENV_FILE:-.env}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-}
+      POSTGRES_USER: ${POSTGRES_USER:-}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:

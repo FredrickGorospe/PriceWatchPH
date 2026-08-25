@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -61,6 +62,9 @@ class RawListingAdmin(admin.ModelAdmin):
         return custom_urls + super().get_urls()
 
     def log_personal_trade_view(self, request):
+        if not request.user.has_perm("ingestion.add_rawlisting"):
+            raise PermissionDenied
+
         if request.method == "POST":
             form = LogPersonalTradeForm(request.POST)
             if form.is_valid():

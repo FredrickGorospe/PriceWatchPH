@@ -137,6 +137,12 @@ class OutcomeAdmin(admin.ModelAdmin):
         return custom_urls + super().get_urls()
 
     def untracked_worklist_view(self, request):
+        if not (
+            request.user.has_perm("pricing.view_dealflag")
+            and request.user.has_perm("outcomes.view_outcome")
+        ):
+            raise PermissionDenied
+
         deal_flags = DealFlag.objects.filter(outcome__isnull=True).order_by(
             "-flagged_at", "pk"
         )

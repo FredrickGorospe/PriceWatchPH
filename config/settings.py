@@ -1,5 +1,8 @@
 import os
 from pathlib import Path
+from urllib.parse import urlsplit
+
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,6 +46,13 @@ TELEGRAM_BOT_TOKEN = os.environ.get("PRICEWATCHPH_TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.environ.get("PRICEWATCHPH_TELEGRAM_CHAT_ID", "")
 ALERT_ACTIVATION_AT = os.environ.get("PRICEWATCHPH_ALERT_ACTIVATION_AT", "")
 PUBLIC_BASE_URL = os.environ.get("PRICEWATCHPH_PUBLIC_BASE_URL", "")
+
+# An HTTPS public origin is unsafe unless Django trusts the terminating proxy.
+if urlsplit(PUBLIC_BASE_URL).scheme.lower() == "https" and not BEHIND_HTTPS_PROXY:
+    raise ImproperlyConfigured(
+        "PRICEWATCHPH_PUBLIC_BASE_URL uses HTTPS, so "
+        'DJANGO_BEHIND_HTTPS_PROXY must be the literal string "1".'
+    )
 
 # TASK_036 validates this deployment cadence in the standalone scheduler.
 SCHEDULER_CRON = os.environ.get("PRICEWATCHPH_SCHEDULER_CRON", "")
