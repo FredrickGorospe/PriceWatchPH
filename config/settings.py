@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "axes",
     "rest_framework",
     "sources",
     "catalogue",
@@ -89,7 +91,39 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "axes.middleware.AxesMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = [
+    "axes.backends.AxesStandaloneBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+# PostgreSQL keeps one restart-persistent throttle across Gunicorn workers.
+AXES_HANDLER = "axes.handlers.database.AxesDatabaseHandler"
+AXES_LOCKOUT_PARAMETERS = ["ip_address"]
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = timedelta(minutes=15)
+AXES_USE_ATTEMPT_EXPIRATION = True
+AXES_RESET_ON_SUCCESS = True
+AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False
+AXES_HTTP_RESPONSE_CODE = 429
+AXES_COOLOFF_MESSAGE = "Too many login attempts. Please try again later."
+
+AXES_DISABLE_ACCESS_LOG = True
+AXES_ENABLE_ACCESS_FAILURE_LOG = False
+AXES_ENABLE_ADMIN = False
+AXES_SENSITIVE_PARAMETERS = ["username", "ip_address"]
+AXES_ONLY_ADMIN_SITE = False
+
+# Caddy replaces X-Forwarded-For; direct/local requests must ignore it.
+AXES_IPWARE_PROXY_ORDER = "left-most"
+AXES_IPWARE_PROXY_COUNT = 0
+AXES_IPWARE_META_PRECEDENCE_ORDER = (
+    ("HTTP_X_FORWARDED_FOR", "REMOTE_ADDR")
+    if BEHIND_HTTPS_PROXY
+    else ("REMOTE_ADDR",)
+)
 
 ROOT_URLCONF = "config.urls"
 
