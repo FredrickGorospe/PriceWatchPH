@@ -601,6 +601,25 @@ def test_raw_loader_and_real_database_output_extraction_preserve_boundaries():
     generator = _module("benchmarks.generator")
     loader = _module("benchmarks.loader")
     metrics = _module("benchmarks.metrics")
+    from sources.models import Source
+
+    manual_source, _created = Source.objects.get_or_create(
+        name="manual_capture",
+        defaults={
+            "base_url": "",
+            "terms_notes": (
+                "N/A — no automation involved, no external terms apply to this source"
+            ),
+            "rate_limit": None,
+        },
+    )
+    assert manual_source.name == "manual_capture"
+    assert manual_source.base_url == ""
+    assert manual_source.terms_notes == (
+        "N/A — no automation involved, no external terms apply to this source"
+    )
+    assert manual_source.rate_limit is None
+
     catalogue = catalogue_module.load_catalogue(FIXTURE_PATH)
     catalogue_module.install_catalogue(catalogue)
 
