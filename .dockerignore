@@ -47,3 +47,6 @@ venv
 **/pgdata
 **/postgres-data
 **/postgresql/data
+
+# Benchmark evidence is mounted explicitly and must not enter application images.
+benchmark-results/

@@ -1,0 +1,55 @@
+{
+  "artifact_type": "bench003_failure_diagnostic.v1",
+  "benchmark_result_approved": false,
+  "database": {
+    "counts": {
+      "deal_flag": 1,
+      "listing": 1000000,
+      "price_point": 17,
+      "raw_listing": 1000000,
+      "review_required": 750000,
+      "unresolved": 750000
+    },
+    "size_bytes": 706214935
+  },
+  "docker": {
+    "exit_code": 137,
+    "memory_allocation_bytes": 4615585792,
+    "oom_event_recorded": true,
+    "oom_event_time": "2026-08-30T09:44:54+08:00"
+  },
+  "failed_run_artifacts": {
+    "labels_ndjson": {
+      "line_count": 1000001,
+      "path": "benchmark-results/bench003-1m-repetition-1-measured/labels.ndjson",
+      "record_count": 1000000,
+      "size_bytes": 494489261
+    },
+    "production_ndjson": {
+      "line_count": 1000000,
+      "path": "benchmark-results/bench003-1m-repetition-1-measured/production.ndjson",
+      "record_count": 1000000,
+      "size_bytes": 458823521
+    }
+  },
+  "lost_timings_seconds": {
+    "benchmark_raw_load": null,
+    "generation": null,
+    "pipeline_throughput_observations_per_second": null,
+    "price_listings": null,
+    "production_processing": null,
+    "resolve_listings": null
+  },
+  "previous_evidence_sha256": {
+    "benchmark-results/bench003-100k-repetition-1-measured/manifest.json": "6a9c7715e86db75a69c39671b63148fe8a0a899cde83826fcefa6e14c0ba8997",
+    "benchmark-results/bench003-500k-repetition-1-corrected-measured/manifest.json": "6ab85fc411452b88eccdf21774ea6ea1f041824fbfc954f6f00202e7ef1c3e68",
+    "benchmark-results/bench003-500k-repetition-1-measured/manifest.json": "2c2fed291bbcbc0c6b5e1e03954fe4ce00539c145607938aa4a8dfb4df6ab2e2",
+    "benchmark-results/bench003-repetition-1-measured/manifest.json": "523cf4eeb662f9170b2943ecca9a75092f30e2433df089f2c4310a4532b38766",
+    "benchmark-results/bench003-repetition-1/machine-context.json": "14c8c9ac550ed7d13f7649041181c29eb88943d87cc6b2ad07c7a28d78de55c9",
+    "benchmark-results/bench003-repetition-1/manifest.json": "32b4ccb921456dbdcd7651c15b72ee92b0180449ced69a855f4bde7530744586",
+    "benchmark-results/bench003-repetition-2-measured/manifest.json": "9ee4361e901df28bad135ab48af11c9275d62c3b34d7dcf5ad8a67442d2d32e6",
+    "benchmark-results/bench003-repetition-3-measured/manifest.json": "ed3ad5312b8c250f3c4a7e5a3ade08605f4f7fecf7168b21ee68c34c64a0fcbb"
+  },
+  "run_classification": "benchmark_harness_oom",
+  "statement": "Production generation, benchmark raw load, resolve_listings, and price_listings completed, but the BENCH_003 runner was OOM-killed during post-pricing quality extraction. No final manifest was created and this is not an approved measured result."
+}

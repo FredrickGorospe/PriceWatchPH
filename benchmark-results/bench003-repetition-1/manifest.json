@@ -1,0 +1,224 @@
+{
+  "artifact_schema_version": "pricewatchph_pipeline_benchmark.v1",
+  "artifacts": {
+    "external_label_sidecar": "/artifacts/labels.ndjson",
+    "manifest": "/artifacts/manifest.json",
+    "production_dataset": "/artifacts/production.ndjson"
+  },
+  "catalogue_category_distribution": {
+    "cpu": 25,
+    "gpu": 30,
+    "mobo": 20,
+    "monitor": 15,
+    "peripheral": 10,
+    "ram": 20
+  },
+  "catalogue_sha256": "ec5622601174f8c7caf1a7d85c903b8d8591baca16c45990166125f231860058",
+  "catalogue_sku_count": 120,
+  "compose_version": "5.3.1",
+  "contract_version": "1.0.0",
+  "difficulty_distribution": {
+    "A": 2500,
+    "B": 2500,
+    "C": 2500,
+    "D": 2500
+  },
+  "docker_version": "client=29.6.2 server=29.5.2",
+  "failure_details": [
+    "Docker memory is below the frozen 4 GiB safety floor"
+  ],
+  "final_snapshot": null,
+  "generator_version": "1.0.0",
+  "implementation_sha": "4522ca4585f5359d64d444076c1694e271fb311c",
+  "implementation_state": {
+    "explanation": "BENCH_003 benchmark-only runner, manifest support, focused tests, and result artifacts are uncommitted",
+    "value": "dirty"
+  },
+  "initial_snapshot": null,
+  "machine_cpu": {
+    "logical_cpu_count": 8,
+    "model": "Apple M2"
+  },
+  "machine_memory": {
+    "bytes": 8589934592,
+    "human": "8.00 GiB",
+    "measurement_source": "sysctl hw.memsize"
+  },
+  "manila_as_of_day": "2026-08-29",
+  "master_seed": 20260829,
+  "null_explanations": {
+    "final_snapshot": "unavailable because the run ended with state not_attempted",
+    "initial_snapshot": "unavailable because the run ended with state not_attempted",
+    "pre_processing_snapshot": "unavailable because the run ended with state not_attempted",
+    "resolution_quality": "unavailable because the run ended with state not_attempted",
+    "timings.benchmark_raw_load_seconds": "unavailable because the run ended with state not_attempted",
+    "timings.generation_seconds": "unavailable because the run ended with state not_attempted",
+    "timings.pipeline_throughput_observations_per_second": "unavailable because the run ended with state not_attempted",
+    "timings.price_listings_seconds": "unavailable because the run ended with state not_attempted",
+    "timings.production_processing_seconds": "unavailable because the run ended with state not_attempted",
+    "timings.resolve_listings_seconds": "unavailable because the run ended with state not_attempted"
+  },
+  "observation_count": 10000,
+  "operating_system": {
+    "architecture": "arm64",
+    "name": "macOS",
+    "version": "26.3.1 (25D2128)"
+  },
+  "postgresql_image": {
+    "image": "postgres:16.14-bookworm",
+    "immutable_identity": "postgres@sha256:92620daddcd947f8d5ab5ba66e848702fe443d87fed30c4cea8e389fd78dfc55"
+  },
+  "postgresql_version": {
+    "explanation": "database preflight has not completed",
+    "value": null
+  },
+  "pre_processing_snapshot": null,
+  "preflight": {
+    "docker_memory": {
+      "measurement_source": "docker info .MemTotal",
+      "observed": {
+        "bytes": 4094447616,
+        "human": "3.81 GiB"
+      },
+      "required": {
+        "bytes": 4294967296,
+        "human": "4.00 GiB"
+      }
+    },
+    "failures": [
+      "Docker memory is below the frozen 4 GiB safety floor"
+    ],
+    "free_disk": {
+      "observed": {
+        "bytes": 30419132416,
+        "human": "28.33 GiB"
+      },
+      "required": {
+        "bytes": 8589934592,
+        "human": "8.00 GiB"
+      }
+    },
+    "full_run_timeout_seconds": 900,
+    "passed": false
+  },
+  "python_version": "3.12.13",
+  "release_sha": "ab0646e9fcb4c3c5d1f567a46848a3a98dbda9a5",
+  "repetition": 1,
+  "resolution_quality": null,
+  "run_ended_at_utc": "2026-08-29T14:37:16.804156Z",
+  "run_started_at_utc": "2026-08-29T14:37:16.803615Z",
+  "run_state": "not_attempted",
+  "scope_notes": [
+    "Controlled labelled synthetic benchmark; not production or real-world accuracy.",
+    "benchmark_raw_load is fixture loading, not production ingestion.",
+    "API measurement is deferred because authenticated concurrent connection-reuse machinery is BENCH_004 scope.",
+    "Backup, restore, and scaled recovery verification are outside BENCH_003 scope."
+  ],
+  "stages": {
+    "api_workload": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "deferred to BENCH_004; frozen authenticated concurrency workload needs isolated machinery",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "backup": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "outside the owner-approved BENCH_003 scope",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "benchmark_raw_load": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "run has not reached this stage",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "catalogue_install": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "run has not reached this stage",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "generation": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "run has not reached this stage",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "manifest_validation": {
+      "details": {},
+      "duration_seconds": "0",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1,
+      "status": "succeeded"
+    },
+    "preflight": {
+      "details": {},
+      "duration_seconds": "0.000488339",
+      "explanation": "Docker memory is below the frozen 4 GiB safety floor",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "price_listings": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "run has not reached this stage",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "quality_extraction": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "run has not reached this stage",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "resolve_listings": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "run has not reached this stage",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "restore": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "outside the owner-approved BENCH_003 scope",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "verification": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "outside the owner-approved BENCH_003 scope",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    }
+  },
+  "timings": {
+    "benchmark_raw_load_seconds": null,
+    "generation_seconds": null,
+    "pipeline_throughput_observations_per_second": null,
+    "pipeline_throughput_processed_count": 10000,
+    "price_listings_seconds": null,
+    "production_processing_seconds": null,
+    "resolve_listings_seconds": null
+  }
+}

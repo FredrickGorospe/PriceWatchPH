@@ -1,0 +1,16 @@
+{
+  "machine_cpu": {
+    "logical_cpu_count": 8,
+    "model": "Apple M2"
+  },
+  "machine_memory": {
+    "bytes": 8589934592,
+    "human": "8.00 GiB",
+    "measurement_source": "sysctl hw.memsize"
+  },
+  "operating_system": {
+    "architecture": "arm64",
+    "name": "macOS",
+    "version": "26.3.1 (25D2128)"
+  }
+}
