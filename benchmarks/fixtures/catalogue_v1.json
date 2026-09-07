@@ -1,0 +1,2541 @@
+{
+  "schema_version": "benchmark_catalogue.v1",
+  "fixture_version": "1.0.0",
+  "catalogue_kind": "synthetic_benchmark_only",
+  "sku_count": 120,
+  "category_counts": {
+    "gpu": 30,
+    "cpu": 25,
+    "ram": 20,
+    "mobo": 20,
+    "monitor": 15,
+    "peripheral": 10
+  },
+  "alias_policy": {
+    "aliases_per_sku": 2,
+    "source_of_truth": "seed",
+    "generated_evaluation_titles_may_be_added": false
+  },
+  "skus": [
+    {
+      "natural_key": "bench_gpu_001",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Aether 110",
+      "variant": "",
+      "launch_msrp": "12000.00",
+      "launch_date": "2023-01-10",
+      "family_token": "Aether",
+      "ambiguity_group": "gpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Veloran Aether 110",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Aether 110 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_002",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Aether 120",
+      "variant": "Core",
+      "launch_msrp": "12185.00",
+      "launch_date": "2023-01-11",
+      "family_token": "Aether",
+      "ambiguity_group": "gpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Veloran Aether 120 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Aether 120 Core by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_003",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Aether 130",
+      "variant": "Plus",
+      "launch_msrp": "12370.00",
+      "launch_date": "2023-01-12",
+      "family_token": "Aether",
+      "ambiguity_group": "gpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Veloran Aether 130 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Aether 130 Plus by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_004",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Aether 140",
+      "variant": "",
+      "launch_msrp": "12555.00",
+      "launch_date": "2023-01-13",
+      "family_token": "Aether",
+      "ambiguity_group": "gpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Veloran Aether 140",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Aether 140 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_005",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Aether 150",
+      "variant": "Max",
+      "launch_msrp": "12740.00",
+      "launch_date": "2023-01-14",
+      "family_token": "Aether",
+      "ambiguity_group": "gpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Veloran Aether 150 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Aether 150 Max by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_006",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Brimstone 210",
+      "variant": "",
+      "launch_msrp": "12725.00",
+      "launch_date": "2023-02-10",
+      "family_token": "Brimstone",
+      "ambiguity_group": "gpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Veloran Brimstone 210",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Brimstone 210 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_007",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Brimstone 220",
+      "variant": "Core",
+      "launch_msrp": "12910.00",
+      "launch_date": "2023-02-11",
+      "family_token": "Brimstone",
+      "ambiguity_group": "gpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Veloran Brimstone 220 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Brimstone 220 Core by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_008",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Brimstone 230",
+      "variant": "Plus",
+      "launch_msrp": "13095.00",
+      "launch_date": "2023-02-12",
+      "family_token": "Brimstone",
+      "ambiguity_group": "gpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Veloran Brimstone 230 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Brimstone 230 Plus by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_009",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Brimstone 240",
+      "variant": "",
+      "launch_msrp": "13280.00",
+      "launch_date": "2023-02-13",
+      "family_token": "Brimstone",
+      "ambiguity_group": "gpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Veloran Brimstone 240",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Brimstone 240 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_010",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Brimstone 250",
+      "variant": "Max",
+      "launch_msrp": "13465.00",
+      "launch_date": "2023-02-14",
+      "family_token": "Brimstone",
+      "ambiguity_group": "gpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Veloran Brimstone 250 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Brimstone 250 Max by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_011",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Cinder 310",
+      "variant": "",
+      "launch_msrp": "13450.00",
+      "launch_date": "2023-03-10",
+      "family_token": "Cinder",
+      "ambiguity_group": "gpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Veloran Cinder 310",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cinder 310 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_012",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Cinder 320",
+      "variant": "Core",
+      "launch_msrp": "13635.00",
+      "launch_date": "2023-03-11",
+      "family_token": "Cinder",
+      "ambiguity_group": "gpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Veloran Cinder 320 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cinder 320 Core by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_013",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Cinder 330",
+      "variant": "Plus",
+      "launch_msrp": "13820.00",
+      "launch_date": "2023-03-12",
+      "family_token": "Cinder",
+      "ambiguity_group": "gpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Veloran Cinder 330 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cinder 330 Plus by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_014",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Cinder 340",
+      "variant": "",
+      "launch_msrp": "14005.00",
+      "launch_date": "2023-03-13",
+      "family_token": "Cinder",
+      "ambiguity_group": "gpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Veloran Cinder 340",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cinder 340 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_015",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Cinder 350",
+      "variant": "Max",
+      "launch_msrp": "14190.00",
+      "launch_date": "2023-03-14",
+      "family_token": "Cinder",
+      "ambiguity_group": "gpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Veloran Cinder 350 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cinder 350 Max by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_016",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Drift 410",
+      "variant": "",
+      "launch_msrp": "14175.00",
+      "launch_date": "2023-04-10",
+      "family_token": "Drift",
+      "ambiguity_group": "gpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Veloran Drift 410",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Drift 410 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_017",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Drift 420",
+      "variant": "Core",
+      "launch_msrp": "14360.00",
+      "launch_date": "2023-04-11",
+      "family_token": "Drift",
+      "ambiguity_group": "gpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Veloran Drift 420 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Drift 420 Core by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_018",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Drift 430",
+      "variant": "Plus",
+      "launch_msrp": "14545.00",
+      "launch_date": "2023-04-12",
+      "family_token": "Drift",
+      "ambiguity_group": "gpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Veloran Drift 430 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Drift 430 Plus by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_019",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Drift 440",
+      "variant": "",
+      "launch_msrp": "14730.00",
+      "launch_date": "2023-04-13",
+      "family_token": "Drift",
+      "ambiguity_group": "gpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Veloran Drift 440",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Drift 440 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_020",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Drift 450",
+      "variant": "Max",
+      "launch_msrp": "14915.00",
+      "launch_date": "2023-04-14",
+      "family_token": "Drift",
+      "ambiguity_group": "gpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Veloran Drift 450 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Drift 450 Max by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_021",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Ember 510",
+      "variant": "",
+      "launch_msrp": "14900.00",
+      "launch_date": "2023-05-10",
+      "family_token": "Ember",
+      "ambiguity_group": "gpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Veloran Ember 510",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ember 510 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_022",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Ember 520",
+      "variant": "Core",
+      "launch_msrp": "15085.00",
+      "launch_date": "2023-05-11",
+      "family_token": "Ember",
+      "ambiguity_group": "gpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Veloran Ember 520 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ember 520 Core by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_023",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Ember 530",
+      "variant": "Plus",
+      "launch_msrp": "15270.00",
+      "launch_date": "2023-05-12",
+      "family_token": "Ember",
+      "ambiguity_group": "gpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Veloran Ember 530 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ember 530 Plus by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_024",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Ember 540",
+      "variant": "",
+      "launch_msrp": "15455.00",
+      "launch_date": "2023-05-13",
+      "family_token": "Ember",
+      "ambiguity_group": "gpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Veloran Ember 540",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ember 540 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_025",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Ember 550",
+      "variant": "Max",
+      "launch_msrp": "15640.00",
+      "launch_date": "2023-05-14",
+      "family_token": "Ember",
+      "ambiguity_group": "gpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Veloran Ember 550 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ember 550 Max by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_026",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Flux 610",
+      "variant": "",
+      "launch_msrp": "15625.00",
+      "launch_date": "2023-06-10",
+      "family_token": "Flux",
+      "ambiguity_group": "gpu_group_06",
+      "aliases": [
+        {
+          "alias_text": "Veloran Flux 610",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Flux 610 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_027",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Flux 620",
+      "variant": "Core",
+      "launch_msrp": "15810.00",
+      "launch_date": "2023-06-11",
+      "family_token": "Flux",
+      "ambiguity_group": "gpu_group_06",
+      "aliases": [
+        {
+          "alias_text": "Veloran Flux 620 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Flux 620 Core by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_028",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Flux 630",
+      "variant": "Plus",
+      "launch_msrp": "15995.00",
+      "launch_date": "2023-06-12",
+      "family_token": "Flux",
+      "ambiguity_group": "gpu_group_06",
+      "aliases": [
+        {
+          "alias_text": "Veloran Flux 630 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Flux 630 Plus by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_029",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Flux 640",
+      "variant": "",
+      "launch_msrp": "16180.00",
+      "launch_date": "2023-06-13",
+      "family_token": "Flux",
+      "ambiguity_group": "gpu_group_06",
+      "aliases": [
+        {
+          "alias_text": "Veloran Flux 640",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Flux 640 Series by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_gpu_030",
+      "category": "gpu",
+      "brand": "Veloran",
+      "model": "Flux 650",
+      "variant": "Max",
+      "launch_msrp": "16365.00",
+      "launch_date": "2023-06-14",
+      "family_token": "Flux",
+      "ambiguity_group": "gpu_group_06",
+      "aliases": [
+        {
+          "alias_text": "Veloran Flux 650 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Flux 650 Max by Veloran",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_001",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Quanta 110",
+      "variant": "",
+      "launch_msrp": "8000.00",
+      "launch_date": "2023-01-10",
+      "family_token": "Quanta",
+      "ambiguity_group": "cpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Orivex Quanta 110",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Quanta 110 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_002",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Quanta 120",
+      "variant": "Core",
+      "launch_msrp": "8185.00",
+      "launch_date": "2023-01-11",
+      "family_token": "Quanta",
+      "ambiguity_group": "cpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Orivex Quanta 120 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Quanta 120 Core by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_003",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Quanta 130",
+      "variant": "Plus",
+      "launch_msrp": "8370.00",
+      "launch_date": "2023-01-12",
+      "family_token": "Quanta",
+      "ambiguity_group": "cpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Orivex Quanta 130 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Quanta 130 Plus by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_004",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Quanta 140",
+      "variant": "",
+      "launch_msrp": "8555.00",
+      "launch_date": "2023-01-13",
+      "family_token": "Quanta",
+      "ambiguity_group": "cpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Orivex Quanta 140",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Quanta 140 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_005",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Quanta 150",
+      "variant": "Max",
+      "launch_msrp": "8740.00",
+      "launch_date": "2023-01-14",
+      "family_token": "Quanta",
+      "ambiguity_group": "cpu_group_01",
+      "aliases": [
+        {
+          "alias_text": "Orivex Quanta 150 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Quanta 150 Max by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_006",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Radian 210",
+      "variant": "",
+      "launch_msrp": "8725.00",
+      "launch_date": "2023-02-10",
+      "family_token": "Radian",
+      "ambiguity_group": "cpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Orivex Radian 210",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Radian 210 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_007",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Radian 220",
+      "variant": "Core",
+      "launch_msrp": "8910.00",
+      "launch_date": "2023-02-11",
+      "family_token": "Radian",
+      "ambiguity_group": "cpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Orivex Radian 220 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Radian 220 Core by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_008",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Radian 230",
+      "variant": "Plus",
+      "launch_msrp": "9095.00",
+      "launch_date": "2023-02-12",
+      "family_token": "Radian",
+      "ambiguity_group": "cpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Orivex Radian 230 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Radian 230 Plus by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_009",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Radian 240",
+      "variant": "",
+      "launch_msrp": "9280.00",
+      "launch_date": "2023-02-13",
+      "family_token": "Radian",
+      "ambiguity_group": "cpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Orivex Radian 240",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Radian 240 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_010",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Radian 250",
+      "variant": "Max",
+      "launch_msrp": "9465.00",
+      "launch_date": "2023-02-14",
+      "family_token": "Radian",
+      "ambiguity_group": "cpu_group_02",
+      "aliases": [
+        {
+          "alias_text": "Orivex Radian 250 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Radian 250 Max by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_011",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Solace 310",
+      "variant": "",
+      "launch_msrp": "9450.00",
+      "launch_date": "2023-03-10",
+      "family_token": "Solace",
+      "ambiguity_group": "cpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Orivex Solace 310",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Solace 310 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_012",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Solace 320",
+      "variant": "Core",
+      "launch_msrp": "9635.00",
+      "launch_date": "2023-03-11",
+      "family_token": "Solace",
+      "ambiguity_group": "cpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Orivex Solace 320 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Solace 320 Core by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_013",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Solace 330",
+      "variant": "Plus",
+      "launch_msrp": "9820.00",
+      "launch_date": "2023-03-12",
+      "family_token": "Solace",
+      "ambiguity_group": "cpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Orivex Solace 330 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Solace 330 Plus by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_014",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Solace 340",
+      "variant": "",
+      "launch_msrp": "10005.00",
+      "launch_date": "2023-03-13",
+      "family_token": "Solace",
+      "ambiguity_group": "cpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Orivex Solace 340",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Solace 340 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_015",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Solace 350",
+      "variant": "Max",
+      "launch_msrp": "10190.00",
+      "launch_date": "2023-03-14",
+      "family_token": "Solace",
+      "ambiguity_group": "cpu_group_03",
+      "aliases": [
+        {
+          "alias_text": "Orivex Solace 350 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Solace 350 Max by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_016",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Tessera 410",
+      "variant": "",
+      "launch_msrp": "10175.00",
+      "launch_date": "2023-04-10",
+      "family_token": "Tessera",
+      "ambiguity_group": "cpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Orivex Tessera 410",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Tessera 410 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_017",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Tessera 420",
+      "variant": "Core",
+      "launch_msrp": "10360.00",
+      "launch_date": "2023-04-11",
+      "family_token": "Tessera",
+      "ambiguity_group": "cpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Orivex Tessera 420 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Tessera 420 Core by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_018",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Tessera 430",
+      "variant": "Plus",
+      "launch_msrp": "10545.00",
+      "launch_date": "2023-04-12",
+      "family_token": "Tessera",
+      "ambiguity_group": "cpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Orivex Tessera 430 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Tessera 430 Plus by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_019",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Tessera 440",
+      "variant": "",
+      "launch_msrp": "10730.00",
+      "launch_date": "2023-04-13",
+      "family_token": "Tessera",
+      "ambiguity_group": "cpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Orivex Tessera 440",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Tessera 440 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_020",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Tessera 450",
+      "variant": "Max",
+      "launch_msrp": "10915.00",
+      "launch_date": "2023-04-14",
+      "family_token": "Tessera",
+      "ambiguity_group": "cpu_group_04",
+      "aliases": [
+        {
+          "alias_text": "Orivex Tessera 450 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Tessera 450 Max by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_021",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Umber 510",
+      "variant": "",
+      "launch_msrp": "10900.00",
+      "launch_date": "2023-05-10",
+      "family_token": "Umber",
+      "ambiguity_group": "cpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Orivex Umber 510",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Umber 510 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_022",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Umber 520",
+      "variant": "Core",
+      "launch_msrp": "11085.00",
+      "launch_date": "2023-05-11",
+      "family_token": "Umber",
+      "ambiguity_group": "cpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Orivex Umber 520 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Umber 520 Core by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_023",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Umber 530",
+      "variant": "Plus",
+      "launch_msrp": "11270.00",
+      "launch_date": "2023-05-12",
+      "family_token": "Umber",
+      "ambiguity_group": "cpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Orivex Umber 530 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Umber 530 Plus by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_024",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Umber 540",
+      "variant": "",
+      "launch_msrp": "11455.00",
+      "launch_date": "2023-05-13",
+      "family_token": "Umber",
+      "ambiguity_group": "cpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Orivex Umber 540",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Umber 540 Series by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_cpu_025",
+      "category": "cpu",
+      "brand": "Orivex",
+      "model": "Umber 550",
+      "variant": "Max",
+      "launch_msrp": "11640.00",
+      "launch_date": "2023-05-14",
+      "family_token": "Umber",
+      "ambiguity_group": "cpu_group_05",
+      "aliases": [
+        {
+          "alias_text": "Orivex Umber 550 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Umber 550 Max by Orivex",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_001",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Vellum 110",
+      "variant": "",
+      "launch_msrp": "3500.00",
+      "launch_date": "2023-01-10",
+      "family_token": "Vellum",
+      "ambiguity_group": "ram_group_01",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Vellum 110",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Vellum 110 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_002",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Vellum 120",
+      "variant": "Core",
+      "launch_msrp": "3685.00",
+      "launch_date": "2023-01-11",
+      "family_token": "Vellum",
+      "ambiguity_group": "ram_group_01",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Vellum 120 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Vellum 120 Core by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_003",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Vellum 130",
+      "variant": "Plus",
+      "launch_msrp": "3870.00",
+      "launch_date": "2023-01-12",
+      "family_token": "Vellum",
+      "ambiguity_group": "ram_group_01",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Vellum 130 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Vellum 130 Plus by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_004",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Vellum 140",
+      "variant": "",
+      "launch_msrp": "4055.00",
+      "launch_date": "2023-01-13",
+      "family_token": "Vellum",
+      "ambiguity_group": "ram_group_01",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Vellum 140",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Vellum 140 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_005",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Vellum 150",
+      "variant": "Max",
+      "launch_msrp": "4240.00",
+      "launch_date": "2023-01-14",
+      "family_token": "Vellum",
+      "ambiguity_group": "ram_group_01",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Vellum 150 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Vellum 150 Max by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_006",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Wisp 210",
+      "variant": "",
+      "launch_msrp": "4225.00",
+      "launch_date": "2023-02-10",
+      "family_token": "Wisp",
+      "ambiguity_group": "ram_group_02",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Wisp 210",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Wisp 210 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_007",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Wisp 220",
+      "variant": "Core",
+      "launch_msrp": "4410.00",
+      "launch_date": "2023-02-11",
+      "family_token": "Wisp",
+      "ambiguity_group": "ram_group_02",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Wisp 220 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Wisp 220 Core by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_008",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Wisp 230",
+      "variant": "Plus",
+      "launch_msrp": "4595.00",
+      "launch_date": "2023-02-12",
+      "family_token": "Wisp",
+      "ambiguity_group": "ram_group_02",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Wisp 230 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Wisp 230 Plus by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_009",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Wisp 240",
+      "variant": "",
+      "launch_msrp": "4780.00",
+      "launch_date": "2023-02-13",
+      "family_token": "Wisp",
+      "ambiguity_group": "ram_group_02",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Wisp 240",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Wisp 240 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_010",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Wisp 250",
+      "variant": "Max",
+      "launch_msrp": "4965.00",
+      "launch_date": "2023-02-14",
+      "family_token": "Wisp",
+      "ambiguity_group": "ram_group_02",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Wisp 250 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Wisp 250 Max by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_011",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Xylo 310",
+      "variant": "",
+      "launch_msrp": "4950.00",
+      "launch_date": "2023-03-10",
+      "family_token": "Xylo",
+      "ambiguity_group": "ram_group_03",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Xylo 310",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Xylo 310 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_012",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Xylo 320",
+      "variant": "Core",
+      "launch_msrp": "5135.00",
+      "launch_date": "2023-03-11",
+      "family_token": "Xylo",
+      "ambiguity_group": "ram_group_03",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Xylo 320 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Xylo 320 Core by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_013",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Xylo 330",
+      "variant": "Plus",
+      "launch_msrp": "5320.00",
+      "launch_date": "2023-03-12",
+      "family_token": "Xylo",
+      "ambiguity_group": "ram_group_03",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Xylo 330 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Xylo 330 Plus by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_014",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Xylo 340",
+      "variant": "",
+      "launch_msrp": "5505.00",
+      "launch_date": "2023-03-13",
+      "family_token": "Xylo",
+      "ambiguity_group": "ram_group_03",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Xylo 340",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Xylo 340 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_015",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Xylo 350",
+      "variant": "Max",
+      "launch_msrp": "5690.00",
+      "launch_date": "2023-03-14",
+      "family_token": "Xylo",
+      "ambiguity_group": "ram_group_03",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Xylo 350 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Xylo 350 Max by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_016",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Yarrow 410",
+      "variant": "",
+      "launch_msrp": "5675.00",
+      "launch_date": "2023-04-10",
+      "family_token": "Yarrow",
+      "ambiguity_group": "ram_group_04",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Yarrow 410",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Yarrow 410 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_017",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Yarrow 420",
+      "variant": "Core",
+      "launch_msrp": "5860.00",
+      "launch_date": "2023-04-11",
+      "family_token": "Yarrow",
+      "ambiguity_group": "ram_group_04",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Yarrow 420 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Yarrow 420 Core by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_018",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Yarrow 430",
+      "variant": "Plus",
+      "launch_msrp": "6045.00",
+      "launch_date": "2023-04-12",
+      "family_token": "Yarrow",
+      "ambiguity_group": "ram_group_04",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Yarrow 430 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Yarrow 430 Plus by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_019",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Yarrow 440",
+      "variant": "",
+      "launch_msrp": "6230.00",
+      "launch_date": "2023-04-13",
+      "family_token": "Yarrow",
+      "ambiguity_group": "ram_group_04",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Yarrow 440",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Yarrow 440 Series by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_ram_020",
+      "category": "ram",
+      "brand": "Mirelda",
+      "model": "Yarrow 450",
+      "variant": "Max",
+      "launch_msrp": "6415.00",
+      "launch_date": "2023-04-14",
+      "family_token": "Yarrow",
+      "ambiguity_group": "ram_group_04",
+      "aliases": [
+        {
+          "alias_text": "Mirelda Yarrow 450 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Yarrow 450 Max by Mirelda",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_001",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Zenith 110",
+      "variant": "",
+      "launch_msrp": "6500.00",
+      "launch_date": "2023-01-10",
+      "family_token": "Zenith",
+      "ambiguity_group": "mobo_group_01",
+      "aliases": [
+        {
+          "alias_text": "Talvori Zenith 110",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Zenith 110 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_002",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Zenith 120",
+      "variant": "Core",
+      "launch_msrp": "6685.00",
+      "launch_date": "2023-01-11",
+      "family_token": "Zenith",
+      "ambiguity_group": "mobo_group_01",
+      "aliases": [
+        {
+          "alias_text": "Talvori Zenith 120 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Zenith 120 Core by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_003",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Zenith 130",
+      "variant": "Plus",
+      "launch_msrp": "6870.00",
+      "launch_date": "2023-01-12",
+      "family_token": "Zenith",
+      "ambiguity_group": "mobo_group_01",
+      "aliases": [
+        {
+          "alias_text": "Talvori Zenith 130 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Zenith 130 Plus by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_004",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Zenith 140",
+      "variant": "",
+      "launch_msrp": "7055.00",
+      "launch_date": "2023-01-13",
+      "family_token": "Zenith",
+      "ambiguity_group": "mobo_group_01",
+      "aliases": [
+        {
+          "alias_text": "Talvori Zenith 140",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Zenith 140 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_005",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Zenith 150",
+      "variant": "Max",
+      "launch_msrp": "7240.00",
+      "launch_date": "2023-01-14",
+      "family_token": "Zenith",
+      "ambiguity_group": "mobo_group_01",
+      "aliases": [
+        {
+          "alias_text": "Talvori Zenith 150 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Zenith 150 Max by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_006",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Ardent 210",
+      "variant": "",
+      "launch_msrp": "7225.00",
+      "launch_date": "2023-02-10",
+      "family_token": "Ardent",
+      "ambiguity_group": "mobo_group_02",
+      "aliases": [
+        {
+          "alias_text": "Talvori Ardent 210",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ardent 210 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_007",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Ardent 220",
+      "variant": "Core",
+      "launch_msrp": "7410.00",
+      "launch_date": "2023-02-11",
+      "family_token": "Ardent",
+      "ambiguity_group": "mobo_group_02",
+      "aliases": [
+        {
+          "alias_text": "Talvori Ardent 220 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ardent 220 Core by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_008",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Ardent 230",
+      "variant": "Plus",
+      "launch_msrp": "7595.00",
+      "launch_date": "2023-02-12",
+      "family_token": "Ardent",
+      "ambiguity_group": "mobo_group_02",
+      "aliases": [
+        {
+          "alias_text": "Talvori Ardent 230 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ardent 230 Plus by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_009",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Ardent 240",
+      "variant": "",
+      "launch_msrp": "7780.00",
+      "launch_date": "2023-02-13",
+      "family_token": "Ardent",
+      "ambiguity_group": "mobo_group_02",
+      "aliases": [
+        {
+          "alias_text": "Talvori Ardent 240",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ardent 240 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_010",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Ardent 250",
+      "variant": "Max",
+      "launch_msrp": "7965.00",
+      "launch_date": "2023-02-14",
+      "family_token": "Ardent",
+      "ambiguity_group": "mobo_group_02",
+      "aliases": [
+        {
+          "alias_text": "Talvori Ardent 250 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Ardent 250 Max by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_011",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Boreal 310",
+      "variant": "",
+      "launch_msrp": "7950.00",
+      "launch_date": "2023-03-10",
+      "family_token": "Boreal",
+      "ambiguity_group": "mobo_group_03",
+      "aliases": [
+        {
+          "alias_text": "Talvori Boreal 310",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Boreal 310 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_012",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Boreal 320",
+      "variant": "Core",
+      "launch_msrp": "8135.00",
+      "launch_date": "2023-03-11",
+      "family_token": "Boreal",
+      "ambiguity_group": "mobo_group_03",
+      "aliases": [
+        {
+          "alias_text": "Talvori Boreal 320 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Boreal 320 Core by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_013",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Boreal 330",
+      "variant": "Plus",
+      "launch_msrp": "8320.00",
+      "launch_date": "2023-03-12",
+      "family_token": "Boreal",
+      "ambiguity_group": "mobo_group_03",
+      "aliases": [
+        {
+          "alias_text": "Talvori Boreal 330 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Boreal 330 Plus by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_014",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Boreal 340",
+      "variant": "",
+      "launch_msrp": "8505.00",
+      "launch_date": "2023-03-13",
+      "family_token": "Boreal",
+      "ambiguity_group": "mobo_group_03",
+      "aliases": [
+        {
+          "alias_text": "Talvori Boreal 340",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Boreal 340 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_015",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Boreal 350",
+      "variant": "Max",
+      "launch_msrp": "8690.00",
+      "launch_date": "2023-03-14",
+      "family_token": "Boreal",
+      "ambiguity_group": "mobo_group_03",
+      "aliases": [
+        {
+          "alias_text": "Talvori Boreal 350 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Boreal 350 Max by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_016",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Cobalt 410",
+      "variant": "",
+      "launch_msrp": "8675.00",
+      "launch_date": "2023-04-10",
+      "family_token": "Cobalt",
+      "ambiguity_group": "mobo_group_04",
+      "aliases": [
+        {
+          "alias_text": "Talvori Cobalt 410",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cobalt 410 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_017",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Cobalt 420",
+      "variant": "Core",
+      "launch_msrp": "8860.00",
+      "launch_date": "2023-04-11",
+      "family_token": "Cobalt",
+      "ambiguity_group": "mobo_group_04",
+      "aliases": [
+        {
+          "alias_text": "Talvori Cobalt 420 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cobalt 420 Core by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_018",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Cobalt 430",
+      "variant": "Plus",
+      "launch_msrp": "9045.00",
+      "launch_date": "2023-04-12",
+      "family_token": "Cobalt",
+      "ambiguity_group": "mobo_group_04",
+      "aliases": [
+        {
+          "alias_text": "Talvori Cobalt 430 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cobalt 430 Plus by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_019",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Cobalt 440",
+      "variant": "",
+      "launch_msrp": "9230.00",
+      "launch_date": "2023-04-13",
+      "family_token": "Cobalt",
+      "ambiguity_group": "mobo_group_04",
+      "aliases": [
+        {
+          "alias_text": "Talvori Cobalt 440",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cobalt 440 Series by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_mobo_020",
+      "category": "mobo",
+      "brand": "Talvori",
+      "model": "Cobalt 450",
+      "variant": "Max",
+      "launch_msrp": "9415.00",
+      "launch_date": "2023-04-14",
+      "family_token": "Cobalt",
+      "ambiguity_group": "mobo_group_04",
+      "aliases": [
+        {
+          "alias_text": "Talvori Cobalt 450 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Cobalt 450 Max by Talvori",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_001",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Dawn 110",
+      "variant": "",
+      "launch_msrp": "9000.00",
+      "launch_date": "2023-01-10",
+      "family_token": "Dawn",
+      "ambiguity_group": "monitor_group_01",
+      "aliases": [
+        {
+          "alias_text": "Celestri Dawn 110",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Dawn 110 Series by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_002",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Dawn 120",
+      "variant": "Core",
+      "launch_msrp": "9185.00",
+      "launch_date": "2023-01-11",
+      "family_token": "Dawn",
+      "ambiguity_group": "monitor_group_01",
+      "aliases": [
+        {
+          "alias_text": "Celestri Dawn 120 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Dawn 120 Core by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_003",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Dawn 130",
+      "variant": "Plus",
+      "launch_msrp": "9370.00",
+      "launch_date": "2023-01-12",
+      "family_token": "Dawn",
+      "ambiguity_group": "monitor_group_01",
+      "aliases": [
+        {
+          "alias_text": "Celestri Dawn 130 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Dawn 130 Plus by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_004",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Dawn 140",
+      "variant": "",
+      "launch_msrp": "9555.00",
+      "launch_date": "2023-01-13",
+      "family_token": "Dawn",
+      "ambiguity_group": "monitor_group_01",
+      "aliases": [
+        {
+          "alias_text": "Celestri Dawn 140",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Dawn 140 Series by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_005",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Dawn 150",
+      "variant": "Max",
+      "launch_msrp": "9740.00",
+      "launch_date": "2023-01-14",
+      "family_token": "Dawn",
+      "ambiguity_group": "monitor_group_01",
+      "aliases": [
+        {
+          "alias_text": "Celestri Dawn 150 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Dawn 150 Max by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_006",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Eon 210",
+      "variant": "",
+      "launch_msrp": "9725.00",
+      "launch_date": "2023-02-10",
+      "family_token": "Eon",
+      "ambiguity_group": "monitor_group_02",
+      "aliases": [
+        {
+          "alias_text": "Celestri Eon 210",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Eon 210 Series by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_007",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Eon 220",
+      "variant": "Core",
+      "launch_msrp": "9910.00",
+      "launch_date": "2023-02-11",
+      "family_token": "Eon",
+      "ambiguity_group": "monitor_group_02",
+      "aliases": [
+        {
+          "alias_text": "Celestri Eon 220 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Eon 220 Core by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_008",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Eon 230",
+      "variant": "Plus",
+      "launch_msrp": "10095.00",
+      "launch_date": "2023-02-12",
+      "family_token": "Eon",
+      "ambiguity_group": "monitor_group_02",
+      "aliases": [
+        {
+          "alias_text": "Celestri Eon 230 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Eon 230 Plus by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_009",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Eon 240",
+      "variant": "",
+      "launch_msrp": "10280.00",
+      "launch_date": "2023-02-13",
+      "family_token": "Eon",
+      "ambiguity_group": "monitor_group_02",
+      "aliases": [
+        {
+          "alias_text": "Celestri Eon 240",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Eon 240 Series by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_010",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Eon 250",
+      "variant": "Max",
+      "launch_msrp": "10465.00",
+      "launch_date": "2023-02-14",
+      "family_token": "Eon",
+      "ambiguity_group": "monitor_group_02",
+      "aliases": [
+        {
+          "alias_text": "Celestri Eon 250 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Eon 250 Max by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_011",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Fable 310",
+      "variant": "",
+      "launch_msrp": "10450.00",
+      "launch_date": "2023-03-10",
+      "family_token": "Fable",
+      "ambiguity_group": "monitor_group_03",
+      "aliases": [
+        {
+          "alias_text": "Celestri Fable 310",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Fable 310 Series by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_012",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Fable 320",
+      "variant": "Core",
+      "launch_msrp": "10635.00",
+      "launch_date": "2023-03-11",
+      "family_token": "Fable",
+      "ambiguity_group": "monitor_group_03",
+      "aliases": [
+        {
+          "alias_text": "Celestri Fable 320 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Fable 320 Core by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_013",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Fable 330",
+      "variant": "Plus",
+      "launch_msrp": "10820.00",
+      "launch_date": "2023-03-12",
+      "family_token": "Fable",
+      "ambiguity_group": "monitor_group_03",
+      "aliases": [
+        {
+          "alias_text": "Celestri Fable 330 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Fable 330 Plus by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_014",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Fable 340",
+      "variant": "",
+      "launch_msrp": "11005.00",
+      "launch_date": "2023-03-13",
+      "family_token": "Fable",
+      "ambiguity_group": "monitor_group_03",
+      "aliases": [
+        {
+          "alias_text": "Celestri Fable 340",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Fable 340 Series by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_monitor_015",
+      "category": "monitor",
+      "brand": "Celestri",
+      "model": "Fable 350",
+      "variant": "Max",
+      "launch_msrp": "11190.00",
+      "launch_date": "2023-03-14",
+      "family_token": "Fable",
+      "ambiguity_group": "monitor_group_03",
+      "aliases": [
+        {
+          "alias_text": "Celestri Fable 350 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Fable 350 Max by Celestri",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_001",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Glimmer 110",
+      "variant": "",
+      "launch_msrp": "1800.00",
+      "launch_date": "2023-01-10",
+      "family_token": "Glimmer",
+      "ambiguity_group": "peripheral_group_01",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Glimmer 110",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Glimmer 110 Series by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_002",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Glimmer 120",
+      "variant": "Core",
+      "launch_msrp": "1985.00",
+      "launch_date": "2023-01-11",
+      "family_token": "Glimmer",
+      "ambiguity_group": "peripheral_group_01",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Glimmer 120 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Glimmer 120 Core by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_003",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Glimmer 130",
+      "variant": "Plus",
+      "launch_msrp": "2170.00",
+      "launch_date": "2023-01-12",
+      "family_token": "Glimmer",
+      "ambiguity_group": "peripheral_group_01",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Glimmer 130 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Glimmer 130 Plus by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_004",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Glimmer 140",
+      "variant": "",
+      "launch_msrp": "2355.00",
+      "launch_date": "2023-01-13",
+      "family_token": "Glimmer",
+      "ambiguity_group": "peripheral_group_01",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Glimmer 140",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Glimmer 140 Series by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_005",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Glimmer 150",
+      "variant": "Max",
+      "launch_msrp": "2540.00",
+      "launch_date": "2023-01-14",
+      "family_token": "Glimmer",
+      "ambiguity_group": "peripheral_group_01",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Glimmer 150 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Glimmer 150 Max by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_006",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Halo 210",
+      "variant": "",
+      "launch_msrp": "2525.00",
+      "launch_date": "2023-02-10",
+      "family_token": "Halo",
+      "ambiguity_group": "peripheral_group_02",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Halo 210",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Halo 210 Series by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_007",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Halo 220",
+      "variant": "Core",
+      "launch_msrp": "2710.00",
+      "launch_date": "2023-02-11",
+      "family_token": "Halo",
+      "ambiguity_group": "peripheral_group_02",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Halo 220 Core",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Halo 220 Core by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_008",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Halo 230",
+      "variant": "Plus",
+      "launch_msrp": "2895.00",
+      "launch_date": "2023-02-12",
+      "family_token": "Halo",
+      "ambiguity_group": "peripheral_group_02",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Halo 230 Plus",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Halo 230 Plus by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_009",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Halo 240",
+      "variant": "",
+      "launch_msrp": "3080.00",
+      "launch_date": "2023-02-13",
+      "family_token": "Halo",
+      "ambiguity_group": "peripheral_group_02",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Halo 240",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Halo 240 Series by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    },
+    {
+      "natural_key": "bench_peripheral_010",
+      "category": "peripheral",
+      "brand": "Novaryn",
+      "model": "Halo 250",
+      "variant": "Max",
+      "launch_msrp": "3265.00",
+      "launch_date": "2023-02-14",
+      "family_token": "Halo",
+      "ambiguity_group": "peripheral_group_02",
+      "aliases": [
+        {
+          "alias_text": "Novaryn Halo 250 Max",
+          "source_of_truth": "seed"
+        },
+        {
+          "alias_text": "Halo 250 Max by Novaryn",
+          "source_of_truth": "seed"
+        }
+      ]
+    }
+  ]
+}

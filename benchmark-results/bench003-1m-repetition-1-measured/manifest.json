@@ -1,0 +1,647 @@
+{
+  "artifact_schema_version": "pricewatchph_pipeline_benchmark.v1",
+  "artifacts": {
+    "external_label_sidecar": "/artifacts/labels.ndjson",
+    "manifest": "/artifacts/manifest.json",
+    "production_dataset": "/artifacts/production.ndjson"
+  },
+  "catalogue_category_distribution": {
+    "cpu": 25,
+    "gpu": 30,
+    "mobo": 20,
+    "monitor": 15,
+    "peripheral": 10,
+    "ram": 20
+  },
+  "catalogue_sha256": "ec5622601174f8c7caf1a7d85c903b8d8591baca16c45990166125f231860058",
+  "catalogue_sku_count": 120,
+  "compose_version": "5.3.1",
+  "contract_version": "1.0.0",
+  "difficulty_distribution": {
+    "A": 250000,
+    "B": 250000,
+    "C": 250000,
+    "D": 250000
+  },
+  "docker_version": "client=29.6.2 server=29.5.2",
+  "failure_details": [],
+  "final_snapshot": {
+    "captured_at_utc": "2026-08-30T04:28:02.843167Z",
+    "core_relation_total_sizes": {
+      "deal_flag": {
+        "bytes": 98304,
+        "human": "96.00 KiB"
+      },
+      "listing": {
+        "bytes": 164585472,
+        "human": "156.96 MiB"
+      },
+      "price_point": {
+        "bytes": 57344,
+        "human": "56.00 KiB"
+      },
+      "raw_listing": {
+        "bytes": 532062208,
+        "human": "507.41 MiB"
+      },
+      "sku": {
+        "bytes": 81920,
+        "human": "80.00 KiB"
+      },
+      "sku_alias": {
+        "bytes": 180224,
+        "human": "176.00 KiB"
+      },
+      "source": {
+        "bytes": 65536,
+        "human": "64.00 KiB"
+      }
+    },
+    "counts": {
+      "deal_flag": 1,
+      "listing": 1000000,
+      "price_point": 17,
+      "raw_listing": 1000000,
+      "review_required": 750000,
+      "sku": 120,
+      "sku_alias": 240,
+      "source": 2,
+      "unresolved": 750000
+    },
+    "database_size": {
+      "bytes": 706255895,
+      "human": "673.54 MiB"
+    }
+  },
+  "generator_version": "1.0.0",
+  "implementation_sha": "4522ca4585f5359d64d444076c1694e271fb311c",
+  "implementation_state": {
+    "explanation": "BENCH_003 benchmark-only runner includes the owner-approved Manila-midnight preflight and bounded-memory quality-extractor corrections; runner, manifest support, focused tests, .dockerignore, and result artifacts remain uncommitted. Measured on an otherwise quiescent local Docker runtime.",
+    "value": "dirty"
+  },
+  "initial_snapshot": {
+    "captured_at_utc": "2026-08-30T03:52:40.530191Z",
+    "core_relation_total_sizes": {
+      "deal_flag": {
+        "bytes": 49152,
+        "human": "48.00 KiB"
+      },
+      "listing": {
+        "bytes": 32768,
+        "human": "32.00 KiB"
+      },
+      "price_point": {
+        "bytes": 24576,
+        "human": "24.00 KiB"
+      },
+      "raw_listing": {
+        "bytes": 32768,
+        "human": "32.00 KiB"
+      },
+      "sku": {
+        "bytes": 24576,
+        "human": "24.00 KiB"
+      },
+      "sku_alias": {
+        "bytes": 40960,
+        "human": "40.00 KiB"
+      },
+      "source": {
+        "bytes": 65536,
+        "human": "64.00 KiB"
+      }
+    },
+    "counts": {
+      "deal_flag": 0,
+      "listing": 0,
+      "price_point": 0,
+      "raw_listing": 0,
+      "review_required": 0,
+      "sku": 0,
+      "sku_alias": 0,
+      "source": 2,
+      "unresolved": 0
+    },
+    "database_size": {
+      "bytes": 9305111,
+      "human": "8.87 MiB"
+    }
+  },
+  "machine_cpu": {
+    "logical_cpu_count": 8,
+    "model": "Apple M2"
+  },
+  "machine_memory": {
+    "bytes": 8589934592,
+    "human": "8.00 GiB",
+    "measurement_source": "sysctl hw.memsize"
+  },
+  "manila_as_of_day": "2026-08-30",
+  "master_seed": 20260829,
+  "null_explanations": {},
+  "observation_count": 1000000,
+  "operating_system": {
+    "architecture": "arm64",
+    "name": "macOS",
+    "version": "26.3.1 (25D2128)"
+  },
+  "postgresql_image": {
+    "image": "postgres:16.14-bookworm",
+    "immutable_identity": "postgres@sha256:92620daddcd947f8d5ab5ba66e848702fe443d87fed30c4cea8e389fd78dfc55"
+  },
+  "postgresql_version": "16.14 (Debian 16.14-1.pgdg12+1)",
+  "pre_processing_snapshot": {
+    "captured_at_utc": "2026-08-30T03:54:59.542932Z",
+    "core_relation_total_sizes": {
+      "deal_flag": {
+        "bytes": 49152,
+        "human": "48.00 KiB"
+      },
+      "listing": {
+        "bytes": 32768,
+        "human": "32.00 KiB"
+      },
+      "price_point": {
+        "bytes": 24576,
+        "human": "24.00 KiB"
+      },
+      "raw_listing": {
+        "bytes": 532045824,
+        "human": "507.40 MiB"
+      },
+      "sku": {
+        "bytes": 81920,
+        "human": "80.00 KiB"
+      },
+      "sku_alias": {
+        "bytes": 180224,
+        "human": "176.00 KiB"
+      },
+      "source": {
+        "bytes": 65536,
+        "human": "64.00 KiB"
+      }
+    },
+    "counts": {
+      "deal_flag": 0,
+      "listing": 0,
+      "price_point": 0,
+      "raw_listing": 1000000,
+      "review_required": 0,
+      "sku": 120,
+      "sku_alias": 240,
+      "source": 2,
+      "unresolved": 0
+    },
+    "database_size": {
+      "bytes": 541522967,
+      "human": "516.44 MiB"
+    }
+  },
+  "preflight": {
+    "docker_memory": {
+      "measurement_source": "docker info .MemTotal after Colima 4.5 GiB resize",
+      "observed": {
+        "bytes": 4615585792,
+        "human": "4.30 GiB"
+      },
+      "required": {
+        "bytes": 4294967296,
+        "human": "4.00 GiB"
+      }
+    },
+    "failures": [],
+    "free_disk": {
+      "observed": {
+        "bytes": 37513199616,
+        "human": "34.94 GiB"
+      },
+      "required": {
+        "bytes": 32212254720,
+        "human": "30.00 GiB"
+      }
+    },
+    "full_run_timeout_seconds": 14400,
+    "manila_day_boundary": {
+      "next_midnight": "2026-08-31T00:00:00.000000+08:00",
+      "observed_at": "2026-08-30T11:52:40.504781+08:00",
+      "required_seconds": 14400,
+      "requirement": "seconds_until_next_manila_midnight > full_run_timeout_seconds",
+      "seconds_until_next_midnight": "43639.495219",
+      "timezone": "Asia/Manila"
+    },
+    "passed": true
+  },
+  "python_version": "3.12.13",
+  "release_sha": "ab0646e9fcb4c3c5d1f567a46848a3a98dbda9a5",
+  "repetition": 1,
+  "resolution_quality": {
+    "by_difficulty": {
+      "A": {
+        "counts": {
+          "ambiguous_observation_count": 0,
+          "automatic_resolution_count_all": 250000,
+          "automatic_resolution_count_eligible": 250000,
+          "correct_abstention_count": 0,
+          "correct_automatic_resolution_count": 250000,
+          "eligible_observation_count": 250000,
+          "incorrect_automatic_resolution_count": 0,
+          "review_required_count": 0,
+          "unnecessary_abstention_count": 0,
+          "unsafe_forced_resolution_count": 0
+        },
+        "rates": {
+          "correct_abstention_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "correct_resolution_coverage": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "resolution_coverage": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "resolution_precision": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "review_required_rate": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          },
+          "unnecessary_abstention_rate": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          },
+          "unsafe_forced_resolution_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "unsafe_resolution_rate": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          }
+        }
+      },
+      "B": {
+        "counts": {
+          "ambiguous_observation_count": 0,
+          "automatic_resolution_count_all": 0,
+          "automatic_resolution_count_eligible": 0,
+          "correct_abstention_count": 0,
+          "correct_automatic_resolution_count": 0,
+          "eligible_observation_count": 250000,
+          "incorrect_automatic_resolution_count": 0,
+          "review_required_count": 250000,
+          "unnecessary_abstention_count": 250000,
+          "unsafe_forced_resolution_count": 0
+        },
+        "rates": {
+          "correct_abstention_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "correct_resolution_coverage": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          },
+          "resolution_coverage": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          },
+          "resolution_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "review_required_rate": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "unnecessary_abstention_rate": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "unsafe_forced_resolution_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "unsafe_resolution_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          }
+        }
+      },
+      "C": {
+        "counts": {
+          "ambiguous_observation_count": 0,
+          "automatic_resolution_count_all": 0,
+          "automatic_resolution_count_eligible": 0,
+          "correct_abstention_count": 0,
+          "correct_automatic_resolution_count": 0,
+          "eligible_observation_count": 250000,
+          "incorrect_automatic_resolution_count": 0,
+          "review_required_count": 250000,
+          "unnecessary_abstention_count": 250000,
+          "unsafe_forced_resolution_count": 0
+        },
+        "rates": {
+          "correct_abstention_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "correct_resolution_coverage": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          },
+          "resolution_coverage": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          },
+          "resolution_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "review_required_rate": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "unnecessary_abstention_rate": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "unsafe_forced_resolution_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "unsafe_resolution_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          }
+        }
+      },
+      "D": {
+        "counts": {
+          "ambiguous_observation_count": 250000,
+          "automatic_resolution_count_all": 0,
+          "automatic_resolution_count_eligible": 0,
+          "correct_abstention_count": 250000,
+          "correct_automatic_resolution_count": 0,
+          "eligible_observation_count": 0,
+          "incorrect_automatic_resolution_count": 0,
+          "review_required_count": 250000,
+          "unnecessary_abstention_count": 0,
+          "unsafe_forced_resolution_count": 0
+        },
+        "rates": {
+          "correct_abstention_rate": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "correct_resolution_coverage": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "resolution_coverage": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "resolution_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "review_required_rate": {
+            "denominator": 250000,
+            "numerator": 250000,
+            "value": "1.000000"
+          },
+          "unnecessary_abstention_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          },
+          "unsafe_forced_resolution_rate": {
+            "denominator": 250000,
+            "numerator": 0,
+            "value": "0.000000"
+          },
+          "unsafe_resolution_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": "N/A"
+          }
+        }
+      }
+    },
+    "counts": {
+      "ambiguous_observation_count": 250000,
+      "automatic_resolution_count_all": 250000,
+      "automatic_resolution_count_eligible": 250000,
+      "correct_abstention_count": 250000,
+      "correct_automatic_resolution_count": 250000,
+      "eligible_observation_count": 750000,
+      "incorrect_automatic_resolution_count": 0,
+      "review_required_count": 750000,
+      "unnecessary_abstention_count": 500000,
+      "unsafe_forced_resolution_count": 0
+    },
+    "rates": {
+      "correct_abstention_rate": {
+        "denominator": 250000,
+        "numerator": 250000,
+        "value": "1.000000"
+      },
+      "correct_resolution_coverage": {
+        "denominator": 750000,
+        "numerator": 250000,
+        "value": "0.333333"
+      },
+      "resolution_coverage": {
+        "denominator": 750000,
+        "numerator": 250000,
+        "value": "0.333333"
+      },
+      "resolution_precision": {
+        "denominator": 250000,
+        "numerator": 250000,
+        "value": "1.000000"
+      },
+      "review_required_rate": {
+        "denominator": 1000000,
+        "numerator": 750000,
+        "value": "0.750000"
+      },
+      "unnecessary_abstention_rate": {
+        "denominator": 750000,
+        "numerator": 500000,
+        "value": "0.666667"
+      },
+      "unsafe_forced_resolution_rate": {
+        "denominator": 250000,
+        "numerator": 0,
+        "value": "0.000000"
+      },
+      "unsafe_resolution_rate": {
+        "denominator": 250000,
+        "numerator": 0,
+        "value": "0.000000"
+      }
+    },
+    "schema_version": "resolution_quality.v1"
+  },
+  "run_ended_at_utc": "2026-08-30T04:28:02.846325Z",
+  "run_started_at_utc": "2026-08-30T03:52:40.504748Z",
+  "run_state": "succeeded",
+  "scope_notes": [
+    "Controlled labelled synthetic benchmark; not production or real-world accuracy.",
+    "benchmark_raw_load is fixture loading, not production ingestion.",
+    "API measurement is deferred because authenticated concurrent connection-reuse machinery is BENCH_004 scope.",
+    "Backup, restore, and scaled recovery verification are outside BENCH_003 scope."
+  ],
+  "stages": {
+    "api_workload": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "deferred to BENCH_004; frozen authenticated concurrency workload needs isolated machinery",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "backup": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "outside the owner-approved BENCH_003 scope",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "benchmark_raw_load": {
+      "details": {
+        "source_name": "manual_capture",
+        "timing_label": "benchmark_raw_load"
+      },
+      "duration_seconds": "65.338378021",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1000000,
+      "status": "succeeded"
+    },
+    "catalogue_install": {
+      "details": {},
+      "duration_seconds": "0.173436813",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 120,
+      "status": "succeeded"
+    },
+    "generation": {
+      "details": {},
+      "duration_seconds": "72.953063275",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1000000,
+      "status": "succeeded"
+    },
+    "manifest_validation": {
+      "details": {},
+      "duration_seconds": "0.001424707",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1,
+      "status": "succeeded"
+    },
+    "preflight": {
+      "details": {},
+      "duration_seconds": "0.000212446",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1,
+      "status": "succeeded"
+    },
+    "price_listings": {
+      "details": {
+        "snapshot_identities": 34,
+        "stderr": "",
+        "stdout": "Pricing 2026-08-30 complete: snapshot_identities=34 listings_evaluated=1000000"
+      },
+      "duration_seconds": "317.530540149",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1000000,
+      "status": "succeeded"
+    },
+    "quality_extraction": {
+      "details": {},
+      "duration_seconds": "49.836704266",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1000000,
+      "status": "succeeded"
+    },
+    "resolve_listings": {
+      "details": {
+        "stderr": "",
+        "stdout": ""
+      },
+      "duration_seconds": "1613.655388587",
+      "explanation": null,
+      "failure_detail": null,
+      "processed_count": 1000000,
+      "status": "succeeded"
+    },
+    "restore": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "outside the owner-approved BENCH_003 scope",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    },
+    "verification": {
+      "details": {},
+      "duration_seconds": null,
+      "explanation": "outside the owner-approved BENCH_003 scope",
+      "failure_detail": null,
+      "processed_count": null,
+      "status": "not_attempted"
+    }
+  },
+  "timings": {
+    "benchmark_raw_load_seconds": "65.338378021",
+    "generation_seconds": "72.953063275",
+    "pipeline_throughput_observations_per_second": "517.8165318626363937284756428",
+    "pipeline_throughput_processed_count": 1000000,
+    "price_listings_seconds": "317.530540149",
+    "production_processing_seconds": "1931.185928736",
+    "resolve_listings_seconds": "1613.655388587"
+  }
+}
